@@ -1,11 +1,11 @@
 ---
-title: "MATH2349 Semester 1, 2018 - ADD DESCRIPTIVE TITLE"
-author: "Alistair Grevis-James (s3644119) and Chris Kaias (sXXXXXX)"
-subtitle: Assignment 3
-output:
-  html_notebook:
-      toc: true
-      toc_float: true
+#title: "MATH2349 Semester 1, 2018 - ADD DESCRIPTIVE TITLE"
+#author: "Alistair Grevis-James (s3644119) and Chris Kaias (sXXXXXX)"
+#subtitle: Assignment 3
+#output:
+#  html_notebook:
+#      toc: true
+#      toc_float: true
 ---
 
 <style>
@@ -249,8 +249,7 @@ gvd2015_keep_cali$female_count <- str_count(gvd2015_keep_cali$participant_gender
 
 ##### Participant_status
 
-The characters `,[:space:]`, `::`, `[:digit:]` & `||` were stripped from the `participant_status` in the same manner as for `participant_gender`. The same methodology was then used to generate counts (`)
-
+The characters `,[:space:]`, `::`, `[:digit:]` & `||` were stripped from the `participant_status` in the same manner as for `participant_gender`. The same methodology was then used to generate counts (`unlist`, `strsplit`, `unique`) for the `participant_status` values, giving the following;
 
 ```{r, include = FALSE}
 gvd2015_keep_cali$participant_status <-  gvd2015_keep_cali$participant_status %>% 
@@ -266,45 +265,31 @@ ul <- unlist(strsplit(participant_status_unique_check, " "))
 unique(ul)
 ```
 
-Using the URL stem "http://www.gunviolencearchive.org/incident/"
-
-- CHANGE TO INJURED ARRESTED
+Several anomalous values which contain mutually exclusive states of being, were identified as; "InjuredUnharmedArrested", "KilledInjured", "KilledArrested", "KilledUnharmed", "InjuredUnharmed" and "KilledUnharmedArrested". The `grepl` function was then used to create a boolean vector for in each case to search for the source of the value in `gvd2015_keep_cali`. Once the `incident_id` was identified, the URL "http://www.gunviolencearchive.org/incident/`incident_id`" was checked. Each instance was then rationalized and given a more appropriate value using the `str_replace_all` function. 
 
 ```{r}
 InjuredUnharmedArrested <- grepl("InjuredUnharmedArrested", gvd2015_keep_cali$participant_status)
 gvd2015_keep_cali[InjuredUnharmedArrested,c(1,14)]
 ```
 
+The values were all checked as described above and updated as follows;
+
+ OriginalValue | Explanation / Justification | UpdatedValue
+------------- | ------------------------------------------------- | -----------
+`InjuredUnharmedArrested` | This value was created as the reporting of an incident is updated | `InjuredArrested`
+`KilledInjured` | This value was created when a person who was initially injured later dies | `Killed`
+`KilledArrested` | This value was created when a person who was mortally wounded, arrested and later dies | `Killed`
+`KilledUnharmed` | This value was created as the reporting of an incident is updated | `Killed`
+`InjuredUnharmed` | This value was created as the reporting of an incident is updated | `Injured`
+`KilledUnharmedArrested` | This value was created as the reporting of an incident is updated | `Killed`
+
 ```{r}
 gvd2015_keep_cali$participant_status <- str_replace_all(gvd2015_keep_cali$participant_status, "InjuredUnharmedArrested", "InjuredArrested")
-```
-
-###### KilledArrested
-
-It was determined that "KilledArrested" means they were arrested but lated died from injuries sustained. Change to InjuredArrestedDied.
-
-```{r}
-KilledArrested <- grepl("KilledArrested", gvd2015_keep_cali$participant_status)
-summary(KilledArrested)
-gvd2015_keep_cali[KilledArrested,]
-```
-
-```{r}
-gvd2015_keep_cali$participant_status <- str_replace_all(gvd2015_keep_cali$participant_status, "KilledArrested", "InjuredArrestedDied")
-```
-
-
-```{r}
-KilledUnharmed <- grepl("KilledUnharmed", gvd2015_keep_cali$participant_status)
-summary(KilledUnharmed)
-gvd2015_keep_cali[KilledUnharmed,]
-```
-
-Incident 318320 was checked online, should be killed, injured, killed.
-Incident 440261 should be killed killed
-
-```{r}
+gvd2015_keep_cali$participant_status <- str_replace_all(gvd2015_keep_cali$participant_status, "KilledInjured", "Killed")
+gvd2015_keep_cali$participant_status <- str_replace_all(gvd2015_keep_cali$participant_status, "KilledArrested", "Killed")
 gvd2015_keep_cali$participant_status <- str_replace_all(gvd2015_keep_cali$participant_status, "KilledUnharmed", "Killed")
+gvd2015_keep_cali$participant_status <- str_replace_all(gvd2015_keep_cali$participant_status, "InjuredUnharmed", "Injured")
+gvd2015_keep_cali$participant_status <- str_replace_all(gvd2015_keep_cali$participant_status, "KilledUnharmedArrested", "Killed")
 ```
 
 ```{r}
@@ -314,30 +299,59 @@ unique(ul)
 ```
 
 ```{r}
-# Check WORD COUNT
-gvd2015_keep_cali$Killed_count <- str_count(gvd2015_keep_cali$participant_status, pattern = "Killed") # Stringr
-gvd2015_keep_cali$Injured_count <- str_count(gvd2015_keep_cali$participant_status, pattern = "Injured") # Stringr
-gvd2015_keep_cali$UnharmedArrested_count <- str_count(gvd2015_keep_cali$participant_status, pattern = "UnharmedArrested") # Stringr
-gvd2015_keep_cali$InjuredArrested_count <- str_count(gvd2015_keep_cali$participant_status, pattern = "InjuredArrested") # Stringr (with anchor)
-gvd2015_keep_cali$Arrested_count <- str_count(gvd2015_keep_cali$participant_status, pattern = "Arrested") # Stringr (with anchor)
-gvd2015_keep_cali$Unharmed_count <- str_count(gvd2015_keep_cali$participant_status, pattern = "Unharmed") # Stringr (with anchor)
-gvd2015_keep_cali$InjuredArrestedDied_count <- str_count(gvd2015_keep_cali$participant_status, pattern = "InjuredArrestedDied") # Stringr
+# !!!!!!!!!!!!!!
+gvd2015_keep_cali$killed_count <- str_count(gvd2015_keep_cali$participant_status, pattern = "Injured")
+gvd2015_keep_cali$injured_count <- str_count(gvd2015_keep_cali$participant_status, pattern = "Unharmed")
+gvd2015_keep_cali$inharmedArrested_count <- str_count(gvd2015_keep_cali$participant_status, pattern = "Killed")
+gvd2015_keep_cali$InjuredArrested_count <- str_count(gvd2015_keep_cali$participant_status, pattern = "UnharmedArrested")
+gvd2015_keep_cali$Arrested_count <- str_count(gvd2015_keep_cali$participant_status, pattern = "Arrested")
+gvd2015_keep_cali$Unharmed_count <- str_count(gvd2015_keep_cali$participant_status, pattern = "InjuredArrested") 
+```
+
+
+##### Participant_Type
+
+The characters `,[:space:]`, `::`, `[:digit:]` & `||` were stripped from the `participant_type` in the same manner as for `participant_gender`. The same methodology was then used to generate counts (`unlist`, `strsplit`, `unique`) for the `participant_type` values, giving the following;
+
+```{r, include = FALSE}
+gvd2015_keep_cali$participant_type <-  gvd2015_keep_cali$participant_type %>% 
+  str_replace_all(",[:space:]", "") %>% #Remove comma & whitespace
+  str_replace_all("::", "") %>%
+  str_replace_all("[:digit:]", " ") %>%
+  str_replace_all("\\||", "")
 ```
 
 ```{r}
-# Check if this is needed???
-KilledUnharmedArrested <- grepl("KilledUnharmedArrested", gvd2015_keep_cali$participant_status)
-summary(KilledUnharmedArrested)
-gvd2015_keep_cali[KilledUnharmedArrested,]
+participant_type_unique_check <- as.character(gvd2015_keep_cali[,c("participant_type")])
+ul <- unlist(strsplit(participant_type_unique_check, " "))
+unique(ul)
 ```
-
-Should be Killed and UnharmedArrested
 
 ```{r}
-KilledUnharmed <- grepl("KilledUnharmed", gvd2015_keep_cali$participant_status)
-summary(KilledUnharmed)
-gvd2015_keep_cali[KilledUnharmed,]
+gvd2015_keep_cali$victim_count <- str_count(gvd2015_keep_cali$participant_type, pattern = "Victim")
+gvd2015_keep_cali$subjectSuspect_count <- str_count(gvd2015_keep_cali$participant_type, pattern = "Subject-Suspect")
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ```{r}
