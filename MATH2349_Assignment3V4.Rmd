@@ -226,10 +226,7 @@ for (i in seq(1,length(ages)-1, 2)) # Each pair of ages in the age ranges
 
 ##### participant_gender
 
-- Current form
-- Discuss
-
-We will split gender into M | F | U (U for unknown)
+The characters `,[:space:]`, `::`, `[:digit:]` & `||` were stripped from the `participant_gender` as seen below. A new char value was subsequently created, `participant_gender_unique_check`. This value was then checked for unique characters, which yielded only blank (""), Female and Male. Two `str_count` functions were then used to generate count columns for gender, these were named `male_count` and `female_count`. The column `participant_gender` will be later dropped.
 
 ```{r}
 gvd2015_keep_cali$participant_gender <-  gvd2015_keep_cali$participant_gender %>% 
@@ -250,11 +247,12 @@ gvd2015_keep_cali$male_count <- str_count(gvd2015_keep_cali$participant_gender, 
 gvd2015_keep_cali$female_count <- str_count(gvd2015_keep_cali$participant_gender, pattern = "Female") # Stringr
 ```
 
-- DROP participant_gender
-
 ##### Participant_status
 
-```{r}
+The characters `,[:space:]`, `::`, `[:digit:]` & `||` were stripped from the `participant_status` in the same manner as for `participant_gender`. The same methodology was then used to generate counts (`)
+
+
+```{r, include = FALSE}
 gvd2015_keep_cali$participant_status <-  gvd2015_keep_cali$participant_status %>% 
   str_replace_all(",[:space:]", "") %>% #Remove comma & whitespace
   str_replace_all("::", "") %>%
@@ -268,9 +266,8 @@ ul <- unlist(strsplit(participant_status_unique_check, " "))
 unique(ul)
 ```
 
-###### InjuredUnharmedArrested
+Using the URL stem "http://www.gunviolencearchive.org/incident/"
 
-- Use "http://www.gunviolencearchive.org/incident/" with 
 - CHANGE TO INJURED ARRESTED
 
 ```{r}
@@ -320,7 +317,7 @@ unique(ul)
 # Check WORD COUNT
 gvd2015_keep_cali$Killed_count <- str_count(gvd2015_keep_cali$participant_status, pattern = "Killed") # Stringr
 gvd2015_keep_cali$Injured_count <- str_count(gvd2015_keep_cali$participant_status, pattern = "Injured") # Stringr
-gvd2015_keep_cali$UnharmedArrested_count <- str_count(gvd2015_keep_cali$participant_status, pattern = "UnharmedArrested") # Stringr (with anchor)
+gvd2015_keep_cali$UnharmedArrested_count <- str_count(gvd2015_keep_cali$participant_status, pattern = "UnharmedArrested") # Stringr
 gvd2015_keep_cali$InjuredArrested_count <- str_count(gvd2015_keep_cali$participant_status, pattern = "InjuredArrested") # Stringr (with anchor)
 gvd2015_keep_cali$Arrested_count <- str_count(gvd2015_keep_cali$participant_status, pattern = "Arrested") # Stringr (with anchor)
 gvd2015_keep_cali$Unharmed_count <- str_count(gvd2015_keep_cali$participant_status, pattern = "Unharmed") # Stringr (with anchor)
@@ -335,6 +332,13 @@ gvd2015_keep_cali[KilledUnharmedArrested,]
 ```
 
 Should be Killed and UnharmedArrested
+
+```{r}
+KilledUnharmed <- grepl("KilledUnharmed", gvd2015_keep_cali$participant_status)
+summary(KilledUnharmed)
+gvd2015_keep_cali[KilledUnharmed,]
+```
+
 
 ```{r}
 colnames(gvd2015_keep_cali)
