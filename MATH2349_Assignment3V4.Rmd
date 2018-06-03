@@ -1,11 +1,11 @@
 ---
-#title: "MATH2349 Semester 1, 2018 - ADD DESCRIPTIVE TITLE"
-#author: "Alistair Grevis-James (s3644119) and Chris Kaias (sXXXXXX)"
-#subtitle: Assignment 3
-#output:
-#  html_notebook:
-#      toc: true
-#      toc_float: true
+title: "MATH2349 Semester 1, 2018 - ADD DESCRIPTIVE TITLE"
+author: "Alistair Grevis-James (s3644119) and Chris Kaias (sXXXXXX)"
+subtitle: Assignment 3
+output:
+  html_notebook:
+      toc: true
+      toc_float: true
 ---
 
 <style>
@@ -495,13 +495,6 @@ hist(gvd_acs_join$male_count)
 x3recip <- 1/gvd_acs_join$male_count
 hist(x3recip)
 ```
-
-
-
-```{r}
-hist(gvd_acs_join$female_count)
-```
-
 
 ```{r}
 range01 <- function(x){(x-min(x))/(max(x)-min(x))}
