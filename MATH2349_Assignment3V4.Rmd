@@ -1,0 +1,505 @@
+---
+#title: "MATH2349 Semester 1, 2018 - ADD DESCRIPTIVE TITLE"
+#author: "Alistair Grevis-James (s3644119) and Chris Kaias (sXXXXXX)"
+#subtitle: Assignment 3
+#output:
+#  html_notebook:
+#      toc: true
+#      toc_float: true
+---
+
+<style>
+body {
+text-align: justify}
+</style>
+
+```{r, include = FALSE}
+options(knitr.table.format = "html")
+```
+
+### Executive Summary
+
+Data blah blah and ... These data were imported as `xxx` and `yyy`, respectively.
+
+### Required packages 
+
+```{r, message=FALSE, warning=FALSE, paged.print=TRUE}
+#The following packages were used whilst completing the report (with annotation)
+library(readr) # Used to import .csv files
+library(dplyr) # Section Y
+library(stringr) # Section Z
+library(knitr) # Section X
+library(tidyr)
+#xlsx #readxl #foreign #gdata #rvest #dplyr  #deductive #validate #Hmisc #stringr #lubridate #outliers
+#MVN #infotheo #MASS #caret #MLR #ggplot #base R functions
+```
+
+### Importing the Data
+
+The `readr` function was used to import the data as shown below. The data were imported as `gvd` for Gun Violence Data and `acs2015` for American (US) 2015 Census Data.
+
+```{r, message=FALSE, warning=FALSE, paged.print=TRUE}
+gvd <- read.csv("gun-violence-data.csv") # Importing Gun Violence Data
+acs2015 <- read.csv("acs2015_county_data.csv") # Importing American (US) Census Data 2015
+```
+
+### Data Summary
+
+Three data sets from two sources was used during this analysis.
+
+Gun Violence Data a Comprehensive record of over 260k US gun violence incidents from 2013-2018 (italics), was compiled by James Ko and made available on kaggle.com (footnote). These data contain all recorded gun violence incidents in the US between January 2013 and March 2018, inclusive. These data were imported as `gvd`.
+
+https://www.kaggle.com/jameslko/gun-violence-data/data = gun_violence_data
+
+US Census Demographic Data Demographic and Economic Data for Tracts and Counties (italics), was collected by the US Census Bureau and made available on kaggle.com (footnote). These data contain all cencus data from the 2015 federal census. These data were split into two data sets, the first being county data, and the second being tract data (The "Census Tract" is an area roughly equivalent to a neighborhood established by the Bureau of Census for analyzing populations. They generally encompass a population between 2,500 to 8,000 people).
+
+https://www.kaggle.com/zimeiyang/2015-us-census-demographic-data/data = acs_2015
+
+
+### Initial Check of Gun Violence Data
+
+Summarise the types of variables and data structures, check the attributes in the data. In addition to the R codes and outputs, explain briefly the steps that you have taken. In this section, show that you have fulfilled minimum requirements 2-4.
+
+```{r, message=FALSE, warning=FALSE, paged.print=TRUE}
+dim(gvd) # Dimensions of Gun Violence Data (gvd)
+```
+
+```{r, message=FALSE, warning=FALSE, paged.print=TRUE}
+#head(gvd, n=8)
+```
+
+```{r colnames gvd, message=FALSE, warning=FALSE, paged.print=TRUE}
+colnames(gvd) # Checking the column names
+```
+
+### Filtering Gun Violence Data for values from 2015
+
+The Gun Violence Dataset contains data from 2013 till 2015, while the American Census Data is from 2015. We will therefore create a data subset of the Gun Violence Data from the year 2015 only.
+
+```{r}
+str(gvd$date)
+```
+
+```{r}
+gvd$date_year <- format.Date(gvd$date, format="%Y") # Converting YYYY-DD-MM to 
+```
+
+```{r}
+str(gvd$date_year)
+```
+
+```{r}
+gvd$date_year <- filter(gvd, date_year == "2015") # Filtering Gun Violence Data for 2015 only
+```
+
+```{r}
+gvd2015$date <- factor(gvd2015$date)
+str(gvd2015$date) # Confirming only 2015 data is present
+```
+
+```{r}
+sapply(gvd, class) # Checking the data types for 'gvd'
+```
+
+### Dropping Attributes from GVD
+
+After the GVD dataframe was subset for 2015, the attributes were examined to determine their value in further analysis.
+
+```{r}
+# Insert display of attributes / explain, narrate attributes ...
+gvd2015_check1 <- select(gvd2015, date, address, incident_url, source_url, incident_url_fields_missing)
+#head(gvd2015_check1, n=6)
+```
+
+The following attributes will be dropped from GVD (2015); `date` as this is all for the year 2015 now, `address` as this level of fine detail is not required, `incident_url`, `source_url` & `incident_url_fields_missing` as these have no value for our analysis.
++ `gun_stolen` to sparse, `gun_type` to sparse, `location_description` to sparse, `notes` no value, `participant_age_group` we already have participant age,  `participant_name`  `participant_relationship`  `sources`     
+
+```{r}
+gvd2015_keep <- select(gvd2015, incident_id, state, city_or_county, n_killed, n_injured, congressional_district, incident_characteristics, latitude, longitude, n_guns_involved, participant_age, participant_age_group, participant_gender, participant_status, participant_type, state_house_district, state_senate_district)
+```
+
+```{r}
+dim(gvd2015_keep)
+```
+
+These data still contain 53579 observations, we will now check the values of `gvd2015_keep$state`. Using the aggregate function
+
+```{r}
+aggregate(city_or_county ~ state, gvd2015_keep, function(x) length(unique(x)))
+```
+
+```{r}
+aggregate(state ~ state, gvd2015_keep, function(x) length(unique(x)))
+```
+
+For our analysis the State California will be chosen. *Talk about varied socio-economic status..?*
+
+```{r}
+gvd2015_keep_cali <- filter(gvd2015_keep, state == "California")
+```
+
+```{r}
+dim(gvd2015_keep_cali)
+```
+
+#### Exploring the GVD 2015 California Data Subset
+
+```{r}
+colnames(gvd2015_keep_cali)
+```
+
+The participant age and gender attributes may contain ... (good data for analytics)
+
+```{r}
+gvd2015_keep_cali[1:4, c(4,5,7,10,11)]
+```
+
+```{r}
+gvd2015_keep_cali[1:4, c(12:15)]
+```
+
+In both attibutes, multiple values are contained. 
+
+*Not tidy, multiple values in one column*
+
+```{r}
+gvd2015_keep_cali$matches <- str_match_all(gvd2015_keep_cali$participant_age, "\\d+::(\\d+)")
+ages = c(c(0,15)) # First age range is under 15s
+for (i in seq(16, 76, 5)) # The other age ranges are every 5 years 
+{  ages <- c(ages, c(i, i+4)) }
+ages <- c(ages, c(81,100)) # The last age range is 81 plus
+for (i in seq(1,length(ages)-1, 2)) # Each pair of ages in the age ranges
+{ # Construct the column using apply, Paste here concatenates the string for the column name
+  gvd2015_keep_cali[paste("age", ages[i],ages[i+1], sep="_")] <- apply(gvd2015_keep_cali, 1, function(row) {
+    cnt <- 0 # Count of ages in current range starts at 0
+    for (x in row$matches) # Iterate through the matches we parsed out
+    { if (!grepl(":", x, fixed = TRUE)) # If the match does not contain a : then it is the match group rather than the match
+      { age <- as.integer(x) # so convert age as string to integer
+        if (age >= ages[i] && age <= ages[i+1]) # and check if age falls within age range for the current column
+        { cnt <- cnt + 1 }}}
+    cnt })}
+```
+
+We will split gender into M | F | U (U for unknown)
+
+```{r}
+gvd2015_keep_cali$participant_gender <-  gvd2015_keep_cali$participant_gender %>% 
+  str_replace_all(",[:space:]", "") %>% #Remove comma & whitespace
+  str_replace_all("::", "") %>%
+  str_replace_all("[:digit:]", " ") %>%
+  str_replace_all("\\||", "")
+```
+
+```{r}
+participant_gender_unique_check <- as.character(gvd2015_keep_cali[,c("participant_gender")])
+ul <- unlist(strsplit(participant_gender_unique_check, " "))
+unique(ul)
+```
+
+```{r}
+gvd2015_keep_cali$male_count <- str_count(gvd2015_keep_cali$participant_gender, pattern = "Male") # Stringr
+gvd2015_keep_cali$female_count <- str_count(gvd2015_keep_cali$participant_gender, pattern = "Female") # Stringr
+```
+
+```{r}
+colnames(gvd2015_keep_cali) # Check column names haven't changed!!!
+gvd2015_keep_cali[1:6, c(13,34,35)]
+```
+
+#### Participant Age Group Column
+```{r}
+gvd2015_keep_cali$participant_age_group <-  gvd2015_keep_cali$participant_age_group %>% 
+  str_replace_all(",[:space:]", "") %>% #Remove comma & whitespace
+  str_replace_all("::", "") %>%
+  str_replace_all("[:digit:]", " ") %>%
+  str_replace_all("\\||", "")
+```
+
+```{r}
+participant_age_group_unique_check <- as.character(gvd2015_keep_cali[,c("participant_age_group")])
+ul <- unlist(strsplit(participant_age_group_unique_check, " "))
+unique(ul)
+```
+
+DROP THIS
+
+```{r}
+colnames(gvd2015_keep_cali)
+```
+
+```{r}
+gvd2015_keep_cali$participant_status <-  gvd2015_keep_cali$participant_status %>% 
+  str_replace_all(",[:space:]", "") %>% #Remove comma & whitespace
+  str_replace_all("::", "") %>%
+  str_replace_all("[:digit:]", " ") %>%
+  str_replace_all("\\||", "")
+```
+
+```{r}
+participant_status_unique_check <- as.character(gvd2015_keep_cali[,c("participant_status")])
+ul <- unlist(strsplit(participant_status_unique_check, " "))
+unique(ul)
+```
+
+```{r}
+InjuredUnharmedArrested <- grepl("InjuredUnharmedArrested", gvd2015_keep_cali$participant_status)
+summary(InjuredUnharmedArrested)
+gvd2015_keep_cali[InjuredUnharmedArrested,]
+```
+
+```{r}
+filter(gvd2015, incident_id == 273316) # http://www.gunviolencearchive.org/incident/273316
+```
+
+CHANGE TO INJURED ARRESTED
+
+Mention URL stem ...
+
+```{r}
+gvd2015_keep_cali$participant_status <- str_replace_all(gvd2015_keep_cali$participant_status, "InjuredUnharmedArrested", "InjuredArrested")
+```
+
+
+
+```{r}
+KilledArrested <- grepl("KilledArrested", gvd2015_keep_cali$participant_status)
+summary(KilledArrested)
+gvd2015_keep_cali[KilledArrested,]
+```
+
+It was determined that "KilledArrested" means they were arrested but lated died from injuries sustained. Change to InjuredArrestedDied.
+
+```{r}
+gvd2015_keep_cali$participant_status <- str_replace_all(gvd2015_keep_cali$participant_status, "KilledArrested", "InjuredArrestedDied")
+```
+
+
+```{r}
+KilledUnharmed <- grepl("KilledUnharmed", gvd2015_keep_cali$participant_status)
+summary(KilledUnharmed)
+gvd2015_keep_cali[KilledUnharmed,]
+```
+
+Incident 318320 was checked online, should be killed, injured, killed.
+Incident 440261 should be killed killed
+
+```{r}
+gvd2015_keep_cali$participant_status <- str_replace_all(gvd2015_keep_cali$participant_status, "KilledUnharmed", "Killed")
+```
+
+```{r}
+participant_status_unique_check <- as.character(gvd2015_keep_cali[,c("participant_status")])
+ul <- unlist(strsplit(participant_status_unique_check, " "))
+unique(ul)
+```
+
+```{r}
+# Check WORD COUNT
+gvd2015_keep_cali$Killed_count <- str_count(gvd2015_keep_cali$participant_status, pattern = "Killed") # Stringr
+gvd2015_keep_cali$Injured_count <- str_count(gvd2015_keep_cali$participant_status, pattern = "Injured") # Stringr
+gvd2015_keep_cali$UnharmedArrested_count <- str_count(gvd2015_keep_cali$participant_status, pattern = "UnharmedArrested") # Stringr (with anchor)
+gvd2015_keep_cali$InjuredArrested_count <- str_count(gvd2015_keep_cali$participant_status, pattern = "InjuredArrested") # Stringr (with anchor)
+gvd2015_keep_cali$Arrested_count <- str_count(gvd2015_keep_cali$participant_status, pattern = "Arrested") # Stringr (with anchor)
+gvd2015_keep_cali$Unharmed_count <- str_count(gvd2015_keep_cali$participant_status, pattern = "Unharmed") # Stringr (with anchor)
+gvd2015_keep_cali$InjuredArrestedDied_count <- str_count(gvd2015_keep_cali$participant_status, pattern = "InjuredArrestedDied") # Stringr
+```
+
+```{r}
+# Check if this is needed???
+KilledUnharmedArrested <- grepl("KilledUnharmedArrested", gvd2015_keep_cali$participant_status)
+summary(KilledUnharmedArrested)
+gvd2015_keep_cali[KilledUnharmedArrested,]
+```
+
+Should be Killed and UnharmedArrested
+
+```{r}
+colnames(gvd2015_keep_cali)
+```
+
+```{r}
+gvd2015_pt2 <- select(gvd2015_keep_cali, incident_id, city_or_county, n_killed, n_injured, congressional_district, latitude, longitude, n_guns_involved, participant_type, state_house_district, state_senate_district, age_0_15, age_16_20, age_21_25, age_26_30, age_31_35, age_36_40, age_41_45, age_46_50, age_51_55, age_56_60, age_61_65, age_66_70, age_71_75, age_76_80, age_81_100, male_count, female_count, Killed_count, Injured_count, UnharmedArrested_count, InjuredArrested_count, Arrested_count, Unharmed_count, InjuredArrestedDied_count) ##### Unfortuanetly ORDER has not been preserved...
+```
+
+
+
+
+### ACS
+
+```{r Column Names, message=FALSE, warning=FALSE, paged.print=TRUE}
+dim(acs2015)
+```
+
+```{r Head of acs2015Pt1, message=FALSE, warning=FALSE, paged.print=TRUE}
+#head(acs2015, n=8)
+```
+
+```{r colnames acs2015, message=FALSE, warning=FALSE, paged.print=TRUE}
+colnames(acs2015) # Checking the column names
+```
+
+```{r}
+sapply(acs2015, class) # Checking the data types for 'acs2015'
+```
+
+
+
+
+##### Comment - drop columns first then join then clean... OR clean then join...
+
+For the following analysis, nly interested in economic indicators
+
+```{r}
+acs2015_keep <- select(acs2015, State, County, TotalPop, Income, IncomePerCap, Poverty, Unemployment) #Dplyr
+```
+
+Checking the data types
+
+```{r, message=FALSE, warning=FALSE, paged.print=TRUE}
+sapply(acs2015_keep, class)
+```
+
+```{r}
+summary(acs2015_keep)
+```
+
+```{r}
+aggregate(County ~ State, acs2015_keep, function(x) length(unique(x)))
+```
+
+```{r}
+acs2015_keep_cali <- filter(acs2015_keep, State == "California")
+```
+
+```{r}
+aggregate(County ~ State, acs2015_keep_cali, function(x) length(unique(x)))
+```
+
+```{r}
+aggregate(city_or_county ~ city_or_county, gvd2015_pt2, function(x) length(unique(x)))
+```
+
+
+### Merge ... 
+
+```{r}
+colnames(gvd2015_pt2)
+gvd2015_pt2 = rename(gvd2015_pt2, County = city_or_county)
+colnames(gvd2015_pt2)
+```
+
+```{r}
+join <- inner_join(gvd2015_pt2, acs2015_keep_cali, by = "County") # Disable warnings...
+```
+
+#### How could CENSUS data be missing???? Justifiably there may not be gun incidents in every country, but there IS more info that gun violence!!!!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+```{r}
+# participant_gender string count -> Then find that string!!!
+#gvd2015_keep_cali_age_gender$participant_gender <- as.character(gvd2015_keep_cali_age_gender$participant_gender)
+#gvd2015_keep_cali_age_gender$genderChar <- nchar(gvd2015_keep_cali_age_gender$participant_gender, 
+                                             #    type = "chars", allowNA = FALSE, keepNA = NA)
+```
+
+```{r}
+#max(gvd2015_keep_cali_age_gender$genderChar)
+#which.max(gvd2015_keep_cali_age_gender$genderChar)
+```
+
+```{r}
+#gvd2015_keep_cali_age_gender[2977,]
+```
+
+http://stringr.tidyverse.org/articles/regular-expressions.html
+
+```{r}
+#gvd2015_keep_cali$participant_status <- str_replace_all(gvd2015_keep_cali$participant_status, "(\\d+)", "")
+```
+
+
+participant_status_only <- as.data.frame(gvd2015_keep_cali[,c("participant_status")])
+colnames(participant_status_only) <- c("col1")
+participant_status_only <- unique(participant_status_only) # 155 obs left
+which.max(participant_status_only$col1) # [1] 52
+participant_status_only[52,]
+participant_status_only$col1 <- trimws(participant_status_only)
+participant_status_only <- separate(participant_status_only, col1, into = c('1','2','3','4','5','6','7','8','9','10'), sep = " ")
+
+
+
+column1 %>% drop_na()
+
+trimws()
+
+separate(rate, into = c("cases", "population"), sep = "/")
+
+listCheckCollapse <- paste(listCheck, collapse = '') # class(listCheckCollapse) = "character"
+listCheckCollapse <- as.vector(listCheckCollapse)
+unique(listCheckCollapse) # 
+listCheckCollapse
+unique(unlist(listCheckCollapse))
+
+
+test <- separate(listCheck, participant_status, into = c(1,2,3,4,5,6,7,8,9,10), sep = " ")
+test <- separate(listCheck, participant_status, into = c(1,2,3,4,5,6,7,8,9,10), sep = " ")
+
+
+```{r}
+#remove_all_characters <- function(dataset, col_name) {
+  dataset$col_name <- NA
+  dataset$col_name <-  dataset$col_name %>% 
+  str_replace_all(",[:space:]", "") %>% #Remove comma & whitespace
+  str_replace_all("::", "") %>%
+  str_replace_all("[:digit:]", " ") %>%
+  str_replace_all("\\||", "")
+  return(dataset)
+}
+```
+
+```{r}
+#try <- remove_all_characters(gvd2015_keep_cali, participant_gender)
+```
+
+
+
+```{r}
+# participant_gender string count -> Then find that string!!!
+#gvd2015_keep_cali_age_gender$participant_gender <- as.character(gvd2015_keep_cali_age_gender$participant_gender)
+#gvd2015_keep_cali_age_gender$genderChar <- nchar(gvd2015_keep_cali_age_gender$participant_gender, 
+                                               #  type = "chars", allowNA = FALSE, keepNA = NA)
+```
+
+```{r}
+#max(gvd2015_keep_cali_age_gender$genderChar)
+#which.max(gvd2015_keep_cali_age_gender$genderChar)
+```
+
+```{r}
+#gvd2015_keep_cali_age_gender[2977,]
+```
+
+
+```{r}
+#acs2015_keep$SC_concat <- do.call(str_c, c(acs2015_keep[c("State", "County")], sep = "_")) 
+```
