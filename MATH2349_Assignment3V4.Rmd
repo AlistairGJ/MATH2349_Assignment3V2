@@ -1,11 +1,11 @@
 ---
-title: "MATH2349 Semester 1, 2018 - ADD DESCRIPTIVE TITLE"
-author: "Alistair Grevis-James (s3644119) and Chris Kaias (sXXXXXX)"
-subtitle: Assignment 3
-output:
-  html_notebook:
-      toc: true
-      toc_float: true
+#title: "MATH2349 Semester 1, 2018 - ADD DESCRIPTIVE TITLE"
+#author: "Alistair Grevis-James (s3644119) and Chris Kaias (sXXXXXX)"
+#subtitle: Assignment 3
+#output:
+#  html_notebook:
+#      toc: true
+#      toc_float: true
 ---
 
 <style>
@@ -19,7 +19,8 @@ options(knitr.table.format = "html")
 
 ### Executive Summary
 
-Data blah blah and ... These data were imported as `xxx` and `yyy`, respectively.
+The libraries `readr`, `diplyr`, `stringr`, `knitr`, `tidyr`, `lubridate`, `kableExtra` and `outliers` were imported into the RStudio interactive development environment. The .csv files “gun-violence-data” (Gun Violence Data, kaggle.com) and “American Census Data 2015” (US Census Demographic and Economic Data, kaggle.com) were imported as `gvd` and `acs2015`, respectively. These data were then checked for structure, including dimensions and attribute classes. It was noted the `gvd` dataset failed to conform to the “tidy data” principals. Most notably, every instance of the attributes prefixed “participant_” contained multiple values, delimited by a combination of [:digit:], :: and/or ||. In order to be computationally efficient, it was decided to first subset `gvd` before cleaning the aforementioned “participant_” attributes. 
+
 
 ### Required packages 
 
@@ -32,8 +33,8 @@ library(knitr) # Section X
 library(tidyr)
 library(lubridate)
 library(kableExtra)
-library(geosphere)
-#xlsx #readxl #foreign #gdata #rvest #dplyr  #deductive #validate #Hmisc #outliers
+library(outliers)
+#xlsx #readxl #foreign #gdata #rvest #dplyr  #deductive #validate #Hmisc 
 #MVN #infotheo #MASS #caret #MLR #ggplot #base R functions
 ```
 
@@ -476,7 +477,6 @@ hist(gvd_acs_join$Income)
 ```
 
 ```{r}
-install.packages("forecast")
 library(forecast)
 boxcox_income <- BoxCox(gvd_acs_join$Income,lambda = "auto")
 
@@ -503,6 +503,10 @@ gvd_acs_join$longitude_norm <- range01(gvd_acs_join$longitude)
 ```
 
 ```{r}
+hist(gvd_acs_join$longitude)
+```
+
+```{r}
 hist(gvd_acs_join$latitude_norm)
 ```
 
@@ -520,13 +524,77 @@ boxplot(gvd_acs_join$killed_count ~ gvd_acs_join$MONTH, main="Diamond carat by c
 gvd_acs_join %>% plot(Unemployment ~ Income, data = ., ylab="Unemployment", xlab="Income", main="Carat by Depth")
 ```
 
+```{r}
+gvd_acs_join %>% plot(latitude_norm ~ longitude_norm, data = ., ylab="Unemployment", xlab="Income", main="Carat by Depth")
+```
+
+```{r}
+gvd_acs_join$IncomePerCap %>%  boxplot(main="Box Plot of Diamond Carat", ylab="Carat", col = "grey")
+```
 
 
+```{r}
+# Checking the summary stats
+summary(gvd_acs_join$IncomePerCap)
+```
 
+```{r}
+# Checking the z score summary stats
+z.scores <- gvd_acs_join$IncomePerCap %>% scores(type = "z")
+z.scores %>% summary()
+```
 
+```{r}
+# Checking the z score values
+gvd_acs_join$IncomePerCap[which(abs(z.scores) > 3)]
+```
 
+```{r}
+# Imputing the outliers
+surveys_combined$hindfoot_length[ which( abs(z.scores) >3 )] <- mean(surveys_combined$hindfoot_length, 
+                                                                     na.rm = TRUE)
+```
 
+```{r}
+# Checking the results
+surveys_combined$hindfoot_length %>%  boxplot(main="Box Plot of Hindfoot Length", 
+                                              ylab="Hindfoot Length", col = "grey")
+```
 
+Outliers were removed by imputation. The method of outlier removal in the case of these data does not require a large amount of consideration. This is because the hindfoot length is being taken over a huge range of different species, so this statistical evaluation has minimal applicable value. Additionally the outliers reprented only four values out of over 30,000, so any method do deal with the outliers will have minimal effect.
+
+```{r}
+gvd_acs_join$Unemployment %>%  boxplot(main="Box Plot of Diamond Carat", ylab="Carat", col = "grey")
+```
+
+```{r}
+gvd_acs_join$killed_count %>%  boxplot(main="Box Plot of Diamond Carat", ylab="Carat", col = "grey")
+```
+
+```{r}
+# Checking the summary stats
+summary(gvd_acs_join$killed_count)
+```
+
+```{r}
+# Checking the z score summary stats
+z.scores <- gvd_acs_join$killed_count %>% scores(type = "z")
+z.scores %>% summary()
+```
+
+```{r}
+# Checking the z score values
+gvd_acs_join$killed_count[which(abs(z.scores) > 3)]
+```
+
+```{r}
+# Imputing the outliers
+killed_count_clean <- gvd_acs_join$killed_count[ - which(abs(z.scores) > 3)]
+```
+
+```{r}
+killed_count_clean %>%  boxplot(main="Box Plot of Diamond Carat", ylab="Carat", col = "grey")
+```
 
 
 
