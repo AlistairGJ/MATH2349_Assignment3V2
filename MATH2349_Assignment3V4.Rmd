@@ -1,11 +1,11 @@
 ---
-#title: "MATH2349 Semester 1, 2018 - ADD DESCRIPTIVE TITLE"
-#author: "Alistair Grevis-James (s3644119) and Chris Kaias (sXXXXXX)"
-#subtitle: Assignment 3
-#output:
-#  html_notebook:
-#      toc: true
-#      toc_float: true
+title: "MATH2349 Semester 1, 2018 - ADD DESCRIPTIVE TITLE"
+author: "Alistair Grevis-James (s3644119) and Chris Kaias (sXXXXXX)"
+subtitle: Assignment 3
+output:
+  html_notebook:
+      toc: true
+      toc_float: true
 ---
 
 <style>
@@ -64,11 +64,14 @@ https://www.kaggle.com/zimeiyang/2015-us-census-demographic-data/data = acs_2015
 
 ### Initial Check of Gun Violence Data
 
-The dataset Gun-Violence Data was imported as `gvd`. Using `str()` it was checked for dimensions (239677 observations of 29 attributes), column names and data types. The structure of the data frame indicates wide format, where the 'subject information' is indicated by the unique value `incident_id`. This was confirmed by `length(unique(gvd$incident_id))` which gave 239677 unique observations, which is equal to the total number of observations (all observations are unique).
+The dataset Gun-Violence Data was imported as `gvd`. Using `data.frame` with piping, `gvd` was checked for dimensions (239677 observations of 29 attributes), column names and data types. The structure of the data frame indicates wide format, where the 'subject information' is indicated by the unique value `incident_id`. This was confirmed by `length(unique(gvd$incident_id))` which gave 239677 unique observations, which is equal to the total number of observations (all observations are unique).
 
 ```{r, message=FALSE, warning=FALSE, paged.print=TRUE}
-str(gvd)
+data.frame(Attribute = names(gvd), Class = sapply(gvd, class),
+           gvd_incident486623 = sapply(gvd[84,], function(x) paste0(head(x),  collapse = ", ")),
+           row.names = NULL) %>% kable()
 ```
+
 ```{r}
 length(unique(gvd$incident_id)) # Checking the number of unique values for incident ID
 ```
@@ -98,6 +101,7 @@ The American (US) Census Data contains values from the year 2015 only, and as su
 year2015_boolean <- as.logical(year(gvd$date) == "2015") #Creating a year 2015 true/false vector
 summary(year2015_boolean) # Checking the vector results
 ```
+
 ```{r}
 gvd2015 <- gvd[year2015_boolean,] # Applying the True/False Vector to filter gvd
 ```
@@ -115,6 +119,7 @@ The data frame `gvd2015` has dimensions of 53579 instances over 29 attributes, w
 ```{r}
 aggregate(city_or_county ~ state, gvd2015, function(x) length(unique(x)))
 ```
+
 ```{r}
 gvd2015_keep_cali <- filter(gvd2015, state == "California")
 ```
@@ -133,7 +138,7 @@ aggregate(city_or_county ~ state, gvd2015_keep_cali, function(x) length(unique(x
 gvd %>% select(participant_age, participant_gender) %>% head(n=8)
 
 gvd2015_keep_cali %>% select(gvd2015_keep_cali, address, incident_url, source_url, incident_url_fields_missing)
-head(gvd2015_check1, n=6)
+
 ```
 
 ```{r}
@@ -554,4 +559,10 @@ year2015_boolean
 ```
 
 summary(gvd2015_keep_cali$state)
+# gvd %>% str() %>% kable() %>% kable_styling()
+
+
+
+
+
 
