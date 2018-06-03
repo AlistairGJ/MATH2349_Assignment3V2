@@ -121,7 +121,7 @@ The DS `gvd2015` is now prepared.
 
 ```{r}
 aggregate(city_or_county ~ state, gvd2015, function(x) length(unique(x))) %>% 
-  kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11, full_width = F) %>% scroll_box(height = "200px")
+  kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11) %>% scroll_box(height = "200px")
 ```
 
 The data frame `gvd2015` has dimensions of 53579 instances over 29 attributes, we will now check the values of `gvd2015$state` using the aggregate function. The output enables us to determine the number of `city_or_county` in each State, that is smaller geographical regions inside each state. For this analysis, the State of California was chosen. As California is one of the most populus states in America (ref), with a large range of socio-economic ... and a varied geography, it was determined to be a good choice. Also note that the following methodology outlined could be applied to any of the states in the `gvd` dataset, so California will act as a proof of concept.
@@ -133,7 +133,7 @@ gvd2015_keep_cali <- filter(gvd2015, state == "California")
 
 ```{r}
 aggregate(city_or_county ~ state, gvd2015_keep_cali, function(x) length(unique(x))) %>% 
-  kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11, full_width = F)
+  kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11)
 ```
 
 ### Exploring the other attributes in gvd2015_keep_cali
@@ -147,7 +147,7 @@ gvd2015_keep_cali <- select(gvd2015_keep_cali, incident_id, date, state, city_or
 ```{r, message=FALSE, warning=FALSE, paged.print=TRUE}
 data.frame(Attribute = names(gvd2015_keep_cali), Class = sapply(gvd2015_keep_cali, class),
            gvd_incident274168 = sapply(gvd2015_keep_cali[53,], function(x) paste0(head(x),  collapse = ", ")),
-           row.names = NULL) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11, full_width = F)
+           row.names = NULL) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11)
 ```
 
 ```{r}
@@ -187,13 +187,13 @@ a[!(a %in% b)]
 * Not tidy, multiple values in one column
 
 ```{r, message=FALSE, warning=FALSE, paged.print=TRUE}
-gvd2015_keep_cali[1:5, c(11:15)] %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11, full_width = F)
+gvd2015_keep_cali[1:5, c(11:15)] %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11)
 ```
 
 ##### n_gun_involved
 
 ```{r}
-table(sapply(gvd2015_keep_cali$n_guns_involved, function(y) sum(length(which(is.na(y)))))) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11, full_width = F) 
+table(sapply(gvd2015_keep_cali$n_guns_involved, function(y) sum(length(which(is.na(y)))))) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11) 
 ```
 
 - Almost 50% NA - drop
@@ -402,7 +402,7 @@ data.frame(Attribute = names(acs2015_keep), Class = sapply(acs2015_keep, class),
 ```
 
 ```{r}
-aggregate(County ~ State, acs2015_keep, function(x) length(unique(x))) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11, full_width = F) %>% scroll_box(height = "200px")
+aggregate(County ~ State, acs2015_keep, function(x) length(unique(x))) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11) %>% scroll_box(height = "200px")
 ```
 
 ```{r}
@@ -410,11 +410,11 @@ acs2015_keep_cali <- filter(acs2015_keep, State == "California")
 ```
 
 ```{r}
-aggregate(County ~ State, acs2015_keep_cali, function(x) length(unique(x))) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11, full_width = F)
+aggregate(County ~ State, acs2015_keep_cali, function(x) length(unique(x))) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11)
 ```
 
 ```{r}
-aggregate(city_or_county ~ city_or_county, gvd2015_pt2, function(x) length(unique(x))) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11, full_width = F)
+aggregate(city_or_county ~ city_or_county, gvd2015_pt2, function(x) length(unique(x))) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11)
 ```
 
 
@@ -457,7 +457,7 @@ gvd_acs_join_sacramento <- gvd_acs_join %>% filter(County == "Sacramento")
 four <- aggregate(congressional_district ~ County, gvd_acs_join_sacramento, function(x) length(unique(x)))
 c <- union_all(one, two)
 d <- union_all(three, four)
-union_all(c, d) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11, full_width = F)
+union_all(c, d) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11)
 ```
 
 ```{r}
