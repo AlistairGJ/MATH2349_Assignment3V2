@@ -39,7 +39,12 @@ library(tidyr)
 The `readr` function was used to import the data as shown below. The data were imported as `gvd` for Gun Violence Data and `acs2015` for American (US) 2015 Census Data.
 
 ```{r, message=FALSE, warning=FALSE, paged.print=TRUE}
-gvd <- read.csv("gun-violence-data.csv") # Importing Gun Violence Data
+gvdZip <- "gun-violence-data.csv.zip"
+outDir<-"/Users/alistairgj/Documents/GitHub" # Change output directory for unzipped .csv file as needed
+unzip(gvdZip, exdir=outDir)
+setwd("/Users/alistairgj/Documents/GitHub")
+gvd <- read.csv("gun-violence-data.csv.zip") # Importing Gun Violence Data
+setwd("/Users/alistairgj/Documents/GitHub/")
 acs2015 <- read.csv("acs2015_county_data.csv") # Importing American (US) Census Data 2015
 ```
 
