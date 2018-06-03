@@ -1,0 +1,172 @@
+
+
+ 
+
+```{r}
+# participant_gender string count -> Then find that string!!!
+#gvd2015_keep_cali_age_gender$participant_gender <- as.character(gvd2015_keep_cali_age_gender$participant_gender)
+#gvd2015_keep_cali_age_gender$genderChar <- nchar(gvd2015_keep_cali_age_gender$participant_gender, 
+                                             #    type = "chars", allowNA = FALSE, keepNA = NA)
+```
+
+```{r}
+#max(gvd2015_keep_cali_age_gender$genderChar)
+#which.max(gvd2015_keep_cali_age_gender$genderChar)
+```
+
+```{r}
+#gvd2015_keep_cali_age_gender[2977,]
+```
+
+http://stringr.tidyverse.org/articles/regular-expressions.html
+
+```{r}
+#gvd2015_keep_cali$participant_status <- str_replace_all(gvd2015_keep_cali$participant_status, "(\\d+)", "")
+```
+
+
+participant_status_only <- as.data.frame(gvd2015_keep_cali[,c("participant_status")])
+colnames(participant_status_only) <- c("col1")
+participant_status_only <- unique(participant_status_only) # 155 obs left
+which.max(participant_status_only$col1) # [1] 52
+participant_status_only[52,]
+participant_status_only$col1 <- trimws(participant_status_only)
+participant_status_only <- separate(participant_status_only, col1, into = c('1','2','3','4','5','6','7','8','9','10'), sep = " ")
+
+
+
+column1 %>% drop_na()
+
+trimws()
+
+separate(rate, into = c("cases", "population"), sep = "/")
+
+listCheckCollapse <- paste(listCheck, collapse = '') # class(listCheckCollapse) = "character"
+listCheckCollapse <- as.vector(listCheckCollapse)
+unique(listCheckCollapse) # 
+listCheckCollapse
+unique(unlist(listCheckCollapse))
+
+
+test <- separate(listCheck, participant_status, into = c(1,2,3,4,5,6,7,8,9,10), sep = " ")
+test <- separate(listCheck, participant_status, into = c(1,2,3,4,5,6,7,8,9,10), sep = " ")
+
+
+```{r}
+#remove_all_characters <- function(dataset, col_name) {
+#  dataset$col_name <- NA
+#  dataset$col_name <-  dataset$col_name %>% 
+#  str_replace_all(",[:space:]", "") %>% #Remove comma & whitespace
+#  str_replace_all("::", "") %>%
+#  str_replace_all("[:digit:]", " ") %>%
+#  str_replace_all("\\||", "")
+#  return(dataset)
+#}
+```
+
+```{r}
+#try <- remove_all_characters(gvd2015_keep_cali, participant_gender)
+```
+
+
+
+```{r}
+# participant_gender string count -> Then find that string!!!
+#gvd2015_keep_cali_age_gender$participant_gender <- as.character(gvd2015_keep_cali_age_gender$participant_gender)
+#gvd2015_keep_cali_age_gender$genderChar <- nchar(gvd2015_keep_cali_age_gender$participant_gender, 
+                                               #  type = "chars", allowNA = FALSE, keepNA = NA)
+```
+
+```{r}
+#max(gvd2015_keep_cali_age_gender$genderChar)
+#which.max(gvd2015_keep_cali_age_gender$genderChar)
+```
+
+```{r}
+#gvd2015_keep_cali_age_gender[2977,]
+```
+
+
+```{r}
+#acs2015_keep$SC_concat <- do.call(str_c, c(acs2015_keep[c("State", "County")], sep = "_")) 
+```
+
+gvd$date_year <- format.Date(gvd$date, format="%Y") # Converting YYYY-DD-MM to
+
+
+gvd2015 <- gvd %>% filter(between(date, "2015-01-01", "2015-12-13"))
+  
+gvd$date >= as.Date("2015-01-01") & gvd$date >= as.Date("2015-12-31")
+
+year2015_boolean <- as.logical(year(gvd$date) == "2015")
+
+year2015_boolean <- as.logical(format.Date(gvd$date, format="%Y"))
+summary(year2015_boolean)
+year2015_boolean
+
+```{r}
+#str(gvd$date_year)
+```
+
+```{r}
+#gvd$date_year <- format.Date(gvd$date, format="%Y") # Converting YYYY-DD-MM to
+#gvd$date_year <- filter(gvd, date_year == "2015") # Filtering Gun Violence Data for 2015 only
+```
+
+summary(gvd2015_keep_cali$state)
+# gvd %>% str() %>% kable() %>% kable_styling()
+
+The following table is a summary 
+
+ Attribute | Description | Action
+------------- | ------------------------------------------------- | -----------
+`summary(ds)` | C |
+`colnames(ds)` | Co |
+`MouseID <- ds$MouseID` | text | 
+
+
+
+```{r}
+gvd2015_keep_cali %>% select(c(1:29)) %>% head(n=8) 
+```
+
+
+```{r}
+gvd2015_keep_cali$matches <- str_match_all(gvd2015_keep_cali$participant_age, "\\d+::(\\d+)")
+ages = c(c(0,15)) # First age range is under 15s
+for (i in seq(16, 76, 5)) # The other age ranges are every 5 years 
+{  ages <- c(ages, c(i, i+4)) }
+ages <- c(ages, c(81,100)) # The last age range is 81 plus
+for (i in seq(1,length(ages)-1, 2)) # Each pair of ages in the age ranges
+{ # Construct the column using apply, Paste here concatenates the string for the column name
+  gvd2015_keep_cali[paste("age", ages[i],ages[i+1], sep="_")] <- apply(gvd2015_keep_cali, 1, function(row) {
+    cnt <- 0 # Count of ages in current range starts at 0
+    for (x in row$matches) # Iterate through the matches we parsed out
+    { if (!grepl(":", x, fixed = TRUE)) # If the match does not contain a : then it is the match group rather than the match
+      { age <- as.integer(x) # so convert age as string to integer
+        if (age >= ages[i] && age <= ages[i+1]) # and check if age falls within age range for the current column
+        { cnt <- cnt + 1 }}}
+    cnt })}
+```
+
+```{r}
+gvd2015_keep_cali$participant_status <-  gvd2015_keep_cali$participant_status %>% 
+  str_replace_all(",[:space:]", "") %>% #Remove comma & whitespace
+  str_replace_all("::", "") %>%
+  str_replace_all("[:digit:]", " ") %>%
+  str_replace_all("\\||", "")
+```
+
+```{r}
+participant_status_unique_check <- as.character(gvd2015_keep_cali[,c("participant_status")])
+ul <- unlist(strsplit(participant_status_unique_check, " "))
+unique(ul)
+```
+
+DROP THIS
+
+```{r}
+colnames(gvd2015_keep_cali)
+```
+
+
