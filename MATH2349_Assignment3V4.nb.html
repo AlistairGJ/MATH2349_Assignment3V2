@@ -620,17 +620,16 @@ logical  186098   53579 </code></pre>
 </div>
 <div id="filtering-gun-violence-data-2015-for-values-from-the-state-of-california" class="section level3">
 <h3>Filtering Gun Violence Data 2015 for values from the state of California</h3>
-<p>The data frame <code>gvd2015</code> has dimensions of 53579 instances over 29 attributes, we will now check the values of <code>gvd2015$state</code> using the aggregate function. The output enables us to determine the number of <code>city_or_county</code> in each State, that is smaller geographical regions inside each state. For this analysis, the State of California was chosen. As California is one of the most populus states in America (ref), with a large range of socio-economic … and a varied geography, it was determined to be a good choice. Also note that the following methodology outlined could be applied to any of the states in the <code>gvd</code> dataset, so California will act as a proof of concept.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWdncmVnYXRlKGNpdHlfb3JfY291bnR5IH4gc3RhdGUsIGd2ZDIwMTUsIGZ1bmN0aW9uKHgpIGxlbmd0aCh1bmlxdWUoeCkpKSAlPiUgXG4gIGthYmxlKCkgJT4lIGthYmxlX3N0eWxpbmcoYm9vdHN0cmFwX29wdGlvbnMgPSBjKFwic3RyaXBlZFwiLCBcImhvdmVyXCIsIFwiY29uZGVuc2VkXCIpLCAgZm9udF9zaXplID0gMTEpICU+JSBzY3JvbGxfYm94KGhlaWdodCA9IFwiMjAwcHhcIilcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWdncmVnYXRlKGNpdHlfb3JfY291bnR5IH4gc3RhdGUsIGd2ZDIwMTUsIGZ1bmN0aW9uKHgpIGxlbmd0aCh1bmlxdWUoeCkpKSAlPiUgXG4gIGthYmxlKCkgJT4lIGthYmxlX3N0eWxpbmcoYm9vdHN0cmFwX29wdGlvbnMgPSBjKFwic3RyaXBlZFwiLCBcImhvdmVyXCIsIFwiY29uZGVuc2VkXCIpLCAgZm9udF9zaXplID0gMTEsIGZ1bGxfd2lkdGggPSBGKSAlPiUgc2Nyb2xsX2JveChoZWlnaHQgPSBcIjIwMHB4XCIpXG5gYGAifQ== -->
 <pre class="r"><code>aggregate(city_or_county ~ state, gvd2015, function(x) length(unique(x))) %&gt;% 
-  kable() %&gt;% kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;),  font_size = 11) %&gt;% scroll_box(height = &quot;200px&quot;)</code></pre>
+  kable() %&gt;% kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;),  font_size = 11, full_width = F) %&gt;% scroll_box(height = &quot;200px&quot;)</code></pre>
 <!-- rnb-source-end -->
-<p>
+
 <!-- rnb-htmlwidget-begin eyJkZXBlbmRlbmNpZXMiOlt7ImFsbF9maWxlcyI6dHJ1ZSwiYXR0YWNobWVudCI6W10sImhlYWQiOltdLCJtZXRhIjpbXSwibmFtZSI6ImpxdWVyeSIsInBhY2thZ2UiOltdLCJzY3JpcHQiOiJqcXVlcnkubWluLmpzIiwic3JjIjp7ImZpbGUiOiIvTGlicmFyeS9GcmFtZXdvcmtzL1IuZnJhbWV3b3JrL1ZlcnNpb25zLzMuNC9SZXNvdXJjZXMvbGlicmFyeS9ybWFya2Rvd24vcm1kL2gvanF1ZXJ5LTEuMTEuMyJ9LCJzdHlsZXNoZWV0IjpbXSwidmVyc2lvbiI6IjEuMTEuMyJ9LHsiYWxsX2ZpbGVzIjp0cnVlLCJhdHRhY2htZW50IjpbXSwiaGVhZCI6W10sIm1ldGEiOnsidmlld3BvcnQiOiJ3aWR0aD1kZXZpY2Utd2lkdGgsIGluaXRpYWwtc2NhbGU9MSJ9LCJuYW1lIjoiYm9vdHN0cmFwIiwicGFja2FnZSI6W10sInNjcmlwdCI6WyJqcy9ib290c3RyYXAubWluLmpzIiwic2hpbS9odG1sNXNoaXYubWluLmpzIiwic2hpbS9yZXNwb25kLm1pbi5qcyJdLCJzcmMiOnsiZmlsZSI6Ii9MaWJyYXJ5L0ZyYW1ld29ya3MvUi5mcmFtZXdvcmsvVmVyc2lvbnMvMy40L1Jlc291cmNlcy9saWJyYXJ5L3JtYXJrZG93bi9ybWQvaC9ib290c3RyYXAtMy4zLjUifSwic3R5bGVzaGVldCI6ImNzcy9zaW1wbGV4Lm1pbi5jc3MiLCJ2ZXJzaW9uIjoiMy4zLjUifSx7ImFsbF9maWxlcyI6dHJ1ZSwiYXR0YWNobWVudCI6W10sImhlYWQiOltdLCJtZXRhIjpbXSwibmFtZSI6ImtlUHJpbnQiLCJwYWNrYWdlIjpbXSwic2NyaXB0Ijoia2VQcmludC5qcyIsInNyYyI6eyJmaWxlIjoiL0xpYnJhcnkvRnJhbWV3b3Jrcy9SLmZyYW1ld29yay9WZXJzaW9ucy8zLjQvUmVzb3VyY2VzL2xpYnJhcnkva2FibGVFeHRyYS9rZVByaW50LTAuMC4xIn0sInN0eWxlc2hlZXQiOltdLCJ2ZXJzaW9uIjoiMC4wLjEifV0sIm1ldGFkYXRhIjp7ImNsYXNzZXMiOlsic2hpbnkudGFnLmxpc3QiLCJsaXN0Il0sInNpemluZ1BvbGljeSI6W119fQ== -->
 
-<div style="border: 1px solid #ddd; padding: 5px; overflow-y: scroll; height:200px; "><table class="table table-striped table-hover table-condensed" style="font-size: 11px; margin-left: auto; margin-right: auto;">
+<div style="border: 1px solid #ddd; padding: 5px; overflow-y: scroll; height:200px; "><table class="table table-striped table-hover table-condensed" style="font-size: 11px; width: auto !important; margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
    <th style="text-align:left;"> state </th>
@@ -846,11 +845,10 @@ logical  186098   53579 </code></pre>
 </table></div>
 
 <!-- rnb-htmlwidget-end -->
- <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDaGVja2luZyB0aGUgY29udmVyc2lvbiBvZiBndmQkZGF0ZVxuYGBgIn0= --></p>
-<pre class="r"><code># Checking the conversion of gvd$date</code></pre>
-<!-- rnb-source-end -->
+
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+<p>The data frame <code>gvd2015</code> has dimensions of 53579 instances over 29 attributes, we will now check the values of <code>gvd2015$state</code> using the aggregate function. The output enables us to determine the number of <code>city_or_county</code> in each State, that is smaller geographical regions inside each state. For this analysis, the State of California was chosen. As California is one of the most populus states in America (ref), with a large range of socio-economic … and a varied geography, it was determined to be a good choice. Also note that the following methodology outlined could be applied to any of the states in the <code>gvd</code> dataset, so California will act as a proof of concept.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ3ZkMjAxNV9rZWVwX2NhbGkgPC0gZmlsdGVyKGd2ZDIwMTUsIHN0YXRlID09IFwiQ2FsaWZvcm5pYVwiKVxuYGBgIn0= -->
@@ -860,14 +858,14 @@ logical  186098   53579 </code></pre>
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWdncmVnYXRlKGNpdHlfb3JfY291bnR5IH4gc3RhdGUsIGd2ZDIwMTVfa2VlcF9jYWxpLCBmdW5jdGlvbih4KSBsZW5ndGgodW5pcXVlKHgpKSkgJT4lIFxuICBrYWJsZSgpICU+JSBrYWJsZV9zdHlsaW5nKGJvb3RzdHJhcF9vcHRpb25zID0gYyhcInN0cmlwZWRcIiwgXCJob3ZlclwiLCBcImNvbmRlbnNlZFwiKSwgIGZvbnRfc2l6ZSA9IDExKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWdncmVnYXRlKGNpdHlfb3JfY291bnR5IH4gc3RhdGUsIGd2ZDIwMTVfa2VlcF9jYWxpLCBmdW5jdGlvbih4KSBsZW5ndGgodW5pcXVlKHgpKSkgJT4lIFxuICBrYWJsZSgpICU+JSBrYWJsZV9zdHlsaW5nKGJvb3RzdHJhcF9vcHRpb25zID0gYyhcInN0cmlwZWRcIiwgXCJob3ZlclwiLCBcImNvbmRlbnNlZFwiKSwgIGZvbnRfc2l6ZSA9IDExLCBmdWxsX3dpZHRoID0gRilcbmBgYCJ9 -->
 <pre class="r"><code>aggregate(city_or_county ~ state, gvd2015_keep_cali, function(x) length(unique(x))) %&gt;% 
-  kable() %&gt;% kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;),  font_size = 11)</code></pre>
+  kable() %&gt;% kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;),  font_size = 11, full_width = F)</code></pre>
 <!-- rnb-source-end -->
 
 <!-- rnb-htmlwidget-begin eyJkZXBlbmRlbmNpZXMiOlt7ImFsbF9maWxlcyI6dHJ1ZSwiYXR0YWNobWVudCI6W10sImhlYWQiOltdLCJtZXRhIjpbXSwibmFtZSI6ImpxdWVyeSIsInBhY2thZ2UiOltdLCJzY3JpcHQiOiJqcXVlcnkubWluLmpzIiwic3JjIjp7ImZpbGUiOiIvTGlicmFyeS9GcmFtZXdvcmtzL1IuZnJhbWV3b3JrL1ZlcnNpb25zLzMuNC9SZXNvdXJjZXMvbGlicmFyeS9ybWFya2Rvd24vcm1kL2gvanF1ZXJ5LTEuMTEuMyJ9LCJzdHlsZXNoZWV0IjpbXSwidmVyc2lvbiI6IjEuMTEuMyJ9LHsiYWxsX2ZpbGVzIjp0cnVlLCJhdHRhY2htZW50IjpbXSwiaGVhZCI6W10sIm1ldGEiOnsidmlld3BvcnQiOiJ3aWR0aD1kZXZpY2Utd2lkdGgsIGluaXRpYWwtc2NhbGU9MSJ9LCJuYW1lIjoiYm9vdHN0cmFwIiwicGFja2FnZSI6W10sInNjcmlwdCI6WyJqcy9ib290c3RyYXAubWluLmpzIiwic2hpbS9odG1sNXNoaXYubWluLmpzIiwic2hpbS9yZXNwb25kLm1pbi5qcyJdLCJzcmMiOnsiZmlsZSI6Ii9MaWJyYXJ5L0ZyYW1ld29ya3MvUi5mcmFtZXdvcmsvVmVyc2lvbnMvMy40L1Jlc291cmNlcy9saWJyYXJ5L3JtYXJrZG93bi9ybWQvaC9ib290c3RyYXAtMy4zLjUifSwic3R5bGVzaGVldCI6ImNzcy9zaW1wbGV4Lm1pbi5jc3MiLCJ2ZXJzaW9uIjoiMy4zLjUifSx7ImFsbF9maWxlcyI6dHJ1ZSwiYXR0YWNobWVudCI6W10sImhlYWQiOltdLCJtZXRhIjpbXSwibmFtZSI6ImtlUHJpbnQiLCJwYWNrYWdlIjpbXSwic2NyaXB0Ijoia2VQcmludC5qcyIsInNyYyI6eyJmaWxlIjoiL0xpYnJhcnkvRnJhbWV3b3Jrcy9SLmZyYW1ld29yay9WZXJzaW9ucy8zLjQvUmVzb3VyY2VzL2xpYnJhcnkva2FibGVFeHRyYS9rZVByaW50LTAuMC4xIn0sInN0eWxlc2hlZXQiOltdLCJ2ZXJzaW9uIjoiMC4wLjEifV0sIm1ldGFkYXRhIjp7ImNsYXNzZXMiOlsic2hpbnkudGFnLmxpc3QiLCJsaXN0Il0sInNpemluZ1BvbGljeSI6W119fQ== -->
 
-<table class="table table-striped table-hover table-condensed" style="font-size: 11px; margin-left: auto; margin-right: auto;">
+<table class="table table-striped table-hover table-condensed" style="font-size: 11px; width: auto !important; margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
    <th style="text-align:left;"> state </th>
@@ -892,22 +890,22 @@ logical  186098   53579 </code></pre>
 <p>Referencing the first table generated surmizing these data, the following attributes will be dropped from gvd2015_keep_cali: <code>address</code> as this level of fine detail is not required, <code>source_url</code> as this can be found via <code>incident_url</code>, <code>incident_url_fields_missing</code> as this is a boolean attribute that was generated by the analyst who compiled the dataset, <code>incident_characteristics</code> as these strings are too unstructured, <code>location_description</code> as these strings are to unstructured, <code>notes</code> no value, <code>participant_age_group</code> we already have participant age, <code>participant_name</code> &amp; <code>sources</code>.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ3ZkMjAxNV9rZWVwX2NhbGkgPC0gc2VsZWN0KGd2ZDIwMTUsIGluY2lkZW50X2lkLCBkYXRlLCBzdGF0ZSwgY2l0eV9vcl9jb3VudHksIG5fa2lsbGVkLCBuX2luanVyZWQsIGluY2lkZW50X3VybCwgY29uZ3Jlc3Npb25hbF9kaXN0cmljdCwgbGF0aXR1ZGUsIGxvbmdpdHVkZSwgbl9ndW5zX2ludm9sdmVkLCBwYXJ0aWNpcGFudF9hZ2UsIHBhcnRpY2lwYW50X2dlbmRlciwgcGFydGljaXBhbnRfc3RhdHVzLCBwYXJ0aWNpcGFudF90eXBlLCBzdGF0ZV9ob3VzZV9kaXN0cmljdCwgc3RhdGVfc2VuYXRlX2Rpc3RyaWN0KVxuYGBgIn0= -->
-<pre class="r"><code>gvd2015_keep_cali &lt;- select(gvd2015, incident_id, date, state, city_or_county, n_killed, n_injured, incident_url, congressional_district, latitude, longitude, n_guns_involved, participant_age, participant_gender, participant_status, participant_type, state_house_district, state_senate_district)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ3ZkMjAxNV9rZWVwX2NhbGkgPC0gc2VsZWN0KGd2ZDIwMTVfa2VlcF9jYWxpLCBpbmNpZGVudF9pZCwgZGF0ZSwgc3RhdGUsIGNpdHlfb3JfY291bnR5LCBuX2tpbGxlZCwgbl9pbmp1cmVkLCBpbmNpZGVudF91cmwsIGNvbmdyZXNzaW9uYWxfZGlzdHJpY3QsIGxhdGl0dWRlLCBsb25naXR1ZGUsIG5fZ3Vuc19pbnZvbHZlZCwgcGFydGljaXBhbnRfYWdlLCBwYXJ0aWNpcGFudF9nZW5kZXIsIHBhcnRpY2lwYW50X3N0YXR1cywgcGFydGljaXBhbnRfdHlwZSwgc3RhdGVfaG91c2VfZGlzdHJpY3QsIHN0YXRlX3NlbmF0ZV9kaXN0cmljdClcbmBgYCJ9 -->
+<pre class="r"><code>gvd2015_keep_cali &lt;- select(gvd2015_keep_cali, incident_id, date, state, city_or_county, n_killed, n_injured, incident_url, congressional_district, latitude, longitude, n_guns_involved, participant_age, participant_gender, participant_status, participant_type, state_house_district, state_senate_district)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YS5mcmFtZShBdHRyaWJ1dGUgPSBuYW1lcyhndmQyMDE1X2tlZXBfY2FsaSksIENsYXNzID0gc2FwcGx5KGd2ZDIwMTVfa2VlcF9jYWxpLCBjbGFzcyksXG4gICAgICAgICAgIGd2ZF9pbmNpZGVudDI3NDE2OCA9IHNhcHBseShndmQyMDE1X2tlZXBfY2FsaVsxLF0sIGZ1bmN0aW9uKHgpIHBhc3RlMChoZWFkKHgpLCAgY29sbGFwc2UgPSBcIiwgXCIpKSxcbiAgICAgICAgICAgcm93Lm5hbWVzID0gTlVMTCkgJT4lIGthYmxlKCkgJT4lIGthYmxlX3N0eWxpbmcoYm9vdHN0cmFwX29wdGlvbnMgPSBjKFwic3RyaXBlZFwiLCBcImhvdmVyXCIsIFwiY29uZGVuc2VkXCIpLCAgZm9udF9zaXplID0gMTEpIFxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YS5mcmFtZShBdHRyaWJ1dGUgPSBuYW1lcyhndmQyMDE1X2tlZXBfY2FsaSksIENsYXNzID0gc2FwcGx5KGd2ZDIwMTVfa2VlcF9jYWxpLCBjbGFzcyksXG4gICAgICAgICAgIGd2ZF9pbmNpZGVudDI3NDE2OCA9IHNhcHBseShndmQyMDE1X2tlZXBfY2FsaVs1MyxdLCBmdW5jdGlvbih4KSBwYXN0ZTAoaGVhZCh4KSwgIGNvbGxhcHNlID0gXCIsIFwiKSksXG4gICAgICAgICAgIHJvdy5uYW1lcyA9IE5VTEwpICU+JSBrYWJsZSgpICU+JSBrYWJsZV9zdHlsaW5nKGJvb3RzdHJhcF9vcHRpb25zID0gYyhcInN0cmlwZWRcIiwgXCJob3ZlclwiLCBcImNvbmRlbnNlZFwiKSwgIGZvbnRfc2l6ZSA9IDExLCBmdWxsX3dpZHRoID0gRilcbmBgYCJ9 -->
 <pre class="r"><code>data.frame(Attribute = names(gvd2015_keep_cali), Class = sapply(gvd2015_keep_cali, class),
-           gvd_incident274168 = sapply(gvd2015_keep_cali[1,], function(x) paste0(head(x),  collapse = &quot;, &quot;)),
-           row.names = NULL) %&gt;% kable() %&gt;% kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;),  font_size = 11) </code></pre>
+           gvd_incident274168 = sapply(gvd2015_keep_cali[53,], function(x) paste0(head(x),  collapse = &quot;, &quot;)),
+           row.names = NULL) %&gt;% kable() %&gt;% kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;),  font_size = 11, full_width = F)</code></pre>
 <!-- rnb-source-end -->
 
 <!-- rnb-htmlwidget-begin eyJkZXBlbmRlbmNpZXMiOlt7ImFsbF9maWxlcyI6dHJ1ZSwiYXR0YWNobWVudCI6W10sImhlYWQiOltdLCJtZXRhIjpbXSwibmFtZSI6ImpxdWVyeSIsInBhY2thZ2UiOltdLCJzY3JpcHQiOiJqcXVlcnkubWluLmpzIiwic3JjIjp7ImZpbGUiOiIvTGlicmFyeS9GcmFtZXdvcmtzL1IuZnJhbWV3b3JrL1ZlcnNpb25zLzMuNC9SZXNvdXJjZXMvbGlicmFyeS9ybWFya2Rvd24vcm1kL2gvanF1ZXJ5LTEuMTEuMyJ9LCJzdHlsZXNoZWV0IjpbXSwidmVyc2lvbiI6IjEuMTEuMyJ9LHsiYWxsX2ZpbGVzIjp0cnVlLCJhdHRhY2htZW50IjpbXSwiaGVhZCI6W10sIm1ldGEiOnsidmlld3BvcnQiOiJ3aWR0aD1kZXZpY2Utd2lkdGgsIGluaXRpYWwtc2NhbGU9MSJ9LCJuYW1lIjoiYm9vdHN0cmFwIiwicGFja2FnZSI6W10sInNjcmlwdCI6WyJqcy9ib290c3RyYXAubWluLmpzIiwic2hpbS9odG1sNXNoaXYubWluLmpzIiwic2hpbS9yZXNwb25kLm1pbi5qcyJdLCJzcmMiOnsiZmlsZSI6Ii9MaWJyYXJ5L0ZyYW1ld29ya3MvUi5mcmFtZXdvcmsvVmVyc2lvbnMvMy40L1Jlc291cmNlcy9saWJyYXJ5L3JtYXJrZG93bi9ybWQvaC9ib290c3RyYXAtMy4zLjUifSwic3R5bGVzaGVldCI6ImNzcy9zaW1wbGV4Lm1pbi5jc3MiLCJ2ZXJzaW9uIjoiMy4zLjUifSx7ImFsbF9maWxlcyI6dHJ1ZSwiYXR0YWNobWVudCI6W10sImhlYWQiOltdLCJtZXRhIjpbXSwibmFtZSI6ImtlUHJpbnQiLCJwYWNrYWdlIjpbXSwic2NyaXB0Ijoia2VQcmludC5qcyIsInNyYyI6eyJmaWxlIjoiL0xpYnJhcnkvRnJhbWV3b3Jrcy9SLmZyYW1ld29yay9WZXJzaW9ucy8zLjQvUmVzb3VyY2VzL2xpYnJhcnkva2FibGVFeHRyYS9rZVByaW50LTAuMC4xIn0sInN0eWxlc2hlZXQiOltdLCJ2ZXJzaW9uIjoiMC4wLjEifV0sIm1ldGFkYXRhIjp7ImNsYXNzZXMiOlsic2hpbnkudGFnLmxpc3QiLCJsaXN0Il0sInNpemluZ1BvbGljeSI6W119fQ== -->
 
-<table class="table table-striped table-hover table-condensed" style="font-size: 11px; margin-left: auto; margin-right: auto;">
+<table class="table table-striped table-hover table-condensed" style="font-size: 11px; width: auto !important; margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
    <th style="text-align:left;"> Attribute </th>
@@ -919,72 +917,72 @@ logical  186098   53579 </code></pre>
   <tr>
    <td style="text-align:left;"> incident_id </td>
    <td style="text-align:left;"> integer </td>
-   <td style="text-align:left;"> 274168 </td>
+   <td style="text-align:left;"> 274386 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> date </td>
    <td style="text-align:left;"> Date </td>
-   <td style="text-align:left;"> 2015-01-01 </td>
+   <td style="text-align:left;"> 2015-01-05 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> state </td>
    <td style="text-align:left;"> factor </td>
-   <td style="text-align:left;"> Oklahoma </td>
+   <td style="text-align:left;"> California </td>
   </tr>
   <tr>
    <td style="text-align:left;"> city_or_county </td>
    <td style="text-align:left;"> factor </td>
-   <td style="text-align:left;"> Tulsa </td>
+   <td style="text-align:left;"> Selma </td>
   </tr>
   <tr>
    <td style="text-align:left;"> n_killed </td>
    <td style="text-align:left;"> integer </td>
-   <td style="text-align:left;"> 0 </td>
+   <td style="text-align:left;"> 3 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> n_injured </td>
    <td style="text-align:left;"> integer </td>
-   <td style="text-align:left;"> 2 </td>
+   <td style="text-align:left;"> 0 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> incident_url </td>
    <td style="text-align:left;"> factor </td>
-   <td style="text-align:left;"> http://www.gunviolencearchive.org/incident/274168 </td>
+   <td style="text-align:left;"> http://www.gunviolencearchive.org/incident/274386 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> congressional_district </td>
    <td style="text-align:left;"> integer </td>
-   <td style="text-align:left;"> 1 </td>
+   <td style="text-align:left;"> 21 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> latitude </td>
    <td style="text-align:left;"> numeric </td>
-   <td style="text-align:left;"> 36.0934 </td>
+   <td style="text-align:left;"> 36.5658 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> longitude </td>
    <td style="text-align:left;"> numeric </td>
-   <td style="text-align:left;"> -95.887 </td>
+   <td style="text-align:left;"> -119.621 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> n_guns_involved </td>
    <td style="text-align:left;"> integer </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 1 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> participant_age </td>
    <td style="text-align:left;"> factor </td>
-   <td style="text-align:left;"> 0::27||1::26 </td>
+   <td style="text-align:left;"> 0::36 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> participant_gender </td>
    <td style="text-align:left;"> factor </td>
-   <td style="text-align:left;"> 0::Female||1::Male </td>
+   <td style="text-align:left;"> 0::Female||1::Female||2::Male </td>
   </tr>
   <tr>
    <td style="text-align:left;"> participant_status </td>
    <td style="text-align:left;"> factor </td>
-   <td style="text-align:left;"> 0::Injured||1::Injured||2::Unharmed </td>
+   <td style="text-align:left;"> 0::Killed||1::Killed||2::Killed </td>
   </tr>
   <tr>
    <td style="text-align:left;"> participant_type </td>
@@ -994,12 +992,12 @@ logical  186098   53579 </code></pre>
   <tr>
    <td style="text-align:left;"> state_house_district </td>
    <td style="text-align:left;"> integer </td>
-   <td style="text-align:left;"> 75 </td>
+   <td style="text-align:left;"> 31 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> state_senate_district </td>
    <td style="text-align:left;"> integer </td>
-   <td style="text-align:left;"> 25 </td>
+   <td style="text-align:left;"> 14 </td>
   </tr>
 </tbody>
 </table>
@@ -1010,11 +1008,20 @@ logical  186098   53579 </code></pre>
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ3ZkMjAxNV9rZWVwX2NhbGkkY29uZ3Jlc3Npb25hbF9kaXN0cmljdCA8LSBhcy5mYWN0b3IoZ3ZkMjAxNV9rZWVwX2NhbGkkY29uZ3Jlc3Npb25hbF9kaXN0cmljdClcbmd2ZDIwMTVfa2VlcF9jYWxpJHN0YXRlX2hvdXNlX2Rpc3RyaWN0IDwtIGFzLmZhY3RvcihndmQyMDE1X2tlZXBfY2FsaSRzdGF0ZV9ob3VzZV9kaXN0cmljdClcbmd2ZDIwMTVfa2VlcF9jYWxpJHN0YXRlX3NlbmF0ZV9kaXN0cmljdCA8LSBhcy5mYWN0b3IoZ3ZkMjAxNV9rZWVwX2NhbGkkc3RhdGVfc2VuYXRlX2Rpc3RyaWN0KVxuYGBgIn0= -->
+<pre class="r"><code>gvd2015_keep_cali$congressional_district &lt;- as.factor(gvd2015_keep_cali$congressional_district)
+gvd2015_keep_cali$state_house_district &lt;- as.factor(gvd2015_keep_cali$state_house_district)
+gvd2015_keep_cali$state_senate_district &lt;- as.factor(gvd2015_keep_cali$state_senate_district)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGltKGd2ZDIwMTVfa2VlcF9jYWxpKVxuYGBgIn0= -->
 <pre class="r"><code>dim(gvd2015_keep_cali)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDUzNTc5ICAgIDE3XG4ifQ== -->
-<pre><code>[1] 53579    17</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDMyMzQgICAxN1xuIn0= -->
+<pre><code>[1] 3234   17</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1057,16 +1064,15 @@ a[!(a %in% b)]</code></pre>
 </ul>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ3ZkMjAxNV9rZWVwX2NhbGlbMTo1LCBjKDExOjE1KV0gJT4lIGthYmxlKCkgJT4lIGthYmxlX3N0eWxpbmcoYm9vdHN0cmFwX29wdGlvbnMgPSBjKFwic3RyaXBlZFwiLCBcImhvdmVyXCIsIFwiY29uZGVuc2VkXCIpLCAgZm9udF9zaXplID0gMTEpIFxuYGBgIn0= -->
-<pre class="r"><code>gvd2015_keep_cali[1:5, c(11:15)] %&gt;% kable() %&gt;% kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;),  font_size = 11) </code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ3ZkMjAxNV9rZWVwX2NhbGlbMTo1LCBjKDExOjE1KV0gJT4lIGthYmxlKCkgJT4lIGthYmxlX3N0eWxpbmcoYm9vdHN0cmFwX29wdGlvbnMgPSBjKFwic3RyaXBlZFwiLCBcImhvdmVyXCIsIFwiY29uZGVuc2VkXCIpLCAgZm9udF9zaXplID0gMTEsIGZ1bGxfd2lkdGggPSBGKVxuYGBgIn0= -->
+<pre class="r"><code>gvd2015_keep_cali[1:5, c(11:15)] %&gt;% kable() %&gt;% kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;),  font_size = 11, full_width = F)</code></pre>
 <!-- rnb-source-end -->
 
 <!-- rnb-htmlwidget-begin eyJkZXBlbmRlbmNpZXMiOlt7ImFsbF9maWxlcyI6dHJ1ZSwiYXR0YWNobWVudCI6W10sImhlYWQiOltdLCJtZXRhIjpbXSwibmFtZSI6ImpxdWVyeSIsInBhY2thZ2UiOltdLCJzY3JpcHQiOiJqcXVlcnkubWluLmpzIiwic3JjIjp7ImZpbGUiOiIvTGlicmFyeS9GcmFtZXdvcmtzL1IuZnJhbWV3b3JrL1ZlcnNpb25zLzMuNC9SZXNvdXJjZXMvbGlicmFyeS9ybWFya2Rvd24vcm1kL2gvanF1ZXJ5LTEuMTEuMyJ9LCJzdHlsZXNoZWV0IjpbXSwidmVyc2lvbiI6IjEuMTEuMyJ9LHsiYWxsX2ZpbGVzIjp0cnVlLCJhdHRhY2htZW50IjpbXSwiaGVhZCI6W10sIm1ldGEiOnsidmlld3BvcnQiOiJ3aWR0aD1kZXZpY2Utd2lkdGgsIGluaXRpYWwtc2NhbGU9MSJ9LCJuYW1lIjoiYm9vdHN0cmFwIiwicGFja2FnZSI6W10sInNjcmlwdCI6WyJqcy9ib290c3RyYXAubWluLmpzIiwic2hpbS9odG1sNXNoaXYubWluLmpzIiwic2hpbS9yZXNwb25kLm1pbi5qcyJdLCJzcmMiOnsiZmlsZSI6Ii9MaWJyYXJ5L0ZyYW1ld29ya3MvUi5mcmFtZXdvcmsvVmVyc2lvbnMvMy40L1Jlc291cmNlcy9saWJyYXJ5L3JtYXJrZG93bi9ybWQvaC9ib290c3RyYXAtMy4zLjUifSwic3R5bGVzaGVldCI6ImNzcy9zaW1wbGV4Lm1pbi5jc3MiLCJ2ZXJzaW9uIjoiMy4zLjUifSx7ImFsbF9maWxlcyI6dHJ1ZSwiYXR0YWNobWVudCI6W10sImhlYWQiOltdLCJtZXRhIjpbXSwibmFtZSI6ImtlUHJpbnQiLCJwYWNrYWdlIjpbXSwic2NyaXB0Ijoia2VQcmludC5qcyIsInNyYyI6eyJmaWxlIjoiL0xpYnJhcnkvRnJhbWV3b3Jrcy9SLmZyYW1ld29yay9WZXJzaW9ucy8zLjQvUmVzb3VyY2VzL2xpYnJhcnkva2FibGVFeHRyYS9rZVByaW50LTAuMC4xIn0sInN0eWxlc2hlZXQiOltdLCJ2ZXJzaW9uIjoiMC4wLjEifV0sIm1ldGFkYXRhIjp7ImNsYXNzZXMiOlsic2hpbnkudGFnLmxpc3QiLCJsaXN0Il0sInNpemluZ1BvbGljeSI6W119fQ== -->
 
-<table class="table table-striped table-hover table-condensed" style="font-size: 11px; margin-left: auto; margin-right: auto;">
+<table class="table table-striped table-hover table-condensed" style="font-size: 11px; width: auto !important; margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
-   <th style="text-align:left;">   </th>
    <th style="text-align:right;"> n_guns_involved </th>
    <th style="text-align:left;"> participant_age </th>
    <th style="text-align:left;"> participant_gender </th>
@@ -1076,44 +1082,39 @@ a[!(a %in% b)]</code></pre>
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:left;"> 52133 </td>
    <td style="text-align:right;"> NA </td>
-   <td style="text-align:left;"> 0::27||1::26 </td>
-   <td style="text-align:left;"> 0::Female||1::Male </td>
-   <td style="text-align:left;"> 0::Injured||1::Injured||2::Unharmed </td>
-   <td style="text-align:left;"> 0::Victim||1::Victim||2::Subject-Suspect </td>
+   <td style="text-align:left;"> 0::48||1::28||2::22 </td>
+   <td style="text-align:left;"> 0::Male||1::Male </td>
+   <td style="text-align:left;"> 0::Killed||1::Injured||2::Injured </td>
+   <td style="text-align:left;"> 0::Victim||1::Victim||2::Victim </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> 52134 </td>
-   <td style="text-align:right;"> NA </td>
-   <td style="text-align:left;"> 0::63 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> 0::52 </td>
    <td style="text-align:left;"> 0::Male </td>
    <td style="text-align:left;"> 0::Killed </td>
    <td style="text-align:left;"> 0::Victim </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> 52135 </td>
-   <td style="text-align:right;"> NA </td>
-   <td style="text-align:left;"> 0::26 </td>
-   <td style="text-align:left;"> 0::Male </td>
-   <td style="text-align:left;"> 0::Unharmed, Arrested </td>
-   <td style="text-align:left;"> 0::Subject-Suspect </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;">  </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> 52136 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
    <td style="text-align:right;"> NA </td>
    <td style="text-align:left;">  </td>
    <td style="text-align:left;"> 0::Male||1::Male </td>
    <td style="text-align:left;"> 0::Injured||1::Injured </td>
    <td style="text-align:left;"> 0::Victim||1::Victim </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 52137 </td>
-   <td style="text-align:right;"> NA </td>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> 0::Male </td>
-   <td style="text-align:left;"> 0::Injured </td>
-   <td style="text-align:left;"> 0::Victim </td>
   </tr>
 </tbody>
 </table>
@@ -1126,13 +1127,13 @@ a[!(a %in% b)]</code></pre>
 <h5>n_gun_involved</h5>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGFibGUoc2FwcGx5KGd2ZDIwMTVfa2VlcF9jYWxpJG5fZ3Vuc19pbnZvbHZlZCwgZnVuY3Rpb24oeSkgc3VtKGxlbmd0aCh3aGljaChpcy5uYSh5KSkpKSkpICU+JSBrYWJsZSgpICU+JSBrYWJsZV9zdHlsaW5nKGJvb3RzdHJhcF9vcHRpb25zID0gYyhcInN0cmlwZWRcIiwgXCJob3ZlclwiLCBcImNvbmRlbnNlZFwiKSwgIGZvbnRfc2l6ZSA9IDExKSBcbmBgYCJ9 -->
-<pre class="r"><code>table(sapply(gvd2015_keep_cali$n_guns_involved, function(y) sum(length(which(is.na(y)))))) %&gt;% kable() %&gt;% kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;),  font_size = 11) </code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGFibGUoc2FwcGx5KGd2ZDIwMTVfa2VlcF9jYWxpJG5fZ3Vuc19pbnZvbHZlZCwgZnVuY3Rpb24oeSkgc3VtKGxlbmd0aCh3aGljaChpcy5uYSh5KSkpKSkpICU+JSBrYWJsZSgpICU+JSBrYWJsZV9zdHlsaW5nKGJvb3RzdHJhcF9vcHRpb25zID0gYyhcInN0cmlwZWRcIiwgXCJob3ZlclwiLCBcImNvbmRlbnNlZFwiKSwgIGZvbnRfc2l6ZSA9IDExLCBmdWxsX3dpZHRoID0gRikgXG5gYGAifQ== -->
+<pre class="r"><code>table(sapply(gvd2015_keep_cali$n_guns_involved, function(y) sum(length(which(is.na(y)))))) %&gt;% kable() %&gt;% kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;),  font_size = 11, full_width = F) </code></pre>
 <!-- rnb-source-end -->
 
 <!-- rnb-htmlwidget-begin eyJkZXBlbmRlbmNpZXMiOlt7ImFsbF9maWxlcyI6dHJ1ZSwiYXR0YWNobWVudCI6W10sImhlYWQiOltdLCJtZXRhIjpbXSwibmFtZSI6ImpxdWVyeSIsInBhY2thZ2UiOltdLCJzY3JpcHQiOiJqcXVlcnkubWluLmpzIiwic3JjIjp7ImZpbGUiOiIvTGlicmFyeS9GcmFtZXdvcmtzL1IuZnJhbWV3b3JrL1ZlcnNpb25zLzMuNC9SZXNvdXJjZXMvbGlicmFyeS9ybWFya2Rvd24vcm1kL2gvanF1ZXJ5LTEuMTEuMyJ9LCJzdHlsZXNoZWV0IjpbXSwidmVyc2lvbiI6IjEuMTEuMyJ9LHsiYWxsX2ZpbGVzIjp0cnVlLCJhdHRhY2htZW50IjpbXSwiaGVhZCI6W10sIm1ldGEiOnsidmlld3BvcnQiOiJ3aWR0aD1kZXZpY2Utd2lkdGgsIGluaXRpYWwtc2NhbGU9MSJ9LCJuYW1lIjoiYm9vdHN0cmFwIiwicGFja2FnZSI6W10sInNjcmlwdCI6WyJqcy9ib290c3RyYXAubWluLmpzIiwic2hpbS9odG1sNXNoaXYubWluLmpzIiwic2hpbS9yZXNwb25kLm1pbi5qcyJdLCJzcmMiOnsiZmlsZSI6Ii9MaWJyYXJ5L0ZyYW1ld29ya3MvUi5mcmFtZXdvcmsvVmVyc2lvbnMvMy40L1Jlc291cmNlcy9saWJyYXJ5L3JtYXJrZG93bi9ybWQvaC9ib290c3RyYXAtMy4zLjUifSwic3R5bGVzaGVldCI6ImNzcy9zaW1wbGV4Lm1pbi5jc3MiLCJ2ZXJzaW9uIjoiMy4zLjUifSx7ImFsbF9maWxlcyI6dHJ1ZSwiYXR0YWNobWVudCI6W10sImhlYWQiOltdLCJtZXRhIjpbXSwibmFtZSI6ImtlUHJpbnQiLCJwYWNrYWdlIjpbXSwic2NyaXB0Ijoia2VQcmludC5qcyIsInNyYyI6eyJmaWxlIjoiL0xpYnJhcnkvRnJhbWV3b3Jrcy9SLmZyYW1ld29yay9WZXJzaW9ucy8zLjQvUmVzb3VyY2VzL2xpYnJhcnkva2FibGVFeHRyYS9rZVByaW50LTAuMC4xIn0sInN0eWxlc2hlZXQiOltdLCJ2ZXJzaW9uIjoiMC4wLjEifV0sIm1ldGFkYXRhIjp7ImNsYXNzZXMiOlsic2hpbnkudGFnLmxpc3QiLCJsaXN0Il0sInNpemluZ1BvbGljeSI6W119fQ== -->
 
-<table class="table table-striped table-hover table-condensed" style="font-size: 11px; margin-left: auto; margin-right: auto;">
+<table class="table table-striped table-hover table-condensed" style="font-size: 11px; width: auto !important; margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
    <th style="text-align:left;"> Var1 </th>
@@ -1142,11 +1143,11 @@ a[!(a %in% b)]</code></pre>
 <tbody>
   <tr>
    <td style="text-align:left;"> 0 </td>
-   <td style="text-align:right;"> 20773 </td>
+   <td style="text-align:right;"> 1258 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> 1 </td>
-   <td style="text-align:right;"> 32806 </td>
+   <td style="text-align:right;"> 1976 </td>
   </tr>
 </tbody>
 </table>
@@ -1168,7 +1169,7 @@ a[!(a %in% b)]</code></pre>
 </ul>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ3ZkMjAxNV9rZWVwX2NhbGkkbWF0Y2hlcyA8LSBzdHJfbWF0Y2hfYWxsKGd2ZDIwMTVfa2VlcF9jYWxpJHBhcnRpY2lwYW50X2FnZSwgXCJcXFxcZCs6OihcXFxcZCspXCIpXG5hZ2VzID0gYyhjKDAsMTUpKSAjIEZpcnN0IGFnZSByYW5nZSBpcyB1bmRlciAxNXNcbmZvciAoaSBpbiBzZXEoMTYsIDc2LCA1KSkgIyBUaGUgb3RoZXIgYWdlIHJhbmdlcyBhcmUgZXZlcnkgNSB5ZWFycyBcbntcbiAgYWdlcyA8LSBjKGFnZXMsIGMoaSwgaSs0KSlcbn1cbmFnZXMgPC0gYyhhZ2VzLCBjKDgxLDEwMCkpICMgVGhlIGxhc3QgYWdlIHJhbmdlIGlzIDgxIHBsdXNcbmZvciAoaSBpbiBzZXEoMSxsZW5ndGgoYWdlcyktMSwgMikpICMgRWFjaCBwYWlyIG9mIGFnZXMgaW4gdGhlIGFnZSByYW5nZXNcbntcbiAgIyBDb25zdHJ1Y3QgdGhlIGNvbHVtbiB1c2luZyBhcHBseVxuICAjIFBhc3RlIGhlcmUgY29uY2F0ZW5hdGVzIHRoZSBzdHJpbmcgZm9yIHRoZSBjb2x1bW4gbmFtZVxuICBndmQyMDE1X2tlZXBfY2FsaVtwYXN0ZShcImFnZVwiLCBhZ2VzW2ldLGFnZXNbaSsxXSwgc2VwPVwiX1wiKV0gPC0gYXBwbHkoZ3ZkMjAxNV9rZWVwX2NhbGksIDEsIGZ1bmN0aW9uKHJvdykge1xuICAgIGNudCA8LSAwICMgQ291bnQgb2YgYWdlcyBpbiBjdXJyZW50IHJhbmdlIHN0YXJ0cyBhdCAwXG4gICAgZm9yICh4IGluIHJvdyRtYXRjaGVzKSAjIEl0ZXJhdGUgdGhyb3VnaCB0aGUgbWF0Y2hlcyB3ZSBwYXJzZWQgb3V0XG4gICAgeyBpZiAoIWdyZXBsKFwiOlwiLCB4LCBmaXhlZCA9IFRSVUUpKSAjIElmIHRoZSBtYXRjaCBkb2VzIG5vdCBjb250YWluIGEgOiB0aGVuIGl0IGlzIHRoZSBtYXRjaCBncm91cCByYXRoZXIgdGhhbiB0aGUgbWF0Y2hcbiAgICAgIHsgYWdlIDwtIGFzLmludGVnZXIoeCkgIyBzbyBjb252ZXJ0IGFnZSBhcyBzdHJpbmcgdG8gaW50ZWdlclxuICAgICAgICAgIGlmIChhZ2UgPj0gYWdlc1tpXSAmJiBhZ2UgPD0gYWdlc1tpKzFdKSAjIGFuZCBjaGVjayBpZiBhZ2UgZmFsbHMgd2l0aGluIGFnZSByYW5nZSBmb3IgdGhlIGN1cnJlbnQgY29sdW1uIFxuICAgICAgICB7IGNudCA8LSBjbnQgKyAxIH1cbiAgICAgIH1cbiAgICB9XG4gICAgY250XG4gIH0pXG59XG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ3ZkMjAxNV9rZWVwX2NhbGkkbWF0Y2hlcyA8LSBzdHJfbWF0Y2hfYWxsKGd2ZDIwMTVfa2VlcF9jYWxpJHBhcnRpY2lwYW50X2FnZSwgXCJcXFxcZCs6OihcXFxcZCspXCIpXG5hZ2VzID0gYyhjKDAsMTUpKSAjIEZpcnN0IGFnZSByYW5nZSBpcyB1bmRlciAxNXNcbmZvciAoaSBpbiBzZXEoMTYsIDc2LCA1KSkgIyBUaGUgb3RoZXIgYWdlIHJhbmdlcyBhcmUgZXZlcnkgNSB5ZWFycyBcbntcbiAgYWdlcyA8LSBjKGFnZXMsIGMoaSwgaSs0KSlcbn1cbmFnZXMgPC0gYyhhZ2VzLCBjKDgxLDEwMCkpICMgVGhlIGxhc3QgYWdlIHJhbmdlIGlzIDgxIHBsdXNcbmZvciAoaSBpbiBzZXEoMSxsZW5ndGgoYWdlcyktMSwgMikpICMgRWFjaCBwYWlyIG9mIGFnZXMgaW4gdGhlIGFnZSByYW5nZXNcbntcbiAgIyBDb25zdHJ1Y3QgdGhlIGNvbHVtbiB1c2luZyBhcHBseVxuICAjIFBhc3RlIGhlcmUgY29uY2F0ZW5hdGVzIHRoZSBzdHJpbmcgZm9yIHRoZSBjb2x1bW4gbmFtZVxuICBndmQyMDE1X2tlZXBfY2FsaVtwYXN0ZShcImFnZVwiLCBhZ2VzW2ldLGFnZXNbaSsxXSwgc2VwPVwiX1wiKV0gPC0gYXBwbHkoZ3ZkMjAxNV9rZWVwX2NhbGksIDEsIGZ1bmN0aW9uKHJvdykge1xuICAgIGNudCA8LSAwICMgQ291bnQgb2YgYWdlcyBpbiBjdXJyZW50IHJhbmdlIHN0YXJ0cyBhdCAwXG4gICAgZm9yICh4IGluIHJvdyRtYXRjaGVzKSAjIEl0ZXJhdGUgdGhyb3VnaCB0aGUgbWF0Y2hlcyB3ZSBwYXJzZWQgb3V0XG4gICAgeyBpZiAoIWdyZXBsKFwiOlwiLCB4LCBmaXhlZCA9IFRSVUUpKSAjIElmIHRoZSBtYXRjaCBkb2VzIG5vdCBjb250YWluIGEgOiB0aGVuIGl0IGlzIHRoZSBtYXRjaCBncm91cCByYXRoZXIgdGhhbiB0aGUgbWF0Y2hcbiAgICAgIHsgYWdlIDwtIGFzLmludGVnZXIoeCkgIyBzbyBjb252ZXJ0IGFnZSBhcyBzdHJpbmcgdG8gaW50ZWdlclxuICAgICAgICAgIGlmIChhZ2UgPj0gYWdlc1tpXSAmJiBhZ2UgPD0gYWdlc1tpKzFdKSAjIGFuZCBjaGVjayBpZiBhZ2UgZmFsbHMgd2l0aGluIGFnZSByYW5nZSBmb3IgdGhlIGN1cnJlbnQgY29sdW1uIFxuICAgICAgICB7IGNudCA8LSBjbnQgKyAxIH1cbiAgICAgIH1cbiAgICB9XG4gICAgYXMuaW50ZWdlcihjbnQpXG4gIH0pXG59XG5gYGAifQ== -->
 <pre class="r"><code>gvd2015_keep_cali$matches &lt;- str_match_all(gvd2015_keep_cali$participant_age, &quot;\\d+::(\\d+)&quot;)
 ages = c(c(0,15)) # First age range is under 15s
 for (i in seq(16, 76, 5)) # The other age ranges are every 5 years 
@@ -1189,7 +1190,7 @@ for (i in seq(1,length(ages)-1, 2)) # Each pair of ages in the age ranges
         { cnt &lt;- cnt + 1 }
       }
     }
-    cnt
+    as.integer(cnt)
   })
 }</code></pre>
 <!-- rnb-source-end -->
@@ -1221,8 +1222,8 @@ for (i in seq(1,length(ages)-1, 2)) # Each pair of ages in the age ranges
 ul &lt;- unlist(strsplit(participant_gender_unique_check, &quot; &quot;))
 unique(ul)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiXCIgICAgICAgXCJGZW1hbGVcIiBcIk1hbGVcIiAgXG4ifQ== -->
-<pre><code>[1] &quot;&quot;       &quot;Female&quot; &quot;Male&quot;  </code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiXCIgICAgICAgXCJNYWxlXCIgICBcIkZlbWFsZVwiXG4ifQ== -->
+<pre><code>[1] &quot;&quot;       &quot;Male&quot;   &quot;Female&quot;</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1237,7 +1238,7 @@ gvd2015_keep_cali$female_count &lt;- str_count(gvd2015_keep_cali$participant_gen
 </div>
 <div id="participant_status" class="section level5">
 <h5>Participant_status</h5>
-<p>The characters <code>,[:space:]</code>, <code>::</code>, <code>[:digit:]</code> &amp; <code>||</code> were stripped from the <code>participant_status</code> in the same manner as for <code>participant_gender</code>. The same methodology was then used to generate counts (`)</p>
+<p>The characters <code>,[:space:]</code>, <code>::</code>, <code>[:digit:]</code> &amp; <code>||</code> were stripped from the <code>participant_status</code> in the same manner as for <code>participant_gender</code>. The same methodology was then used to generate counts (<code>unlist</code>, <code>strsplit</code>, <code>unique</code>) for the <code>participant_status</code> values, giving the following;</p>
 <!-- rnb-text-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -1247,62 +1248,88 @@ gvd2015_keep_cali$female_count &lt;- str_count(gvd2015_keep_cali$participant_gen
 ul &lt;- unlist(strsplit(participant_status_unique_check, &quot; &quot;))
 unique(ul)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcIlwiICAgICAgICAgICAgICAgICAgICAgICAgXCJLaWxsZWRcIiAgICAgICAgICAgICAgICAgIFwiSW5qdXJlZFwiICAgICAgICAgICAgICAgICBcIlVuaGFybWVkQXJyZXN0ZWRcIiAgICAgICAgXCJJbmp1cmVkVW5oYXJtZWRBcnJlc3RlZFwiIFwiQXJyZXN0ZWRcIiAgICAgICAgICAgICAgIFxuIFs3XSBcIlVuaGFybWVkXCIgICAgICAgICAgICAgICAgXCJJbmp1cmVkQXJyZXN0ZWRcIiAgICAgICAgIFwiS2lsbGVkQXJyZXN0ZWRcIiAgICAgICAgICBcIktpbGxlZFVuaGFybWVkXCIgICAgICAgICAgXCJLaWxsZWRVbmhhcm1lZEFycmVzdGVkXCIgXG4ifQ== -->
+<pre><code> [1] &quot;&quot;                        &quot;Killed&quot;                  &quot;Injured&quot;                 &quot;UnharmedArrested&quot;        &quot;InjuredUnharmedArrested&quot; &quot;Arrested&quot;               
+ [7] &quot;Unharmed&quot;                &quot;InjuredArrested&quot;         &quot;KilledArrested&quot;          &quot;KilledUnharmed&quot;          &quot;KilledUnharmedArrested&quot; </code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Using the URL stem “<a href="http://www.gunviolencearchive.org/incident/" class="uri">http://www.gunviolencearchive.org/incident/</a>”</p>
-<ul>
-<li>CHANGE TO INJURED ARRESTED</li>
-</ul>
+<p>Several anomalous values which contain mutually exclusive states of being, were identified as; “InjuredUnharmedArrested”, “KilledInjured”, “KilledArrested”, “KilledUnharmed”, “InjuredUnharmed” and “KilledUnharmedArrested”. The <code>grepl</code> function was then used to create a boolean vector for in each case to search for the source of the value in <code>gvd2015_keep_cali</code>. Once the <code>incident_id</code> was identified, the URL “<a href="http://www.gunviolencearchive.org/incident/%60incident_id" class="uri">http://www.gunviolencearchive.org/incident/`incident_id</a><code>&quot; was checked. Each instance was then rationalized and given a more appropriate value using the</code>str_replace_all` function.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuSW5qdXJlZFVuaGFybWVkQXJyZXN0ZWQgPC0gZ3JlcGwoXCJJbmp1cmVkVW5oYXJtZWRBcnJlc3RlZFwiLCBndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMpXG5ndmQyMDE1X2tlZXBfY2FsaVtJbmp1cmVkVW5oYXJtZWRBcnJlc3RlZCxjKDEsMTQpXVxuYGBgIn0= -->
 <pre class="r"><code>InjuredUnharmedArrested &lt;- grepl(&quot;InjuredUnharmedArrested&quot;, gvd2015_keep_cali$participant_status)
 gvd2015_keep_cali[InjuredUnharmedArrested,c(1,14)]</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6MiwibnJvdyI6MX0sInJkZiI6Ikg0c0lBQUFBQUFBQUEyMVFRVTdETUJEY09BbFZnMEFWZktCMzFCeDY0bHFKQytLR2hOUWJNcmFoQm5jZDJSdkJnM2hud1Vsc0tiSjY4WHJIT3pzemZuN1liNXQ5QXdBTXlxb0NWb1pyeGNKUlFBWExvZjRBbExmakFNRFY5SEQzRytwcU5yUmJQMmxqbEZ5LzRJRzdvNUk3NTVTbmM4QWpmdlpPeVJ6UFZHdmtSK1dqQ292Z3BVYWhwVUo2MVRKQ054MTNwSVh1ZUVBOWNlcDl0bW5wN0hlYnRrMytBUmE1bkREYyt5eFVJem54OXQwRmJ1aE9HV1ZoTzlJV0E0a052MU5uNU1KbHdLckh3WVhjaUVPUFg1dnQvYUFRN1JRemEvTTdtelRaWDl4VngxMFhDajgwcW1UZThEZGxZbk1kNG81cDI4NXBwQlFsb0w0bFN6ek5OY0thaEl6aDRQUVBEeDl0MEF3Q0FBQT0ifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["incident_id"],"name":[1],"type":["int"],"align":["right"]},{"label":["participant_status"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"273316","2":"Killed UnharmedArrested UnharmedArrested InjuredUnharmedArrested","_rn_":"7"}],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+<p>The values were all checked as described above and updated as follows;</p>
+<table>
+<colgroup>
+<col width="18%"></col>
+<col width="65%"></col>
+<col width="15%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th>OriginalValue</th>
+<th>Explanation / Justification</th>
+<th>UpdatedValue</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>InjuredUnharmedArrested</code></td>
+<td>This value was created as the reporting of an incident is updated</td>
+<td><code>InjuredArrested</code></td>
+</tr>
+<tr class="even">
+<td><code>KilledInjured</code></td>
+<td>This value was created when a person who was initially injured later dies</td>
+<td><code>Killed</code></td>
+</tr>
+<tr class="odd">
+<td><code>KilledArrested</code></td>
+<td>This value was created when a person who was mortally wounded, arrested and later dies</td>
+<td><code>Killed</code></td>
+</tr>
+<tr class="even">
+<td><code>KilledUnharmed</code></td>
+<td>This value was created as the reporting of an incident is updated</td>
+<td><code>Killed</code></td>
+</tr>
+<tr class="odd">
+<td><code>InjuredUnharmed</code></td>
+<td>This value was created as the reporting of an incident is updated</td>
+<td><code>Injured</code></td>
+</tr>
+<tr class="even">
+<td><code>KilledUnharmedArrested</code></td>
+<td>This value was created as the reporting of an incident is updated</td>
+<td><code>Killed</code></td>
+</tr>
+</tbody>
+</table>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ3ZkMjAxNV9rZWVwX2NhbGkkcGFydGljaXBhbnRfc3RhdHVzIDwtIHN0cl9yZXBsYWNlX2FsbChndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMsIFwiSW5qdXJlZFVuaGFybWVkQXJyZXN0ZWRcIiwgXCJJbmp1cmVkQXJyZXN0ZWRcIilcbmBgYCJ9 -->
-<pre class="r"><code>gvd2015_keep_cali$participant_status &lt;- str_replace_all(gvd2015_keep_cali$participant_status, &quot;InjuredUnharmedArrested&quot;, &quot;InjuredArrested&quot;)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ3ZkMjAxNV9rZWVwX2NhbGkkcGFydGljaXBhbnRfc3RhdHVzIDwtIHN0cl9yZXBsYWNlX2FsbChndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMsIFwiSW5qdXJlZFVuaGFybWVkQXJyZXN0ZWRcIiwgXCJJbmp1cmVkQXJyZXN0ZWRcIilcbmd2ZDIwMTVfa2VlcF9jYWxpJHBhcnRpY2lwYW50X3N0YXR1cyA8LSBzdHJfcmVwbGFjZV9hbGwoZ3ZkMjAxNV9rZWVwX2NhbGkkcGFydGljaXBhbnRfc3RhdHVzLCBcIktpbGxlZEluanVyZWRcIiwgXCJLaWxsZWRcIilcbmd2ZDIwMTVfa2VlcF9jYWxpJHBhcnRpY2lwYW50X3N0YXR1cyA8LSBzdHJfcmVwbGFjZV9hbGwoZ3ZkMjAxNV9rZWVwX2NhbGkkcGFydGljaXBhbnRfc3RhdHVzLCBcIktpbGxlZEFycmVzdGVkXCIsIFwiS2lsbGVkXCIpXG5ndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMgPC0gc3RyX3JlcGxhY2VfYWxsKGd2ZDIwMTVfa2VlcF9jYWxpJHBhcnRpY2lwYW50X3N0YXR1cywgXCJLaWxsZWRVbmhhcm1lZFwiLCBcIktpbGxlZFwiKVxuZ3ZkMjAxNV9rZWVwX2NhbGkkcGFydGljaXBhbnRfc3RhdHVzIDwtIHN0cl9yZXBsYWNlX2FsbChndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMsIFwiSW5qdXJlZFVuaGFybWVkXCIsIFwiSW5qdXJlZFwiKVxuZ3ZkMjAxNV9rZWVwX2NhbGkkcGFydGljaXBhbnRfc3RhdHVzIDwtIHN0cl9yZXBsYWNlX2FsbChndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMsIFwiS2lsbGVkVW5oYXJtZWRBcnJlc3RlZFwiLCBcIktpbGxlZFwiKVxuYGBgIn0= -->
+<pre class="r"><code>gvd2015_keep_cali$participant_status &lt;- str_replace_all(gvd2015_keep_cali$participant_status, &quot;InjuredUnharmedArrested&quot;, &quot;InjuredArrested&quot;)
+gvd2015_keep_cali$participant_status &lt;- str_replace_all(gvd2015_keep_cali$participant_status, &quot;KilledInjured&quot;, &quot;Killed&quot;)
+gvd2015_keep_cali$participant_status &lt;- str_replace_all(gvd2015_keep_cali$participant_status, &quot;KilledArrested&quot;, &quot;Killed&quot;)
+gvd2015_keep_cali$participant_status &lt;- str_replace_all(gvd2015_keep_cali$participant_status, &quot;KilledUnharmed&quot;, &quot;Killed&quot;)
+gvd2015_keep_cali$participant_status &lt;- str_replace_all(gvd2015_keep_cali$participant_status, &quot;InjuredUnharmed&quot;, &quot;Injured&quot;)
+gvd2015_keep_cali$participant_status &lt;- str_replace_all(gvd2015_keep_cali$participant_status, &quot;KilledUnharmedArrested&quot;, &quot;Killed&quot;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<div id="killedarrested" class="section level6">
-<h6>KilledArrested</h6>
-<p>It was determined that “KilledArrested” means they were arrested but lated died from injuries sustained. Change to InjuredArrestedDied.</p>
 <!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuS2lsbGVkQXJyZXN0ZWQgPC0gZ3JlcGwoXCJLaWxsZWRBcnJlc3RlZFwiLCBndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMpXG5zdW1tYXJ5KEtpbGxlZEFycmVzdGVkKVxuZ3ZkMjAxNV9rZWVwX2NhbGlbS2lsbGVkQXJyZXN0ZWQsXVxuYGBgIn0= -->
-<pre class="r"><code>KilledArrested &lt;- grepl(&quot;KilledArrested&quot;, gvd2015_keep_cali$participant_status)
-summary(KilledArrested)
-gvd2015_keep_cali[KilledArrested,]</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ3ZkMjAxNV9rZWVwX2NhbGkkcGFydGljaXBhbnRfc3RhdHVzIDwtIHN0cl9yZXBsYWNlX2FsbChndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMsIFwiS2lsbGVkQXJyZXN0ZWRcIiwgXCJJbmp1cmVkQXJyZXN0ZWREaWVkXCIpXG5gYGAifQ== -->
-<pre class="r"><code>gvd2015_keep_cali$participant_status &lt;- str_replace_all(gvd2015_keep_cali$participant_status, &quot;KilledArrested&quot;, &quot;InjuredArrestedDied&quot;)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuS2lsbGVkVW5oYXJtZWQgPC0gZ3JlcGwoXCJLaWxsZWRVbmhhcm1lZFwiLCBndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMpXG5zdW1tYXJ5KEtpbGxlZFVuaGFybWVkKVxuZ3ZkMjAxNV9rZWVwX2NhbGlbS2lsbGVkVW5oYXJtZWQsXVxuYGBgIn0= -->
-<pre class="r"><code>KilledUnharmed &lt;- grepl(&quot;KilledUnharmed&quot;, gvd2015_keep_cali$participant_status)
-summary(KilledUnharmed)
-gvd2015_keep_cali[KilledUnharmed,]</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Incident 318320 was checked online, should be killed, injured, killed. Incident 440261 should be killed killed</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ3ZkMjAxNV9rZWVwX2NhbGkkcGFydGljaXBhbnRfc3RhdHVzIDwtIHN0cl9yZXBsYWNlX2FsbChndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMsIFwiS2lsbGVkVW5oYXJtZWRcIiwgXCJLaWxsZWRcIilcbmBgYCJ9 -->
-<pre class="r"><code>gvd2015_keep_cali$participant_status &lt;- str_replace_all(gvd2015_keep_cali$participant_status, &quot;KilledUnharmed&quot;, &quot;Killed&quot;)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
@@ -1311,120 +1338,827 @@ gvd2015_keep_cali[KilledUnharmed,]</code></pre>
 ul &lt;- unlist(strsplit(participant_status_unique_check, &quot; &quot;))
 unique(ul)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiXCIgICAgICAgICAgICAgICAgIFwiS2lsbGVkXCIgICAgICAgICAgIFwiSW5qdXJlZFwiICAgICAgICAgIFwiVW5oYXJtZWRBcnJlc3RlZFwiIFwiSW5qdXJlZEFycmVzdGVkXCIgIFwiQXJyZXN0ZWRcIiAgICAgICAgIFwiVW5oYXJtZWRcIiAgICAgICAgXG4ifQ== -->
+<pre><code>[1] &quot;&quot;                 &quot;Killed&quot;           &quot;Injured&quot;          &quot;UnharmedArrested&quot; &quot;InjuredArrested&quot;  &quot;Arrested&quot;         &quot;Unharmed&quot;        </code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDaGVjayBXT1JEIENPVU5UXG5ndmQyMDE1X2tlZXBfY2FsaSRLaWxsZWRfY291bnQgPC0gc3RyX2NvdW50KGd2ZDIwMTVfa2VlcF9jYWxpJHBhcnRpY2lwYW50X3N0YXR1cywgcGF0dGVybiA9IFwiS2lsbGVkXCIpICMgU3RyaW5nclxuZ3ZkMjAxNV9rZWVwX2NhbGkkSW5qdXJlZF9jb3VudCA8LSBzdHJfY291bnQoZ3ZkMjAxNV9rZWVwX2NhbGkkcGFydGljaXBhbnRfc3RhdHVzLCBwYXR0ZXJuID0gXCJJbmp1cmVkXCIpICMgU3RyaW5nclxuZ3ZkMjAxNV9rZWVwX2NhbGkkVW5oYXJtZWRBcnJlc3RlZF9jb3VudCA8LSBzdHJfY291bnQoZ3ZkMjAxNV9rZWVwX2NhbGkkcGFydGljaXBhbnRfc3RhdHVzLCBwYXR0ZXJuID0gXCJVbmhhcm1lZEFycmVzdGVkXCIpICMgU3RyaW5nclxuZ3ZkMjAxNV9rZWVwX2NhbGkkSW5qdXJlZEFycmVzdGVkX2NvdW50IDwtIHN0cl9jb3VudChndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMsIHBhdHRlcm4gPSBcIkluanVyZWRBcnJlc3RlZFwiKSAjIFN0cmluZ3IgKHdpdGggYW5jaG9yKVxuZ3ZkMjAxNV9rZWVwX2NhbGkkQXJyZXN0ZWRfY291bnQgPC0gc3RyX2NvdW50KGd2ZDIwMTVfa2VlcF9jYWxpJHBhcnRpY2lwYW50X3N0YXR1cywgcGF0dGVybiA9IFwiQXJyZXN0ZWRcIikgIyBTdHJpbmdyICh3aXRoIGFuY2hvcilcbmd2ZDIwMTVfa2VlcF9jYWxpJFVuaGFybWVkX2NvdW50IDwtIHN0cl9jb3VudChndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMsIHBhdHRlcm4gPSBcIlVuaGFybWVkXCIpICMgU3RyaW5nciAod2l0aCBhbmNob3IpXG5ndmQyMDE1X2tlZXBfY2FsaSRJbmp1cmVkQXJyZXN0ZWREaWVkX2NvdW50IDwtIHN0cl9jb3VudChndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMsIHBhdHRlcm4gPSBcIkluanVyZWRBcnJlc3RlZERpZWRcIikgIyBTdHJpbmdyXG5gYGAifQ== -->
-<pre class="r"><code># Check WORD COUNT
-gvd2015_keep_cali$Killed_count &lt;- str_count(gvd2015_keep_cali$participant_status, pattern = &quot;Killed&quot;) # Stringr
-gvd2015_keep_cali$Injured_count &lt;- str_count(gvd2015_keep_cali$participant_status, pattern = &quot;Injured&quot;) # Stringr
-gvd2015_keep_cali$UnharmedArrested_count &lt;- str_count(gvd2015_keep_cali$participant_status, pattern = &quot;UnharmedArrested&quot;) # Stringr
-gvd2015_keep_cali$InjuredArrested_count &lt;- str_count(gvd2015_keep_cali$participant_status, pattern = &quot;InjuredArrested&quot;) # Stringr (with anchor)
-gvd2015_keep_cali$Arrested_count &lt;- str_count(gvd2015_keep_cali$participant_status, pattern = &quot;Arrested&quot;) # Stringr (with anchor)
-gvd2015_keep_cali$Unharmed_count &lt;- str_count(gvd2015_keep_cali$participant_status, pattern = &quot;Unharmed&quot;) # Stringr (with anchor)
-gvd2015_keep_cali$InjuredArrestedDied_count &lt;- str_count(gvd2015_keep_cali$participant_status, pattern = &quot;InjuredArrestedDied&quot;) # Stringr</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ3ZkMjAxNV9rZWVwX2NhbGkkaW5qdXJlZF9jb3VudCA8LSBzdHJfY291bnQoZ3ZkMjAxNV9rZWVwX2NhbGkkcGFydGljaXBhbnRfc3RhdHVzLCBwYXR0ZXJuID0gXCJJbmp1cmVkXCIpXG5ndmQyMDE1X2tlZXBfY2FsaSR1bmhhcm1lZF9jb3VudCA8LSBzdHJfY291bnQoZ3ZkMjAxNV9rZWVwX2NhbGkkcGFydGljaXBhbnRfc3RhdHVzLCBwYXR0ZXJuID0gXCJVbmhhcm1lZFwiKVxuZ3ZkMjAxNV9rZWVwX2NhbGkka2lsbGVkX2NvdW50IDwtIHN0cl9jb3VudChndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMsIHBhdHRlcm4gPSBcIktpbGxlZFwiKVxuZ3ZkMjAxNV9rZWVwX2NhbGkkdW5oYXJtZWRBcnJlc3RlZF9jb3VudCA8LSBzdHJfY291bnQoZ3ZkMjAxNV9rZWVwX2NhbGkkcGFydGljaXBhbnRfc3RhdHVzLCBwYXR0ZXJuID0gXCJVbmhhcm1lZEFycmVzdGVkXCIpXG5ndmQyMDE1X2tlZXBfY2FsaSRhcnJlc3RlZF9jb3VudCA8LSBzdHJfY291bnQoZ3ZkMjAxNV9rZWVwX2NhbGkkcGFydGljaXBhbnRfc3RhdHVzLCBwYXR0ZXJuID0gXCJBcnJlc3RlZFwiKVxuZ3ZkMjAxNV9rZWVwX2NhbGkkaW5qdXJlZEFycmVzdGVkX2NvdW50IDwtIHN0cl9jb3VudChndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMsIHBhdHRlcm4gPSBcIkluanVyZWRBcnJlc3RlZFwiKSBcbmBgYCJ9 -->
+<pre class="r"><code>gvd2015_keep_cali$injured_count &lt;- str_count(gvd2015_keep_cali$participant_status, pattern = &quot;Injured&quot;)
+gvd2015_keep_cali$unharmed_count &lt;- str_count(gvd2015_keep_cali$participant_status, pattern = &quot;Unharmed&quot;)
+gvd2015_keep_cali$killed_count &lt;- str_count(gvd2015_keep_cali$participant_status, pattern = &quot;Killed&quot;)
+gvd2015_keep_cali$unharmedArrested_count &lt;- str_count(gvd2015_keep_cali$participant_status, pattern = &quot;UnharmedArrested&quot;)
+gvd2015_keep_cali$arrested_count &lt;- str_count(gvd2015_keep_cali$participant_status, pattern = &quot;Arrested&quot;)
+gvd2015_keep_cali$injuredArrested_count &lt;- str_count(gvd2015_keep_cali$participant_status, pattern = &quot;InjuredArrested&quot;) </code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="participant_type" class="section level5">
+<h5>Participant_Type</h5>
+<p>The characters <code>,[:space:]</code>, <code>::</code>, <code>[:digit:]</code> &amp; <code>||</code> were stripped from the <code>participant_type</code> in the same manner as for <code>participant_gender</code>. The same methodology was then used to generate counts (<code>unlist</code>, <code>strsplit</code>, <code>unique</code>) for the <code>participant_type</code> values, giving the following;</p>
+<!-- rnb-text-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFydGljaXBhbnRfdHlwZV91bmlxdWVfY2hlY2sgPC0gYXMuY2hhcmFjdGVyKGd2ZDIwMTVfa2VlcF9jYWxpWyxjKFwicGFydGljaXBhbnRfdHlwZVwiKV0pXG51bCA8LSB1bmxpc3Qoc3Ryc3BsaXQocGFydGljaXBhbnRfdHlwZV91bmlxdWVfY2hlY2ssIFwiIFwiKSlcbnVuaXF1ZSh1bClcbmBgYCJ9 -->
+<pre class="r"><code>participant_type_unique_check &lt;- as.character(gvd2015_keep_cali[,c(&quot;participant_type&quot;)])
+ul &lt;- unlist(strsplit(participant_type_unique_check, &quot; &quot;))
+unique(ul)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiXCIgICAgICAgICAgICAgICAgXCJWaWN0aW1cIiAgICAgICAgICBcIlN1YmplY3QtU3VzcGVjdFwiXG4ifQ== -->
+<pre><code>[1] &quot;&quot;                &quot;Victim&quot;          &quot;Subject-Suspect&quot;</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDaGVjayBpZiB0aGlzIGlzIG5lZWRlZD8/P1xuS2lsbGVkVW5oYXJtZWRBcnJlc3RlZCA8LSBncmVwbChcIktpbGxlZFVuaGFybWVkQXJyZXN0ZWRcIiwgZ3ZkMjAxNV9rZWVwX2NhbGkkcGFydGljaXBhbnRfc3RhdHVzKVxuc3VtbWFyeShLaWxsZWRVbmhhcm1lZEFycmVzdGVkKVxuZ3ZkMjAxNV9rZWVwX2NhbGlbS2lsbGVkVW5oYXJtZWRBcnJlc3RlZCxdXG5gYGAifQ== -->
-<pre class="r"><code># Check if this is needed???
-KilledUnharmedArrested &lt;- grepl(&quot;KilledUnharmedArrested&quot;, gvd2015_keep_cali$participant_status)
-summary(KilledUnharmedArrested)
-gvd2015_keep_cali[KilledUnharmedArrested,]</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ3ZkMjAxNV9rZWVwX2NhbGkkdmljdGltX2NvdW50IDwtIHN0cl9jb3VudChndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF90eXBlLCBwYXR0ZXJuID0gXCJWaWN0aW1cIilcbmd2ZDIwMTVfa2VlcF9jYWxpJHN1YmplY3RTdXNwZWN0X2NvdW50IDwtIHN0cl9jb3VudChndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF90eXBlLCBwYXR0ZXJuID0gXCJTdWJqZWN0LVN1c3BlY3RcIilcbmBgYCJ9 -->
+<pre class="r"><code>gvd2015_keep_cali$victim_count &lt;- str_count(gvd2015_keep_cali$participant_type, pattern = &quot;Victim&quot;)
+gvd2015_keep_cali$subjectSuspect_count &lt;- str_count(gvd2015_keep_cali$participant_type, pattern = &quot;Subject-Suspect&quot;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Should be Killed and UnharmedArrested</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuS2lsbGVkVW5oYXJtZWQgPC0gZ3JlcGwoXCJLaWxsZWRVbmhhcm1lZFwiLCBndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMpXG5zdW1tYXJ5KEtpbGxlZFVuaGFybWVkKVxuZ3ZkMjAxNV9rZWVwX2NhbGlbS2lsbGVkVW5oYXJtZWQsXVxuYGBgIn0= -->
-<pre class="r"><code>KilledUnharmed &lt;- grepl(&quot;KilledUnharmed&quot;, gvd2015_keep_cali$participant_status)
-summary(KilledUnharmed)
-gvd2015_keep_cali[KilledUnharmed,]</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
+</div>
+</div>
+<div id="the-date-column" class="section level4">
+<h4>The Date Column ???</h4>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY29sbmFtZXMoZ3ZkMjAxNV9rZWVwX2NhbGkpXG5gYGAifQ== -->
 <pre class="r"><code>colnames(gvd2015_keep_cali)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcImluY2lkZW50X2lkXCIgICAgICAgICAgICBcImRhdGVcIiAgICAgICAgICAgICAgICAgICBcInN0YXRlXCIgICAgICAgICAgICAgICAgICBcImNpdHlfb3JfY291bnR5XCIgICAgICAgICBcIm5fa2lsbGVkXCIgICAgICAgICAgICAgICBcIm5faW5qdXJlZFwiICAgICAgICAgICAgIFxuIFs3XSBcImluY2lkZW50X3VybFwiICAgICAgICAgICBcImNvbmdyZXNzaW9uYWxfZGlzdHJpY3RcIiBcImxhdGl0dWRlXCIgICAgICAgICAgICAgICBcImxvbmdpdHVkZVwiICAgICAgICAgICAgICBcIm5fZ3Vuc19pbnZvbHZlZFwiICAgICAgICBcInBhcnRpY2lwYW50X2FnZVwiICAgICAgIFxuWzEzXSBcInBhcnRpY2lwYW50X2dlbmRlclwiICAgICBcInBhcnRpY2lwYW50X3N0YXR1c1wiICAgICBcInBhcnRpY2lwYW50X3R5cGVcIiAgICAgICBcInN0YXRlX2hvdXNlX2Rpc3RyaWN0XCIgICBcInN0YXRlX3NlbmF0ZV9kaXN0cmljdFwiICBcIm1hdGNoZXNcIiAgICAgICAgICAgICAgIFxuWzE5XSBcImFnZV8wXzE1XCIgICAgICAgICAgICAgICBcImFnZV8xNl8yMFwiICAgICAgICAgICAgICBcImFnZV8yMV8yNVwiICAgICAgICAgICAgICBcImFnZV8yNl8zMFwiICAgICAgICAgICAgICBcImFnZV8zMV8zNVwiICAgICAgICAgICAgICBcImFnZV8zNl80MFwiICAgICAgICAgICAgIFxuWzI1XSBcImFnZV80MV80NVwiICAgICAgICAgICAgICBcImFnZV80Nl81MFwiICAgICAgICAgICAgICBcImFnZV81MV81NVwiICAgICAgICAgICAgICBcImFnZV81Nl82MFwiICAgICAgICAgICAgICBcImFnZV82MV82NVwiICAgICAgICAgICAgICBcImFnZV82Nl83MFwiICAgICAgICAgICAgIFxuWzMxXSBcImFnZV83MV83NVwiICAgICAgICAgICAgICBcImFnZV83Nl84MFwiICAgICAgICAgICAgICBcImFnZV84MV8xMDBcIiAgICAgICAgICAgICBcIm1hbGVfY291bnRcIiAgICAgICAgICAgICBcImZlbWFsZV9jb3VudFwiICAgICAgICAgICBcImluanVyZWRfY291bnRcIiAgICAgICAgIFxuWzM3XSBcInVuaGFybWVkX2NvdW50XCIgICAgICAgICBcImtpbGxlZF9jb3VudFwiICAgICAgICAgICBcInVuaGFybWVkQXJyZXN0ZWRfY291bnRcIiBcImFycmVzdGVkX2NvdW50XCIgICAgICAgICBcImluanVyZWRBcnJlc3RlZF9jb3VudFwiICBcInZpY3RpbV9jb3VudFwiICAgICAgICAgIFxuWzQzXSBcInN1YmplY3RTdXNwZWN0X2NvdW50XCIgIFxuIn0= -->
+<pre><code> [1] &quot;incident_id&quot;            &quot;date&quot;                   &quot;state&quot;                  &quot;city_or_county&quot;         &quot;n_killed&quot;               &quot;n_injured&quot;             
+ [7] &quot;incident_url&quot;           &quot;congressional_district&quot; &quot;latitude&quot;               &quot;longitude&quot;              &quot;n_guns_involved&quot;        &quot;participant_age&quot;       
+[13] &quot;participant_gender&quot;     &quot;participant_status&quot;     &quot;participant_type&quot;       &quot;state_house_district&quot;   &quot;state_senate_district&quot;  &quot;matches&quot;               
+[19] &quot;age_0_15&quot;               &quot;age_16_20&quot;              &quot;age_21_25&quot;              &quot;age_26_30&quot;              &quot;age_31_35&quot;              &quot;age_36_40&quot;             
+[25] &quot;age_41_45&quot;              &quot;age_46_50&quot;              &quot;age_51_55&quot;              &quot;age_56_60&quot;              &quot;age_61_65&quot;              &quot;age_66_70&quot;             
+[31] &quot;age_71_75&quot;              &quot;age_76_80&quot;              &quot;age_81_100&quot;             &quot;male_count&quot;             &quot;female_count&quot;           &quot;injured_count&quot;         
+[37] &quot;unharmed_count&quot;         &quot;killed_count&quot;           &quot;unharmedArrested_count&quot; &quot;arrested_count&quot;         &quot;injuredArrested_count&quot;  &quot;victim_count&quot;          
+[43] &quot;subjectSuspect_count&quot;  </code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ3ZkMjAxNV9wdDIgPC0gc2VsZWN0KGd2ZDIwMTVfa2VlcF9jYWxpLCBpbmNpZGVudF9pZCwgY2l0eV9vcl9jb3VudHksIG5fa2lsbGVkLCBuX2luanVyZWQsIGNvbmdyZXNzaW9uYWxfZGlzdHJpY3QsIGxhdGl0dWRlLCBsb25naXR1ZGUsIG5fZ3Vuc19pbnZvbHZlZCwgcGFydGljaXBhbnRfdHlwZSwgc3RhdGVfaG91c2VfZGlzdHJpY3QsIHN0YXRlX3NlbmF0ZV9kaXN0cmljdCwgYWdlXzBfMTUsIGFnZV8xNl8yMCwgYWdlXzIxXzI1LCBhZ2VfMjZfMzAsIGFnZV8zMV8zNSwgYWdlXzM2XzQwLCBhZ2VfNDFfNDUsIGFnZV80Nl81MCwgYWdlXzUxXzU1LCBhZ2VfNTZfNjAsIGFnZV82MV82NSwgYWdlXzY2XzcwLCBhZ2VfNzFfNzUsIGFnZV83Nl84MCwgYWdlXzgxXzEwMCwgbWFsZV9jb3VudCwgZmVtYWxlX2NvdW50LCBLaWxsZWRfY291bnQsIEluanVyZWRfY291bnQsIFVuaGFybWVkQXJyZXN0ZWRfY291bnQsIEluanVyZWRBcnJlc3RlZF9jb3VudCwgQXJyZXN0ZWRfY291bnQsIFVuaGFybWVkX2NvdW50LCBJbmp1cmVkQXJyZXN0ZWREaWVkX2NvdW50KSAjIyMjIyBVbmZvcnR1YW5ldGx5IE9SREVSIGhhcyBub3QgYmVlbiBwcmVzZXJ2ZWQuLi5cbmBgYCJ9 -->
-<pre class="r"><code>gvd2015_pt2 &lt;- select(gvd2015_keep_cali, incident_id, city_or_county, n_killed, n_injured, congressional_district, latitude, longitude, n_guns_involved, participant_type, state_house_district, state_senate_district, age_0_15, age_16_20, age_21_25, age_26_30, age_31_35, age_36_40, age_41_45, age_46_50, age_51_55, age_56_60, age_61_65, age_66_70, age_71_75, age_76_80, age_81_100, male_count, female_count, Killed_count, Injured_count, UnharmedArrested_count, InjuredArrested_count, Arrested_count, Unharmed_count, InjuredArrestedDied_count) ##### Unfortuanetly ORDER has not been preserved...</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDaGVja2luZ1xuYSA8LSBhcy52ZWN0b3IoZ3ZkMjAxNV9rZWVwX2NhbGkkbl9raWxsZWQpXG5iIDwtIGFzLnZlY3RvcihndmQyMDE1X2tlZXBfY2FsaSRraWxsZWRfY291bnQpXG5hWyEoYSAlaW4lIGIpXVxuYGBgIn0= -->
+<pre class="r"><code># Checking
+a &lt;- as.vector(gvd2015_keep_cali$n_killed)
+b &lt;- as.vector(gvd2015_keep_cali$killed_count)
+a[!(a %in% b)]</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiaW50ZWdlcigwKVxuIn0= -->
+<pre><code>integer(0)</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDaGVja2luZ1xuYSA8LSBhcy52ZWN0b3IoZ3ZkMjAxNV9rZWVwX2NhbGkkbl9pbmp1cmVkKVxuYiA8LSBhcy52ZWN0b3IoZ3ZkMjAxNV9rZWVwX2NhbGkkaW5qdXJlZF9jb3VudClcbmFbIShhICVpbiUgYildXG5gYGAifQ== -->
+<pre class="r"><code># Checking
+a &lt;- as.vector(gvd2015_keep_cali$n_injured)
+b &lt;- as.vector(gvd2015_keep_cali$injured_count)
+a[!(a %in% b)]</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiaW50ZWdlcigwKVxuIn0= -->
+<pre><code>integer(0)</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
 </div>
-</div>
+<div id="section" class="section level3">
+<h3></h3>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ3ZkMjAxNV9wdDIgPC0gc2VsZWN0KGd2ZDIwMTVfa2VlcF9jYWxpLCBpbmNpZGVudF9pZCwgZGF0ZSwgc3RhdGUsIGNpdHlfb3JfY291bnR5LCBjb25ncmVzc2lvbmFsX2Rpc3RyaWN0LCBzdGF0ZV9ob3VzZV9kaXN0cmljdCwgc3RhdGVfc2VuYXRlX2Rpc3RyaWN0LCBsYXRpdHVkZSwgbG9uZ2l0dWRlLCBhZ2VfMF8xNSwgYWdlXzE2XzIwLCBhZ2VfMjFfMjUsIGFnZV8yNl8zMCwgYWdlXzMxXzM1LCBhZ2VfMzZfNDAsIGFnZV80MV80NSwgYWdlXzQ2XzUwLCBhZ2VfNTFfNTUsIGFnZV81Nl82MCwgYWdlXzYxXzY1LCBhZ2VfNjZfNzAsIGFnZV83MV83NSwgYWdlXzc2XzgwLCBhZ2VfODFfMTAwLCBtYWxlX2NvdW50LCBmZW1hbGVfY291bnQsIGluanVyZWRfY291bnQsIHVuaGFybWVkX2NvdW50LCBraWxsZWRfY291bnQsIHVuaGFybWVkQXJyZXN0ZWRfY291bnQsIGFycmVzdGVkX2NvdW50LCBpbmp1cmVkQXJyZXN0ZWRfY291bnQsIHZpY3RpbV9jb3VudCwgc3ViamVjdFN1c3BlY3RfY291bnQpXG5gYGAifQ== -->
+<pre class="r"><code>gvd2015_pt2 &lt;- select(gvd2015_keep_cali, incident_id, date, state, city_or_county, congressional_district, state_house_district, state_senate_district, latitude, longitude, age_0_15, age_16_20, age_21_25, age_26_30, age_31_35, age_36_40, age_41_45, age_46_50, age_51_55, age_56_60, age_61_65, age_66_70, age_71_75, age_76_80, age_81_100, male_count, female_count, injured_count, unharmed_count, killed_count, unharmedArrested_count, arrested_count, injuredArrested_count, victim_count, subjectSuspect_count)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YS5mcmFtZShBdHRyaWJ1dGUgPSBuYW1lcyhndmQyMDE1X3B0MiksIENsYXNzID0gc2FwcGx5KGd2ZDIwMTVfcHQyLCBjbGFzcyksXG4gICAgICAgICAgIGd2ZDIwMTVfa2VlcF9jYWxpID0gc2FwcGx5KGd2ZDIwMTVfcHQyLCBmdW5jdGlvbih4KSBwYXN0ZShoZWFkKHgpLCAgY29sbGFwc2UgPSBcIiwgXCIpKSxcbiAgICAgICAgICAgcm93Lm5hbWVzID0gTlVMTCkgJT4lIGthYmxlKCkgJT4lIGthYmxlX3N0eWxpbmcoYm9vdHN0cmFwX29wdGlvbnMgPSBjKFwic3RyaXBlZFwiLCBcImhvdmVyXCIsIFwiY29uZGVuc2VkXCIpLCAgZm9udF9zaXplID0gMTEpXG5gYGAifQ== -->
+<pre class="r"><code>data.frame(Attribute = names(gvd2015_pt2), Class = sapply(gvd2015_pt2, class),
+           gvd2015_keep_cali = sapply(gvd2015_pt2, function(x) paste(head(x),  collapse = &quot;, &quot;)),
+           row.names = NULL) %&gt;% kable() %&gt;% kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;),  font_size = 11)</code></pre>
+<!-- rnb-source-end -->
+
+<!-- rnb-htmlwidget-begin eyJkZXBlbmRlbmNpZXMiOlt7ImFsbF9maWxlcyI6dHJ1ZSwiYXR0YWNobWVudCI6W10sImhlYWQiOltdLCJtZXRhIjpbXSwibmFtZSI6ImpxdWVyeSIsInBhY2thZ2UiOltdLCJzY3JpcHQiOiJqcXVlcnkubWluLmpzIiwic3JjIjp7ImZpbGUiOiIvTGlicmFyeS9GcmFtZXdvcmtzL1IuZnJhbWV3b3JrL1ZlcnNpb25zLzMuNC9SZXNvdXJjZXMvbGlicmFyeS9ybWFya2Rvd24vcm1kL2gvanF1ZXJ5LTEuMTEuMyJ9LCJzdHlsZXNoZWV0IjpbXSwidmVyc2lvbiI6IjEuMTEuMyJ9LHsiYWxsX2ZpbGVzIjp0cnVlLCJhdHRhY2htZW50IjpbXSwiaGVhZCI6W10sIm1ldGEiOnsidmlld3BvcnQiOiJ3aWR0aD1kZXZpY2Utd2lkdGgsIGluaXRpYWwtc2NhbGU9MSJ9LCJuYW1lIjoiYm9vdHN0cmFwIiwicGFja2FnZSI6W10sInNjcmlwdCI6WyJqcy9ib290c3RyYXAubWluLmpzIiwic2hpbS9odG1sNXNoaXYubWluLmpzIiwic2hpbS9yZXNwb25kLm1pbi5qcyJdLCJzcmMiOnsiZmlsZSI6Ii9MaWJyYXJ5L0ZyYW1ld29ya3MvUi5mcmFtZXdvcmsvVmVyc2lvbnMvMy40L1Jlc291cmNlcy9saWJyYXJ5L3JtYXJrZG93bi9ybWQvaC9ib290c3RyYXAtMy4zLjUifSwic3R5bGVzaGVldCI6ImNzcy9zaW1wbGV4Lm1pbi5jc3MiLCJ2ZXJzaW9uIjoiMy4zLjUifSx7ImFsbF9maWxlcyI6dHJ1ZSwiYXR0YWNobWVudCI6W10sImhlYWQiOltdLCJtZXRhIjpbXSwibmFtZSI6ImtlUHJpbnQiLCJwYWNrYWdlIjpbXSwic2NyaXB0Ijoia2VQcmludC5qcyIsInNyYyI6eyJmaWxlIjoiL0xpYnJhcnkvRnJhbWV3b3Jrcy9SLmZyYW1ld29yay9WZXJzaW9ucy8zLjQvUmVzb3VyY2VzL2xpYnJhcnkva2FibGVFeHRyYS9rZVByaW50LTAuMC4xIn0sInN0eWxlc2hlZXQiOltdLCJ2ZXJzaW9uIjoiMC4wLjEifV0sIm1ldGFkYXRhIjp7ImNsYXNzZXMiOlsic2hpbnkudGFnLmxpc3QiLCJsaXN0Il0sInNpemluZ1BvbGljeSI6W119fQ== -->
+
+<table class="table table-striped table-hover table-condensed" style="font-size: 11px; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Attribute </th>
+   <th style="text-align:left;"> Class </th>
+   <th style="text-align:left;"> gvd2015_keep_cali </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> incident_id </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 271979, 272551, 272555, 271970, 271975, 275619 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> date </td>
+   <td style="text-align:left;"> Date </td>
+   <td style="text-align:left;"> 2015-01-01, 2015-01-01, 2015-01-01, 2015-01-01, 2015-01-01, 2015-01-01 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> state </td>
+   <td style="text-align:left;"> factor </td>
+   <td style="text-align:left;"> California, California, California, California, California, California </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> city_or_county </td>
+   <td style="text-align:left;"> factor </td>
+   <td style="text-align:left;"> Grand Terrace, Merced, Seaside, Downey, San Jose, Bermuda Dunes </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> congressional_district </td>
+   <td style="text-align:left;"> factor </td>
+   <td style="text-align:left;"> 31, 16, 20, 40, 19, 36 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> state_house_district </td>
+   <td style="text-align:left;"> factor </td>
+   <td style="text-align:left;"> 47, 21, 29, 58, 27, 56 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> state_senate_district </td>
+   <td style="text-align:left;"> factor </td>
+   <td style="text-align:left;"> 20, 12, 17, 32, 15, 28 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> latitude </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 34.0322, 37.3006, 36.6121, 33.9327, 37.3339, 33.7429 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> longitude </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> -117.326, -120.498, -121.836, -118.102, -121.855, -116.274 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_0_15 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_16_20 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_21_25 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 1, 0, 0, 0, 0, 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_26_30 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 1, 0, 0, 0, 0, 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_31_35 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_36_40 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_41_45 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_46_50 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 1, 0, 0, 0, 0, 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_51_55 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 1, 0, 0, 0, 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_56_60 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_61_65 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_66_70 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_71_75 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_76_80 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_81_100 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> male_count </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 2, 1, 0, 0, 2, 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> female_count </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> injured_count </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 2, 0, 0, 0, 2, 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> unharmed_count </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> killed_count </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 1, 1, 0, 0, 0, 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> unharmedArrested_count </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arrested_count </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> injuredArrested_count </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> victim_count </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 3, 1, 0, 0, 2, 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> subjectSuspect_count </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 1 </td>
+  </tr>
+</tbody>
+</table>
+
+<!-- rnb-htmlwidget-end -->
+
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 </div>
 <div id="acs" class="section level3">
 <h3>ACS</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGltKGFjczIwMTUpXG5gYGAifQ== -->
-<pre class="r"><code>dim(acs2015)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YS5mcmFtZShBdHRyaWJ1dGUgPSBuYW1lcyhhY3MyMDE1KSwgQ2xhc3MgPSBzYXBwbHkoYWNzMjAxNSwgY2xhc3MpLFxuICAgICAgICAgICBhY3MyMDE1ID0gc2FwcGx5KGFjczIwMTUsIGZ1bmN0aW9uKHgpIHBhc3RlKGhlYWQoeCksICBjb2xsYXBzZSA9IFwiLCBcIikpLFxuICAgICAgICAgICByb3cubmFtZXMgPSBOVUxMKSAlPiUga2FibGUoKSAlPiUga2FibGVfc3R5bGluZyhib290c3RyYXBfb3B0aW9ucyA9IGMoXCJzdHJpcGVkXCIsIFwiaG92ZXJcIiwgXCJjb25kZW5zZWRcIiksICBmb250X3NpemUgPSAxMSkgJT4lIHNjcm9sbF9ib3goaGVpZ2h0ID0gXCIyMDBweFwiKVxuYGBgIn0= -->
+<pre class="r"><code>data.frame(Attribute = names(acs2015), Class = sapply(acs2015, class),
+           acs2015 = sapply(acs2015, function(x) paste(head(x),  collapse = &quot;, &quot;)),
+           row.names = NULL) %&gt;% kable() %&gt;% kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;),  font_size = 11) %&gt;% scroll_box(height = &quot;200px&quot;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2hlYWQoYWNzMjAxNSwgbj04KVxuYGBgIn0= -->
-<pre class="r"><code>#head(acs2015, n=8)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY29sbmFtZXMoYWNzMjAxNSkgIyBDaGVja2luZyB0aGUgY29sdW1uIG5hbWVzXG5gYGAifQ== -->
-<pre class="r"><code>colnames(acs2015) # Checking the column names</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2FwcGx5KGFjczIwMTUsIGNsYXNzKSAjIENoZWNraW5nIHRoZSBkYXRhIHR5cGVzIGZvciAnYWNzMjAxNSdcbmBgYCJ9 -->
-<pre class="r"><code>sapply(acs2015, class) # Checking the data types for 'acs2015'</code></pre>
-<!-- rnb-source-end -->
+
+<!-- rnb-htmlwidget-begin eyJkZXBlbmRlbmNpZXMiOlt7ImFsbF9maWxlcyI6dHJ1ZSwiYXR0YWNobWVudCI6W10sImhlYWQiOltdLCJtZXRhIjpbXSwibmFtZSI6ImpxdWVyeSIsInBhY2thZ2UiOltdLCJzY3JpcHQiOiJqcXVlcnkubWluLmpzIiwic3JjIjp7ImZpbGUiOiIvTGlicmFyeS9GcmFtZXdvcmtzL1IuZnJhbWV3b3JrL1ZlcnNpb25zLzMuNC9SZXNvdXJjZXMvbGlicmFyeS9ybWFya2Rvd24vcm1kL2gvanF1ZXJ5LTEuMTEuMyJ9LCJzdHlsZXNoZWV0IjpbXSwidmVyc2lvbiI6IjEuMTEuMyJ9LHsiYWxsX2ZpbGVzIjp0cnVlLCJhdHRhY2htZW50IjpbXSwiaGVhZCI6W10sIm1ldGEiOnsidmlld3BvcnQiOiJ3aWR0aD1kZXZpY2Utd2lkdGgsIGluaXRpYWwtc2NhbGU9MSJ9LCJuYW1lIjoiYm9vdHN0cmFwIiwicGFja2FnZSI6W10sInNjcmlwdCI6WyJqcy9ib290c3RyYXAubWluLmpzIiwic2hpbS9odG1sNXNoaXYubWluLmpzIiwic2hpbS9yZXNwb25kLm1pbi5qcyJdLCJzcmMiOnsiZmlsZSI6Ii9MaWJyYXJ5L0ZyYW1ld29ya3MvUi5mcmFtZXdvcmsvVmVyc2lvbnMvMy40L1Jlc291cmNlcy9saWJyYXJ5L3JtYXJrZG93bi9ybWQvaC9ib290c3RyYXAtMy4zLjUifSwic3R5bGVzaGVldCI6ImNzcy9zaW1wbGV4Lm1pbi5jc3MiLCJ2ZXJzaW9uIjoiMy4zLjUifSx7ImFsbF9maWxlcyI6dHJ1ZSwiYXR0YWNobWVudCI6W10sImhlYWQiOltdLCJtZXRhIjpbXSwibmFtZSI6ImtlUHJpbnQiLCJwYWNrYWdlIjpbXSwic2NyaXB0Ijoia2VQcmludC5qcyIsInNyYyI6eyJmaWxlIjoiL0xpYnJhcnkvRnJhbWV3b3Jrcy9SLmZyYW1ld29yay9WZXJzaW9ucy8zLjQvUmVzb3VyY2VzL2xpYnJhcnkva2FibGVFeHRyYS9rZVByaW50LTAuMC4xIn0sInN0eWxlc2hlZXQiOltdLCJ2ZXJzaW9uIjoiMC4wLjEifV0sIm1ldGFkYXRhIjp7ImNsYXNzZXMiOlsic2hpbnkudGFnLmxpc3QiLCJsaXN0Il0sInNpemluZ1BvbGljeSI6W119fQ== -->
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-y: scroll; height:200px; "><table class="table table-striped table-hover table-condensed" style="font-size: 11px; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Attribute </th>
+   <th style="text-align:left;"> Class </th>
+   <th style="text-align:left;"> acs2015 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> CensusId </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 1001, 1003, 1005, 1007, 1009, 1011 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> State </td>
+   <td style="text-align:left;"> factor </td>
+   <td style="text-align:left;"> Alabama, Alabama, Alabama, Alabama, Alabama, Alabama </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> County </td>
+   <td style="text-align:left;"> factor </td>
+   <td style="text-align:left;"> Autauga, Baldwin, Barbour, Bibb, Blount, Bullock </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> TotalPop </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 55221, 195121, 26932, 22604, 57710, 10678 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Men </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 26745, 95314, 14497, 12073, 28512, 5660 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Women </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 28476, 99807, 12435, 10531, 29198, 5018 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Hispanic </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 2.6, 4.5, 4.6, 2.2, 8.6, 4.4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> White </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 75.8, 83.1, 46.2, 74.5, 87.9, 22.2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Black </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 18.5, 9.5, 46.7, 21.4, 1.5, 70.7 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Native </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 0.4, 0.6, 0.2, 0.4, 0.3, 1.2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Asian </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 1, 0.7, 0.4, 0.1, 0.1, 0.2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Pacific </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Citizen </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 40725, 147695, 20714, 17495, 42345, 8057 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Income </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 51281, 50254, 32964, 38678, 45813, 31938 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> IncomeErr </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 2391, 1263, 2973, 3995, 3141, 5884 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> IncomePerCap </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 24974, 27317, 16824, 18431, 20532, 17580 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> IncomePerCapErr </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 1080, 711, 798, 1618, 708, 2055 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Poverty </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 12.9, 13.4, 26.7, 16.8, 16.7, 24.6 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ChildPoverty </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 18.6, 19.2, 45.3, 27.9, 27.2, 38.4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Professional </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 33.2, 33.1, 26.8, 21.5, 28.5, 18.8 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Service </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 17, 17.7, 16.1, 17.9, 14.1, 15 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Office </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 24.2, 27.1, 23.1, 17.8, 23.9, 19.7 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Construction </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 8.6, 10.8, 10.8, 19, 13.5, 20.1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Production </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 17.1, 11.2, 23.1, 23.7, 19.9, 26.4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Drive </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 87.5, 84.7, 83.8, 83.2, 84.9, 74.9 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Carpool </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 8.8, 8.8, 10.9, 13.5, 11.2, 14.9 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Transit </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 0.1, 0.1, 0.4, 0.5, 0.4, 0.7 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Walk </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 0.5, 1, 1.8, 0.6, 0.9, 5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> OtherTransp </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 1.3, 1.4, 1.5, 1.5, 0.4, 1.7 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> WorkAtHome </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 1.8, 3.9, 1.6, 0.7, 2.3, 2.8 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> MeanCommute </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 26.5, 26.4, 24.1, 28.8, 34.9, 27.5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Employed </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 23986, 85953, 8597, 8294, 22189, 3865 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> PrivateWork </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 73.6, 81.5, 71.8, 76.8, 82, 79.5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> PublicWork </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 20.9, 12.3, 20.8, 16.1, 13.5, 15.1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> SelfEmployed </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 5.5, 5.8, 7.3, 6.7, 4.2, 5.4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> FamilyWork </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 0, 0.4, 0.1, 0.4, 0.4, 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Unemployment </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 7.6, 7.5, 17.6, 8.3, 7.7, 18 </td>
+  </tr>
+</tbody>
+</table></div>
+
+<!-- rnb-htmlwidget-end -->
+
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <div id="comment---drop-columns-first-then-join-then-clean-or-clean-then-join" class="section level5">
 <h5>Comment - drop columns first then join then clean… OR clean then join…</h5>
-<p>For the following analysis, nly interested in economic indicators</p>
+<p>For the following analysis, only interested in economic indicators and population</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWNzMjAxNV9rZWVwIDwtIHNlbGVjdChhY3MyMDE1LCBTdGF0ZSwgQ291bnR5LCBUb3RhbFBvcCwgSW5jb21lLCBJbmNvbWVQZXJDYXAsIFBvdmVydHksIFVuZW1wbG95bWVudCkgI0RwbHlyXG5gYGAifQ== -->
-<pre class="r"><code>acs2015_keep &lt;- select(acs2015, State, County, TotalPop, Income, IncomePerCap, Poverty, Unemployment) #Dplyr</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Checking the data types</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2FwcGx5KGFjczIwMTVfa2VlcCwgY2xhc3MpXG5gYGAifQ== -->
-<pre class="r"><code>sapply(acs2015_keep, class)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWNzMjAxNV9rZWVwIDwtIHNlbGVjdChhY3MyMDE1LCBTdGF0ZSwgQ291bnR5LCBUb3RhbFBvcCwgTWVuLCBXb21lbiwgSW5jb21lLCBJbmNvbWVQZXJDYXAsIFBvdmVydHksIFVuZW1wbG95bWVudClcbmBgYCJ9 -->
+<pre class="r"><code>acs2015_keep &lt;- select(acs2015, State, County, TotalPop, Men, Women, Income, IncomePerCap, Poverty, Unemployment)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShhY3MyMDE1X2tlZXApXG5gYGAifQ== -->
-<pre class="r"><code>summary(acs2015_keep)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YS5mcmFtZShBdHRyaWJ1dGUgPSBuYW1lcyhhY3MyMDE1X2tlZXApLCBDbGFzcyA9IHNhcHBseShhY3MyMDE1X2tlZXAsIGNsYXNzKSxcbiAgICAgICAgICAgYWNzMjAxNSA9IHNhcHBseShhY3MyMDE1X2tlZXAsIGZ1bmN0aW9uKHgpIHBhc3RlKGhlYWQoeCksICBjb2xsYXBzZSA9IFwiLCBcIikpLFxuICAgICAgICAgICByb3cubmFtZXMgPSBOVUxMKSAlPiUga2FibGUoKSAlPiUga2FibGVfc3R5bGluZyhib290c3RyYXBfb3B0aW9ucyA9IGMoXCJzdHJpcGVkXCIsIFwiaG92ZXJcIiwgXCJjb25kZW5zZWRcIiksICBmb250X3NpemUgPSAxMSkgJT4lIHNjcm9sbF9ib3goaGVpZ2h0ID0gXCIyMDBweFwiKVxuYGBgIn0= -->
+<pre class="r"><code>data.frame(Attribute = names(acs2015_keep), Class = sapply(acs2015_keep, class),
+           acs2015 = sapply(acs2015_keep, function(x) paste(head(x),  collapse = &quot;, &quot;)),
+           row.names = NULL) %&gt;% kable() %&gt;% kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;),  font_size = 11) %&gt;% scroll_box(height = &quot;200px&quot;)</code></pre>
 <!-- rnb-source-end -->
+
+<!-- rnb-htmlwidget-begin eyJkZXBlbmRlbmNpZXMiOlt7ImFsbF9maWxlcyI6dHJ1ZSwiYXR0YWNobWVudCI6W10sImhlYWQiOltdLCJtZXRhIjpbXSwibmFtZSI6ImpxdWVyeSIsInBhY2thZ2UiOltdLCJzY3JpcHQiOiJqcXVlcnkubWluLmpzIiwic3JjIjp7ImZpbGUiOiIvTGlicmFyeS9GcmFtZXdvcmtzL1IuZnJhbWV3b3JrL1ZlcnNpb25zLzMuNC9SZXNvdXJjZXMvbGlicmFyeS9ybWFya2Rvd24vcm1kL2gvanF1ZXJ5LTEuMTEuMyJ9LCJzdHlsZXNoZWV0IjpbXSwidmVyc2lvbiI6IjEuMTEuMyJ9LHsiYWxsX2ZpbGVzIjp0cnVlLCJhdHRhY2htZW50IjpbXSwiaGVhZCI6W10sIm1ldGEiOnsidmlld3BvcnQiOiJ3aWR0aD1kZXZpY2Utd2lkdGgsIGluaXRpYWwtc2NhbGU9MSJ9LCJuYW1lIjoiYm9vdHN0cmFwIiwicGFja2FnZSI6W10sInNjcmlwdCI6WyJqcy9ib290c3RyYXAubWluLmpzIiwic2hpbS9odG1sNXNoaXYubWluLmpzIiwic2hpbS9yZXNwb25kLm1pbi5qcyJdLCJzcmMiOnsiZmlsZSI6Ii9MaWJyYXJ5L0ZyYW1ld29ya3MvUi5mcmFtZXdvcmsvVmVyc2lvbnMvMy40L1Jlc291cmNlcy9saWJyYXJ5L3JtYXJrZG93bi9ybWQvaC9ib290c3RyYXAtMy4zLjUifSwic3R5bGVzaGVldCI6ImNzcy9zaW1wbGV4Lm1pbi5jc3MiLCJ2ZXJzaW9uIjoiMy4zLjUifSx7ImFsbF9maWxlcyI6dHJ1ZSwiYXR0YWNobWVudCI6W10sImhlYWQiOltdLCJtZXRhIjpbXSwibmFtZSI6ImtlUHJpbnQiLCJwYWNrYWdlIjpbXSwic2NyaXB0Ijoia2VQcmludC5qcyIsInNyYyI6eyJmaWxlIjoiL0xpYnJhcnkvRnJhbWV3b3Jrcy9SLmZyYW1ld29yay9WZXJzaW9ucy8zLjQvUmVzb3VyY2VzL2xpYnJhcnkva2FibGVFeHRyYS9rZVByaW50LTAuMC4xIn0sInN0eWxlc2hlZXQiOltdLCJ2ZXJzaW9uIjoiMC4wLjEifV0sIm1ldGFkYXRhIjp7ImNsYXNzZXMiOlsic2hpbnkudGFnLmxpc3QiLCJsaXN0Il0sInNpemluZ1BvbGljeSI6W119fQ== -->
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-y: scroll; height:200px; "><table class="table table-striped table-hover table-condensed" style="font-size: 11px; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Attribute </th>
+   <th style="text-align:left;"> Class </th>
+   <th style="text-align:left;"> acs2015 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> State </td>
+   <td style="text-align:left;"> factor </td>
+   <td style="text-align:left;"> Alabama, Alabama, Alabama, Alabama, Alabama, Alabama </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> County </td>
+   <td style="text-align:left;"> factor </td>
+   <td style="text-align:left;"> Autauga, Baldwin, Barbour, Bibb, Blount, Bullock </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> TotalPop </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 55221, 195121, 26932, 22604, 57710, 10678 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Men </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 26745, 95314, 14497, 12073, 28512, 5660 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Women </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 28476, 99807, 12435, 10531, 29198, 5018 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Income </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 51281, 50254, 32964, 38678, 45813, 31938 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> IncomePerCap </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 24974, 27317, 16824, 18431, 20532, 17580 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Poverty </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 12.9, 13.4, 26.7, 16.8, 16.7, 24.6 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Unemployment </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 7.6, 7.5, 17.6, 8.3, 7.7, 18 </td>
+  </tr>
+</tbody>
+</table></div>
+
+<!-- rnb-htmlwidget-end -->
+
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWdncmVnYXRlKENvdW50eSB+IFN0YXRlLCBhY3MyMDE1X2tlZXAsIGZ1bmN0aW9uKHgpIGxlbmd0aCh1bmlxdWUoeCkpKVxuYGBgIn0= -->
-<pre class="r"><code>aggregate(County ~ State, acs2015_keep, function(x) length(unique(x)))</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWdncmVnYXRlKENvdW50eSB+IFN0YXRlLCBhY3MyMDE1X2tlZXAsIGZ1bmN0aW9uKHgpIGxlbmd0aCh1bmlxdWUoeCkpKSAlPiUga2FibGUoKSAlPiUga2FibGVfc3R5bGluZyhib290c3RyYXBfb3B0aW9ucyA9IGMoXCJzdHJpcGVkXCIsIFwiaG92ZXJcIiwgXCJjb25kZW5zZWRcIiksICBmb250X3NpemUgPSAxMSwgZnVsbF93aWR0aCA9IEYpICU+JSBzY3JvbGxfYm94KGhlaWdodCA9IFwiMjAwcHhcIilcbmBgYCJ9 -->
+<pre class="r"><code>aggregate(County ~ State, acs2015_keep, function(x) length(unique(x))) %&gt;% kable() %&gt;% kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;),  font_size = 11, full_width = F) %&gt;% scroll_box(height = &quot;200px&quot;)</code></pre>
 <!-- rnb-source-end -->
+
+<!-- rnb-htmlwidget-begin eyJkZXBlbmRlbmNpZXMiOlt7ImFsbF9maWxlcyI6dHJ1ZSwiYXR0YWNobWVudCI6W10sImhlYWQiOltdLCJtZXRhIjpbXSwibmFtZSI6ImpxdWVyeSIsInBhY2thZ2UiOltdLCJzY3JpcHQiOiJqcXVlcnkubWluLmpzIiwic3JjIjp7ImZpbGUiOiIvTGlicmFyeS9GcmFtZXdvcmtzL1IuZnJhbWV3b3JrL1ZlcnNpb25zLzMuNC9SZXNvdXJjZXMvbGlicmFyeS9ybWFya2Rvd24vcm1kL2gvanF1ZXJ5LTEuMTEuMyJ9LCJzdHlsZXNoZWV0IjpbXSwidmVyc2lvbiI6IjEuMTEuMyJ9LHsiYWxsX2ZpbGVzIjp0cnVlLCJhdHRhY2htZW50IjpbXSwiaGVhZCI6W10sIm1ldGEiOnsidmlld3BvcnQiOiJ3aWR0aD1kZXZpY2Utd2lkdGgsIGluaXRpYWwtc2NhbGU9MSJ9LCJuYW1lIjoiYm9vdHN0cmFwIiwicGFja2FnZSI6W10sInNjcmlwdCI6WyJqcy9ib290c3RyYXAubWluLmpzIiwic2hpbS9odG1sNXNoaXYubWluLmpzIiwic2hpbS9yZXNwb25kLm1pbi5qcyJdLCJzcmMiOnsiZmlsZSI6Ii9MaWJyYXJ5L0ZyYW1ld29ya3MvUi5mcmFtZXdvcmsvVmVyc2lvbnMvMy40L1Jlc291cmNlcy9saWJyYXJ5L3JtYXJrZG93bi9ybWQvaC9ib290c3RyYXAtMy4zLjUifSwic3R5bGVzaGVldCI6ImNzcy9zaW1wbGV4Lm1pbi5jc3MiLCJ2ZXJzaW9uIjoiMy4zLjUifSx7ImFsbF9maWxlcyI6dHJ1ZSwiYXR0YWNobWVudCI6W10sImhlYWQiOltdLCJtZXRhIjpbXSwibmFtZSI6ImtlUHJpbnQiLCJwYWNrYWdlIjpbXSwic2NyaXB0Ijoia2VQcmludC5qcyIsInNyYyI6eyJmaWxlIjoiL0xpYnJhcnkvRnJhbWV3b3Jrcy9SLmZyYW1ld29yay9WZXJzaW9ucy8zLjQvUmVzb3VyY2VzL2xpYnJhcnkva2FibGVFeHRyYS9rZVByaW50LTAuMC4xIn0sInN0eWxlc2hlZXQiOltdLCJ2ZXJzaW9uIjoiMC4wLjEifV0sIm1ldGFkYXRhIjp7ImNsYXNzZXMiOlsic2hpbnkudGFnLmxpc3QiLCJsaXN0Il0sInNpemluZ1BvbGljeSI6W119fQ== -->
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-y: scroll; height:200px; "><table class="table table-striped table-hover table-condensed" style="font-size: 11px; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> State </th>
+   <th style="text-align:right;"> County </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Alabama </td>
+   <td style="text-align:right;"> 67 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Alaska </td>
+   <td style="text-align:right;"> 29 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Arizona </td>
+   <td style="text-align:right;"> 15 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Arkansas </td>
+   <td style="text-align:right;"> 75 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> California </td>
+   <td style="text-align:right;"> 58 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Colorado </td>
+   <td style="text-align:right;"> 64 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Connecticut </td>
+   <td style="text-align:right;"> 8 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Delaware </td>
+   <td style="text-align:right;"> 3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> District of Columbia </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Florida </td>
+   <td style="text-align:right;"> 67 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Georgia </td>
+   <td style="text-align:right;"> 159 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Hawaii </td>
+   <td style="text-align:right;"> 5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Idaho </td>
+   <td style="text-align:right;"> 44 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Illinois </td>
+   <td style="text-align:right;"> 102 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Indiana </td>
+   <td style="text-align:right;"> 92 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Iowa </td>
+   <td style="text-align:right;"> 99 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Kansas </td>
+   <td style="text-align:right;"> 105 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Kentucky </td>
+   <td style="text-align:right;"> 120 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Louisiana </td>
+   <td style="text-align:right;"> 64 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Maine </td>
+   <td style="text-align:right;"> 16 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Maryland </td>
+   <td style="text-align:right;"> 24 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Massachusetts </td>
+   <td style="text-align:right;"> 14 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Michigan </td>
+   <td style="text-align:right;"> 83 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Minnesota </td>
+   <td style="text-align:right;"> 87 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Mississippi </td>
+   <td style="text-align:right;"> 82 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Missouri </td>
+   <td style="text-align:right;"> 115 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Montana </td>
+   <td style="text-align:right;"> 56 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Nebraska </td>
+   <td style="text-align:right;"> 93 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Nevada </td>
+   <td style="text-align:right;"> 17 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> New Hampshire </td>
+   <td style="text-align:right;"> 10 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> New Jersey </td>
+   <td style="text-align:right;"> 21 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> New Mexico </td>
+   <td style="text-align:right;"> 33 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> New York </td>
+   <td style="text-align:right;"> 62 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> North Carolina </td>
+   <td style="text-align:right;"> 100 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> North Dakota </td>
+   <td style="text-align:right;"> 53 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Ohio </td>
+   <td style="text-align:right;"> 88 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Oklahoma </td>
+   <td style="text-align:right;"> 77 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Oregon </td>
+   <td style="text-align:right;"> 36 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Pennsylvania </td>
+   <td style="text-align:right;"> 67 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Puerto Rico </td>
+   <td style="text-align:right;"> 78 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Rhode Island </td>
+   <td style="text-align:right;"> 5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> South Carolina </td>
+   <td style="text-align:right;"> 46 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> South Dakota </td>
+   <td style="text-align:right;"> 66 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Tennessee </td>
+   <td style="text-align:right;"> 95 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Texas </td>
+   <td style="text-align:right;"> 254 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Utah </td>
+   <td style="text-align:right;"> 29 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Vermont </td>
+   <td style="text-align:right;"> 14 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Virginia </td>
+   <td style="text-align:right;"> 133 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Washington </td>
+   <td style="text-align:right;"> 39 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> West Virginia </td>
+   <td style="text-align:right;"> 55 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Wisconsin </td>
+   <td style="text-align:right;"> 72 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Wyoming </td>
+   <td style="text-align:right;"> 23 </td>
+  </tr>
+</tbody>
+</table></div>
+
+<!-- rnb-htmlwidget-end -->
+
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -1436,16 +2170,54 @@ gvd2015_keep_cali[KilledUnharmed,]</code></pre>
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWdncmVnYXRlKENvdW50eSB+IFN0YXRlLCBhY3MyMDE1X2tlZXBfY2FsaSwgZnVuY3Rpb24oeCkgbGVuZ3RoKHVuaXF1ZSh4KSkpXG5gYGAifQ== -->
-<pre class="r"><code>aggregate(County ~ State, acs2015_keep_cali, function(x) length(unique(x)))</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWdncmVnYXRlKENvdW50eSB+IFN0YXRlLCBhY3MyMDE1X2tlZXBfY2FsaSwgZnVuY3Rpb24oeCkgbGVuZ3RoKHVuaXF1ZSh4KSkpICU+JSBrYWJsZSgpICU+JSBrYWJsZV9zdHlsaW5nKGJvb3RzdHJhcF9vcHRpb25zID0gYyhcInN0cmlwZWRcIiwgXCJob3ZlclwiLCBcImNvbmRlbnNlZFwiKSwgIGZvbnRfc2l6ZSA9IDExLCBmdWxsX3dpZHRoID0gRilcbmBgYCJ9 -->
+<pre class="r"><code>aggregate(County ~ State, acs2015_keep_cali, function(x) length(unique(x))) %&gt;% kable() %&gt;% kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;),  font_size = 11, full_width = F)</code></pre>
 <!-- rnb-source-end -->
+
+<!-- rnb-htmlwidget-begin eyJkZXBlbmRlbmNpZXMiOlt7ImFsbF9maWxlcyI6dHJ1ZSwiYXR0YWNobWVudCI6W10sImhlYWQiOltdLCJtZXRhIjpbXSwibmFtZSI6ImpxdWVyeSIsInBhY2thZ2UiOltdLCJzY3JpcHQiOiJqcXVlcnkubWluLmpzIiwic3JjIjp7ImZpbGUiOiIvTGlicmFyeS9GcmFtZXdvcmtzL1IuZnJhbWV3b3JrL1ZlcnNpb25zLzMuNC9SZXNvdXJjZXMvbGlicmFyeS9ybWFya2Rvd24vcm1kL2gvanF1ZXJ5LTEuMTEuMyJ9LCJzdHlsZXNoZWV0IjpbXSwidmVyc2lvbiI6IjEuMTEuMyJ9LHsiYWxsX2ZpbGVzIjp0cnVlLCJhdHRhY2htZW50IjpbXSwiaGVhZCI6W10sIm1ldGEiOnsidmlld3BvcnQiOiJ3aWR0aD1kZXZpY2Utd2lkdGgsIGluaXRpYWwtc2NhbGU9MSJ9LCJuYW1lIjoiYm9vdHN0cmFwIiwicGFja2FnZSI6W10sInNjcmlwdCI6WyJqcy9ib290c3RyYXAubWluLmpzIiwic2hpbS9odG1sNXNoaXYubWluLmpzIiwic2hpbS9yZXNwb25kLm1pbi5qcyJdLCJzcmMiOnsiZmlsZSI6Ii9MaWJyYXJ5L0ZyYW1ld29ya3MvUi5mcmFtZXdvcmsvVmVyc2lvbnMvMy40L1Jlc291cmNlcy9saWJyYXJ5L3JtYXJrZG93bi9ybWQvaC9ib290c3RyYXAtMy4zLjUifSwic3R5bGVzaGVldCI6ImNzcy9zaW1wbGV4Lm1pbi5jc3MiLCJ2ZXJzaW9uIjoiMy4zLjUifSx7ImFsbF9maWxlcyI6dHJ1ZSwiYXR0YWNobWVudCI6W10sImhlYWQiOltdLCJtZXRhIjpbXSwibmFtZSI6ImtlUHJpbnQiLCJwYWNrYWdlIjpbXSwic2NyaXB0Ijoia2VQcmludC5qcyIsInNyYyI6eyJmaWxlIjoiL0xpYnJhcnkvRnJhbWV3b3Jrcy9SLmZyYW1ld29yay9WZXJzaW9ucy8zLjQvUmVzb3VyY2VzL2xpYnJhcnkva2FibGVFeHRyYS9rZVByaW50LTAuMC4xIn0sInN0eWxlc2hlZXQiOltdLCJ2ZXJzaW9uIjoiMC4wLjEifV0sIm1ldGFkYXRhIjp7ImNsYXNzZXMiOlsic2hpbnkudGFnLmxpc3QiLCJsaXN0Il0sInNpemluZ1BvbGljeSI6W119fQ== -->
+
+<table class="table table-striped table-hover table-condensed" style="font-size: 11px; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> State </th>
+   <th style="text-align:right;"> County </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> California </td>
+   <td style="text-align:right;"> 58 </td>
+  </tr>
+</tbody>
+</table>
+
+<!-- rnb-htmlwidget-end -->
+
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWdncmVnYXRlKGNpdHlfb3JfY291bnR5IH4gY2l0eV9vcl9jb3VudHksIGd2ZDIwMTVfcHQyLCBmdW5jdGlvbih4KSBsZW5ndGgodW5pcXVlKHgpKSlcbmBgYCJ9 -->
-<pre class="r"><code>aggregate(city_or_county ~ city_or_county, gvd2015_pt2, function(x) length(unique(x)))</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWdncmVnYXRlKGNpdHlfb3JfY291bnR5IH4gY2l0eV9vcl9jb3VudHksIGd2ZDIwMTVfcHQyLCBmdW5jdGlvbih4KSBsZW5ndGgodW5pcXVlKHgpKSkgJT4lIGthYmxlKCkgJT4lIGthYmxlX3N0eWxpbmcoYm9vdHN0cmFwX29wdGlvbnMgPSBjKFwic3RyaXBlZFwiLCBcImhvdmVyXCIsIFwiY29uZGVuc2VkXCIpLCAgZm9udF9zaXplID0gMTEsIGZ1bGxfd2lkdGggPSBGKVxuYGBgIn0= -->
+<pre class="r"><code>aggregate(city_or_county ~ city_or_county, gvd2015_pt2, function(x) length(unique(x))) %&gt;% kable() %&gt;% kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;),  font_size = 11, full_width = F)</code></pre>
 <!-- rnb-source-end -->
+
+<!-- rnb-htmlwidget-begin eyJkZXBlbmRlbmNpZXMiOlt7ImFsbF9maWxlcyI6dHJ1ZSwiYXR0YWNobWVudCI6W10sImhlYWQiOltdLCJtZXRhIjpbXSwibmFtZSI6ImpxdWVyeSIsInBhY2thZ2UiOltdLCJzY3JpcHQiOiJqcXVlcnkubWluLmpzIiwic3JjIjp7ImZpbGUiOiIvTGlicmFyeS9GcmFtZXdvcmtzL1IuZnJhbWV3b3JrL1ZlcnNpb25zLzMuNC9SZXNvdXJjZXMvbGlicmFyeS9ybWFya2Rvd24vcm1kL2gvanF1ZXJ5LTEuMTEuMyJ9LCJzdHlsZXNoZWV0IjpbXSwidmVyc2lvbiI6IjEuMTEuMyJ9LHsiYWxsX2ZpbGVzIjp0cnVlLCJhdHRhY2htZW50IjpbXSwiaGVhZCI6W10sIm1ldGEiOnsidmlld3BvcnQiOiJ3aWR0aD1kZXZpY2Utd2lkdGgsIGluaXRpYWwtc2NhbGU9MSJ9LCJuYW1lIjoiYm9vdHN0cmFwIiwicGFja2FnZSI6W10sInNjcmlwdCI6WyJqcy9ib290c3RyYXAubWluLmpzIiwic2hpbS9odG1sNXNoaXYubWluLmpzIiwic2hpbS9yZXNwb25kLm1pbi5qcyJdLCJzcmMiOnsiZmlsZSI6Ii9MaWJyYXJ5L0ZyYW1ld29ya3MvUi5mcmFtZXdvcmsvVmVyc2lvbnMvMy40L1Jlc291cmNlcy9saWJyYXJ5L3JtYXJrZG93bi9ybWQvaC9ib290c3RyYXAtMy4zLjUifSwic3R5bGVzaGVldCI6ImNzcy9zaW1wbGV4Lm1pbi5jc3MiLCJ2ZXJzaW9uIjoiMy4zLjUifSx7ImFsbF9maWxlcyI6dHJ1ZSwiYXR0YWNobWVudCI6W10sImhlYWQiOltdLCJtZXRhIjpbXSwibmFtZSI6ImtlUHJpbnQiLCJwYWNrYWdlIjpbXSwic2NyaXB0Ijoia2VQcmludC5qcyIsInNyYyI6eyJmaWxlIjoiL0xpYnJhcnkvRnJhbWV3b3Jrcy9SLmZyYW1ld29yay9WZXJzaW9ucy8zLjQvUmVzb3VyY2VzL2xpYnJhcnkva2FibGVFeHRyYS9rZVByaW50LTAuMC4xIn0sInN0eWxlc2hlZXQiOltdLCJ2ZXJzaW9uIjoiMC4wLjEifV0sIm1ldGFkYXRhIjp7ImNsYXNzZXMiOlsic2hpbnkudGFnLmxpc3QiLCJsaXN0Il0sInNpemluZ1BvbGljeSI6W119fQ== -->
+
+<table class="table table-striped table-hover table-condensed" style="font-size: 11px; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> city_or_county </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 502 </td>
+  </tr>
+</tbody>
+</table>
+
+<!-- rnb-htmlwidget-end -->
+
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -1454,27 +2226,374 @@ gvd2015_keep_cali[KilledUnharmed,]</code></pre>
 <h3>Merge …</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY29sbmFtZXMoZ3ZkMjAxNV9wdDIpXG5ndmQyMDE1X3B0MiA9IHJlbmFtZShndmQyMDE1X3B0MiwgQ291bnR5ID0gY2l0eV9vcl9jb3VudHkpXG5jb2xuYW1lcyhndmQyMDE1X3B0MilcbmBgYCJ9 -->
-<pre class="r"><code>colnames(gvd2015_pt2)
-gvd2015_pt2 = rename(gvd2015_pt2, County = city_or_county)
-colnames(gvd2015_pt2)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ3ZkMjAxNV9wdDIgPC0gcmVuYW1lKGd2ZDIwMTVfcHQyLCBDb3VudHkgPSBjaXR5X29yX2NvdW50eSlcbmd2ZF9hY3Nfam9pbiA8LSBpbm5lcl9qb2luKGd2ZDIwMTVfcHQyLCBhY3MyMDE1X2tlZXBfY2FsaSwgYnkgPSBcIkNvdW50eVwiKVxuZ3ZkX2Fjc19qb2luIDwtIHN1YnNldChndmRfYWNzX2pvaW4sIHNlbGVjdCA9IC1jKFN0YXRlLCBzdGF0ZSkpXG5gYGAifQ== -->
+<pre class="r"><code>gvd2015_pt2 &lt;- rename(gvd2015_pt2, County = city_or_county)
+gvd_acs_join &lt;- inner_join(gvd2015_pt2, acs2015_keep_cali, by = &quot;County&quot;)
+gvd_acs_join &lt;- subset(gvd_acs_join, select = -c(State, state))</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="merge-1" class="section level3">
+<h3>Merge …</h3>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YS5mcmFtZShBdHRyaWJ1dGUgPSBuYW1lcyhndmRfYWNzX2pvaW4pLCBDbGFzcyA9IHNhcHBseShndmRfYWNzX2pvaW4sIGNsYXNzKSxcbiAgICAgICAgICAgZ3ZkX2Fjc19qb2luID0gc2FwcGx5KGd2ZF9hY3Nfam9pbiwgZnVuY3Rpb24oeCkgcGFzdGUwKGhlYWQoeCksICBjb2xsYXBzZSA9IFwiLCBcIikpLFxuICAgICAgICAgICBOQU4gPSBzYXBwbHkoZ3ZkX2Fjc19qb2luLCBmdW5jdGlvbih5KSBzdW0obGVuZ3RoKHdoaWNoKGlzLm5hKHkpKSkpKSxcbiAgICAgICAgICAgcm93Lm5hbWVzID0gTlVMTCkgJT4lIGthYmxlKCkgJT4lIGthYmxlX3N0eWxpbmcoYm9vdHN0cmFwX29wdGlvbnMgPSBjKFwic3RyaXBlZFwiLCBcImhvdmVyXCIsIFwiY29uZGVuc2VkXCIpLCAgZm9udF9zaXplID0gMTEpICMlPiUgc2Nyb2xsX2JveChoZWlnaHQgPSBcIjIwMHB4XCIpXG5gYGAifQ== -->
+<pre class="r"><code>data.frame(Attribute = names(gvd_acs_join), Class = sapply(gvd_acs_join, class),
+           gvd_acs_join = sapply(gvd_acs_join, function(x) paste0(head(x),  collapse = &quot;, &quot;)),
+           NAN = sapply(gvd_acs_join, function(y) sum(length(which(is.na(y))))),
+           row.names = NULL) %&gt;% kable() %&gt;% kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;),  font_size = 11) #%&gt;% scroll_box(height = &quot;200px&quot;)</code></pre>
+<!-- rnb-source-end -->
+
+<!-- rnb-htmlwidget-begin eyJkZXBlbmRlbmNpZXMiOlt7ImFsbF9maWxlcyI6dHJ1ZSwiYXR0YWNobWVudCI6W10sImhlYWQiOltdLCJtZXRhIjpbXSwibmFtZSI6ImpxdWVyeSIsInBhY2thZ2UiOltdLCJzY3JpcHQiOiJqcXVlcnkubWluLmpzIiwic3JjIjp7ImZpbGUiOiIvTGlicmFyeS9GcmFtZXdvcmtzL1IuZnJhbWV3b3JrL1ZlcnNpb25zLzMuNC9SZXNvdXJjZXMvbGlicmFyeS9ybWFya2Rvd24vcm1kL2gvanF1ZXJ5LTEuMTEuMyJ9LCJzdHlsZXNoZWV0IjpbXSwidmVyc2lvbiI6IjEuMTEuMyJ9LHsiYWxsX2ZpbGVzIjp0cnVlLCJhdHRhY2htZW50IjpbXSwiaGVhZCI6W10sIm1ldGEiOnsidmlld3BvcnQiOiJ3aWR0aD1kZXZpY2Utd2lkdGgsIGluaXRpYWwtc2NhbGU9MSJ9LCJuYW1lIjoiYm9vdHN0cmFwIiwicGFja2FnZSI6W10sInNjcmlwdCI6WyJqcy9ib290c3RyYXAubWluLmpzIiwic2hpbS9odG1sNXNoaXYubWluLmpzIiwic2hpbS9yZXNwb25kLm1pbi5qcyJdLCJzcmMiOnsiZmlsZSI6Ii9MaWJyYXJ5L0ZyYW1ld29ya3MvUi5mcmFtZXdvcmsvVmVyc2lvbnMvMy40L1Jlc291cmNlcy9saWJyYXJ5L3JtYXJrZG93bi9ybWQvaC9ib290c3RyYXAtMy4zLjUifSwic3R5bGVzaGVldCI6ImNzcy9zaW1wbGV4Lm1pbi5jc3MiLCJ2ZXJzaW9uIjoiMy4zLjUifSx7ImFsbF9maWxlcyI6dHJ1ZSwiYXR0YWNobWVudCI6W10sImhlYWQiOltdLCJtZXRhIjpbXSwibmFtZSI6ImtlUHJpbnQiLCJwYWNrYWdlIjpbXSwic2NyaXB0Ijoia2VQcmludC5qcyIsInNyYyI6eyJmaWxlIjoiL0xpYnJhcnkvRnJhbWV3b3Jrcy9SLmZyYW1ld29yay9WZXJzaW9ucy8zLjQvUmVzb3VyY2VzL2xpYnJhcnkva2FibGVFeHRyYS9rZVByaW50LTAuMC4xIn0sInN0eWxlc2hlZXQiOltdLCJ2ZXJzaW9uIjoiMC4wLjEifV0sIm1ldGFkYXRhIjp7ImNsYXNzZXMiOlsic2hpbnkudGFnLmxpc3QiLCJsaXN0Il0sInNpemluZ1BvbGljeSI6W119fQ== -->
+
+<table class="table table-striped table-hover table-condensed" style="font-size: 11px; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Attribute </th>
+   <th style="text-align:left;"> Class </th>
+   <th style="text-align:left;"> gvd_acs_join </th>
+   <th style="text-align:right;"> NAN </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> incident_id </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 272551, 272526, 272165, 273497, 273249, 273495 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> date </td>
+   <td style="text-align:left;"> Date </td>
+   <td style="text-align:left;"> 2015-01-01, 2015-01-01, 2015-01-01, 2015-01-01, 2015-01-02, 2015-01-03 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> County </td>
+   <td style="text-align:left;"> character </td>
+   <td style="text-align:left;"> Merced, Fresno, San Francisco, Merced, Fresno, Fresno </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> congressional_district </td>
+   <td style="text-align:left;"> factor </td>
+   <td style="text-align:left;"> 16, 16, 12, 16, 16, 16 </td>
+   <td style="text-align:right;"> 5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> state_house_district </td>
+   <td style="text-align:left;"> factor </td>
+   <td style="text-align:left;"> 21, 31, 17, 21, 23, 31 </td>
+   <td style="text-align:right;"> 5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> state_senate_district </td>
+   <td style="text-align:left;"> factor </td>
+   <td style="text-align:left;"> 12, 14, 11, 12, 8, 14 </td>
+   <td style="text-align:right;"> 5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> latitude </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 37.3006, 36.7307, 37.7881, 37.3103, 36.7501, 36.7504 </td>
+   <td style="text-align:right;"> 5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> longitude </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> -120.498, -119.769, -122.395, -120.481, -119.849, -119.797 </td>
+   <td style="text-align:right;"> 5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_0_15 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_16_20 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 2, 0, 0, 0, 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_21_25 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 1, 1, 3, 0, 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_26_30 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 1, 0, 0, 0, 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_31_35 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 1, 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_36_40 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 1, 0, 1 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_41_45 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_46_50 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_51_55 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 1, 0, 0, 0, 0, 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_56_60 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_61_65 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_66_70 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_71_75 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_76_80 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age_81_100 </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> male_count </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 1, 4, 1, 5, 1, 1 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> female_count </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> injured_count </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> unharmed_count </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 4, 1, 5, 1, 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> killed_count </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 1, 0, 0, 0, 0, 1 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> unharmedArrested_count </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 4, 1, 5, 1, 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arrested_count </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 4, 1, 5, 1, 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> injuredArrested_count </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 0, 0, 0, 0, 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> victim_count </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 1, 0, 0, 0, 0, 1 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> subjectSuspect_count </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 0, 4, 1, 5, 1, 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> TotalPop </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 263885, 956749, 840763, 263885, 956749, 956749 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Men </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 133152, 477316, 427909, 133152, 477316, 477316 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Women </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 130733, 479433, 412854, 130733, 479433, 479433 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Income </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 42462, 45233, 81294, 42462, 45233, 45233 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> IncomePerCap </td>
+   <td style="text-align:left;"> integer </td>
+   <td style="text-align:left;"> 18204, 20408, 52220, 18204, 20408, 20408 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Poverty </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 26.1, 26.8, 13.2, 26.1, 26.8, 26.8 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Unemployment </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:left;"> 16.2, 13.2, 6.8, 16.2, 13.2, 13.2 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+</tbody>
+</table>
+
+<!-- rnb-htmlwidget-end -->
+
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="nan-values" class="section level4">
+<h4>NaN Values</h4>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ3ZkX2Fjc19qb2luICU+JSBmaWx0ZXIoaXMubmEoY29uZ3Jlc3Npb25hbF9kaXN0cmljdCkpICU+JSBcbiAgc2VsZWN0KENvdW50eSwgY29uZ3Jlc3Npb25hbF9kaXN0cmljdCwgc3RhdGVfaG91c2VfZGlzdHJpY3QsIHN0YXRlX3NlbmF0ZV9kaXN0cmljdCwgbGF0aXR1ZGUsIGxvbmdpdHVkZSkgJT4lXG4gIGthYmxlKCkgJT4lIGthYmxlX3N0eWxpbmcoYm9vdHN0cmFwX29wdGlvbnMgPSBjKFwic3RyaXBlZFwiLCBcImhvdmVyXCIsIFwiY29uZGVuc2VkXCIpLCAgZm9udF9zaXplID0gMTEpXG5gYGAifQ== -->
+<pre class="r"><code>gvd_acs_join %&gt;% filter(is.na(congressional_district)) %&gt;% 
+  select(County, congressional_district, state_house_district, state_senate_district, latitude, longitude) %&gt;%
+  kable() %&gt;% kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;),  font_size = 11)</code></pre>
+<!-- rnb-source-end -->
+
+<!-- rnb-htmlwidget-begin eyJkZXBlbmRlbmNpZXMiOlt7ImFsbF9maWxlcyI6dHJ1ZSwiYXR0YWNobWVudCI6W10sImhlYWQiOltdLCJtZXRhIjpbXSwibmFtZSI6ImpxdWVyeSIsInBhY2thZ2UiOltdLCJzY3JpcHQiOiJqcXVlcnkubWluLmpzIiwic3JjIjp7ImZpbGUiOiIvTGlicmFyeS9GcmFtZXdvcmtzL1IuZnJhbWV3b3JrL1ZlcnNpb25zLzMuNC9SZXNvdXJjZXMvbGlicmFyeS9ybWFya2Rvd24vcm1kL2gvanF1ZXJ5LTEuMTEuMyJ9LCJzdHlsZXNoZWV0IjpbXSwidmVyc2lvbiI6IjEuMTEuMyJ9LHsiYWxsX2ZpbGVzIjp0cnVlLCJhdHRhY2htZW50IjpbXSwiaGVhZCI6W10sIm1ldGEiOnsidmlld3BvcnQiOiJ3aWR0aD1kZXZpY2Utd2lkdGgsIGluaXRpYWwtc2NhbGU9MSJ9LCJuYW1lIjoiYm9vdHN0cmFwIiwicGFja2FnZSI6W10sInNjcmlwdCI6WyJqcy9ib290c3RyYXAubWluLmpzIiwic2hpbS9odG1sNXNoaXYubWluLmpzIiwic2hpbS9yZXNwb25kLm1pbi5qcyJdLCJzcmMiOnsiZmlsZSI6Ii9MaWJyYXJ5L0ZyYW1ld29ya3MvUi5mcmFtZXdvcmsvVmVyc2lvbnMvMy40L1Jlc291cmNlcy9saWJyYXJ5L3JtYXJrZG93bi9ybWQvaC9ib290c3RyYXAtMy4zLjUifSwic3R5bGVzaGVldCI6ImNzcy9zaW1wbGV4Lm1pbi5jc3MiLCJ2ZXJzaW9uIjoiMy4zLjUifSx7ImFsbF9maWxlcyI6dHJ1ZSwiYXR0YWNobWVudCI6W10sImhlYWQiOltdLCJtZXRhIjpbXSwibmFtZSI6ImtlUHJpbnQiLCJwYWNrYWdlIjpbXSwic2NyaXB0Ijoia2VQcmludC5qcyIsInNyYyI6eyJmaWxlIjoiL0xpYnJhcnkvRnJhbWV3b3Jrcy9SLmZyYW1ld29yay9WZXJzaW9ucy8zLjQvUmVzb3VyY2VzL2xpYnJhcnkva2FibGVFeHRyYS9rZVByaW50LTAuMC4xIn0sInN0eWxlc2hlZXQiOltdLCJ2ZXJzaW9uIjoiMC4wLjEifV0sIm1ldGFkYXRhIjp7ImNsYXNzZXMiOlsic2hpbnkudGFnLmxpc3QiLCJsaXN0Il0sInNpemluZ1BvbGljeSI6W119fQ== -->
+
+<table class="table table-striped table-hover table-condensed" style="font-size: 11px; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> County </th>
+   <th style="text-align:left;"> congressional_district </th>
+   <th style="text-align:left;"> state_house_district </th>
+   <th style="text-align:left;"> state_senate_district </th>
+   <th style="text-align:right;"> latitude </th>
+   <th style="text-align:right;"> longitude </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Fresno </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> San Bernardino </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Fresno </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Los Angeles </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Sacramento </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+  </tr>
+</tbody>
+</table>
+
+<!-- rnb-htmlwidget-end -->
+
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuam9pbiA8LSBpbm5lcl9qb2luKGd2ZDIwMTVfcHQyLCBhY3MyMDE1X2tlZXBfY2FsaSwgYnkgPSBcIkNvdW50eVwiKSAjIERpc2FibGUgd2FybmluZ3MuLi5cbmBgYCJ9 -->
-<pre class="r"><code>join &lt;- inner_join(gvd2015_pt2, acs2015_keep_cali, by = &quot;County&quot;) # Disable warnings...</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShndmRfYWNzX2pvaW5fZnJlc25vJGNvbmdyZXNzaW9uYWxfZGlzdHJpY3QpXG5cbmBgYCJ9 -->
+<pre class="r"><code>summary(gvd_acs_join_fresno$congressional_district)
+</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgMSAgICAyICAgIDMgICAgNCAgICA1ICAgIDYgICAgNyAgICA4ICAgIDkgICAxMCAgIDExICAgMTIgICAxMyAgIDE0ICAgMTUgICAxNiAgIDE3ICAgMTggICAxOSAgIDIwICAgMjEgICAyMiAgIDIzICAgMjQgICAyNSAgIDI2ICAgMjcgICAyOCAgIDI5ICAgMzAgICAzMSAgIDMyIFxuICAgMCAgICAwICAgIDAgICAgMCAgICAwICAgIDAgICAgMSAgICAwICAgIDAgICAgMCAgICAwICAgIDAgICAgMCAgICAwICAgIDAgIDIwOSAgICAwICAgIDAgICAgMCAgICAwICAgIDMgICA3MSAgICAwICAgIDAgICAgMCAgICAwICAgIDAgICAgMCAgICAwICAgIDAgICAgMCAgICAwIFxuICAzMyAgIDM0ICAgMzUgICAzNiAgIDM3ICAgMzggICAzOSAgIDQwICAgNDEgICA0MiAgIDQzICAgNDQgICA0NSAgIDQ2ICAgNDcgICA0OCAgIDQ5ICAgNTAgICA1MSAgIDUyICAgNTMgTkEncyBcbiAgIDAgICAgMCAgICAwICAgIDAgICAgMCAgICAwICAgIDAgICAgMCAgICAwICAgIDAgICAgMCAgICAwICAgIDAgICAgMCAgICAwICAgIDAgICAgMCAgICAwICAgIDAgICAgMCAgICAwICAgIDIgXG4ifQ== -->
+<pre><code>   1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16   17   18   19   20   21   22   23   24   25   26   27   28   29   30   31   32 
+   0    0    0    0    0    0    1    0    0    0    0    0    0    0    0  209    0    0    0    0    3   71    0    0    0    0    0    0    0    0    0    0 
+  33   34   35   36   37   38   39   40   41   42   43   44   45   46   47   48   49   50   51   52   53 NA's 
+   0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    2 </code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<div id="how-could-census-data-be-missing-justifiably-there-may-not-be-gun-incidents-in-every-country-but-there-is-more-info-that-gun-violence" class="section level4">
-<h4>How could CENSUS data be missing???? Justifiably there may not be gun incidents in every country, but there IS more info that gun violence!!!!</h4>
 <!-- rnb-text-end -->
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiTUFUSDIzNDkgU2VtZXN0ZXIgMSwgMjAxOCAtIEFERCBERVNDUklQVElWRSBUSVRMRSIKYXV0aG9yOiAiQWxpc3RhaXIgR3JldmlzLUphbWVzIChzMzY0NDExOSkgYW5kIENocmlzIEthaWFzIChzWFhYWFhYKSIKc3VidGl0bGU6IEFzc2lnbm1lbnQgMwpvdXRwdXQ6CiAgaHRtbF9ub3RlYm9vazoKICAgICAgdG9jOiB0cnVlCiAgICAgIHRvY19mbG9hdDogdHJ1ZQotLS0KCjxzdHlsZT4KYm9keSB7CnRleHQtYWxpZ246IGp1c3RpZnl9Cjwvc3R5bGU+CgpgYGB7ciwgaW5jbHVkZSA9IEZBTFNFfQpvcHRpb25zKGtuaXRyLnRhYmxlLmZvcm1hdCA9ICJodG1sIikKYGBgCgojIyMgRXhlY3V0aXZlIFN1bW1hcnkKCkRhdGEgYmxhaCBibGFoIGFuZCAuLi4gVGhlc2UgZGF0YSB3ZXJlIGltcG9ydGVkIGFzIGB4eHhgIGFuZCBgeXl5YCwgcmVzcGVjdGl2ZWx5LgoKIyMjIFJlcXVpcmVkIHBhY2thZ2VzIAoKYGBge3IsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHBhZ2VkLnByaW50PVRSVUV9CiNUaGUgZm9sbG93aW5nIHBhY2thZ2VzIHdlcmUgdXNlZCB3aGlsc3QgY29tcGxldGluZyB0aGUgcmVwb3J0ICh3aXRoIGFubm90YXRpb24pCmxpYnJhcnkocmVhZHIpICMgVXNlZCB0byBpbXBvcnQgLmNzdiBmaWxlcwpsaWJyYXJ5KGRwbHlyKSAjIFNlY3Rpb24gWQpsaWJyYXJ5KHN0cmluZ3IpICMgU2VjdGlvbiBaCmxpYnJhcnkoa25pdHIpICMgU2VjdGlvbiBYCmxpYnJhcnkodGlkeXIpCmxpYnJhcnkobHVicmlkYXRlKQpsaWJyYXJ5KGthYmxlRXh0cmEpCiN4bHN4ICNyZWFkeGwgI2ZvcmVpZ24gI2dkYXRhICNydmVzdCAjZHBseXIgICNkZWR1Y3RpdmUgI3ZhbGlkYXRlICNIbWlzYyAjb3V0bGllcnMKI01WTiAjaW5mb3RoZW8gI01BU1MgI2NhcmV0ICNNTFIgI2dncGxvdCAjYmFzZSBSIGZ1bmN0aW9ucwpgYGAKCiMjIyBJbXBvcnRpbmcgdGhlIERhdGEKClRoZSBgcmVhZHJgIGZ1bmN0aW9uIHdhcyB1c2VkIHRvIGltcG9ydCB0aGUgZGF0YSBhcyBzaG93biBiZWxvdy4gVGhlIGRhdGEgd2VyZSBpbXBvcnRlZCBhcyBgZ3ZkYCBmb3IgR3VuIFZpb2xlbmNlIERhdGEgYW5kIGBhY3MyMDE1YCBmb3IgQW1lcmljYW4gKFVTKSAyMDE1IENlbnN1cyBEYXRhLgoKYGBge3IsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHBhZ2VkLnByaW50PVRSVUV9Cmd2ZFppcCA8LSAiZ3VuLXZpb2xlbmNlLWRhdGEuY3N2LnppcCIKb3V0RGlyPC0iL1VzZXJzL2FsaXN0YWlyZ2ovRG9jdW1lbnRzL0dpdEh1YiIgIyBDaGFuZ2Ugb3V0cHV0IGRpcmVjdG9yeSBmb3IgdW56aXBwZWQgLmNzdiBmaWxlIGFzIG5lZWRlZAp1bnppcChndmRaaXAsIGV4ZGlyPW91dERpcikKc2V0d2QoIi9Vc2Vycy9hbGlzdGFpcmdqL0RvY3VtZW50cy9HaXRIdWIiKQpndmQgPC0gcmVhZC5jc3YoImd1bi12aW9sZW5jZS1kYXRhLmNzdiIpICMgSW1wb3J0aW5nIEd1biBWaW9sZW5jZSBEYXRhCnNldHdkKCIvVXNlcnMvYWxpc3RhaXJnai9Eb2N1bWVudHMvR2l0SHViL01BVEgyMzQ5X0Fzc2lnbm1lbnQzVjIiKQphY3MyMDE1IDwtIHJlYWQuY3N2KCJhY3MyMDE1X2NvdW50eV9kYXRhLmNzdiIpICMgSW1wb3J0aW5nIEFtZXJpY2FuIChVUykgQ2Vuc3VzIERhdGEgMjAxNQpgYGAKCiMjIyBEYXRhIFN1bW1hcnkKClRocmVlIGRhdGEgc2V0cyBmcm9tIHR3byBzb3VyY2VzIHdhcyB1c2VkIGR1cmluZyB0aGlzIGFuYWx5c2lzLgoKR3VuIFZpb2xlbmNlIERhdGEgYSBDb21wcmVoZW5zaXZlIHJlY29yZCBvZiBvdmVyIDI2MGsgVVMgZ3VuIHZpb2xlbmNlIGluY2lkZW50cyBmcm9tIDIwMTMtMjAxOCAoaXRhbGljcyksIHdhcyBjb21waWxlZCBieSBKYW1lcyBLbyBhbmQgbWFkZSBhdmFpbGFibGUgb24ga2FnZ2xlLmNvbSAoZm9vdG5vdGUpLiBUaGVzZSBkYXRhIGNvbnRhaW4gYWxsIHJlY29yZGVkIGd1biB2aW9sZW5jZSBpbmNpZGVudHMgaW4gdGhlIFVTIGJldHdlZW4gSmFudWFyeSAyMDEzIGFuZCBNYXJjaCAyMDE4LCBpbmNsdXNpdmUuIFRoZXNlIGRhdGEgd2VyZSBpbXBvcnRlZCBhcyBgZ3ZkYC4KCmh0dHBzOi8vd3d3LmthZ2dsZS5jb20vamFtZXNsa28vZ3VuLXZpb2xlbmNlLWRhdGEvZGF0YSA9IGd1bl92aW9sZW5jZV9kYXRhCgpVUyBDZW5zdXMgRGVtb2dyYXBoaWMgRGF0YSBEZW1vZ3JhcGhpYyBhbmQgRWNvbm9taWMgRGF0YSBmb3IgVHJhY3RzIGFuZCBDb3VudGllcyAoaXRhbGljcyksIHdhcyBjb2xsZWN0ZWQgYnkgdGhlIFVTIENlbnN1cyBCdXJlYXUgYW5kIG1hZGUgYXZhaWxhYmxlIG9uIGthZ2dsZS5jb20gKGZvb3Rub3RlKS4gVGhlc2UgZGF0YSBjb250YWluIGFsbCBjZW5jdXMgZGF0YSBmcm9tIHRoZSAyMDE1IGZlZGVyYWwgY2Vuc3VzLiBUaGVzZSBkYXRhIHdlcmUgc3BsaXQgaW50byB0d28gZGF0YSBzZXRzLCB0aGUgZmlyc3QgYmVpbmcgY291bnR5IGRhdGEsIGFuZCB0aGUgc2Vjb25kIGJlaW5nIHRyYWN0IGRhdGEgKFRoZSAiQ2Vuc3VzIFRyYWN0IiBpcyBhbiBhcmVhIHJvdWdobHkgZXF1aXZhbGVudCB0byBhIG5laWdoYm9yaG9vZCBlc3RhYmxpc2hlZCBieSB0aGUgQnVyZWF1IG9mIENlbnN1cyBmb3IgYW5hbHl6aW5nIHBvcHVsYXRpb25zLiBUaGV5IGdlbmVyYWxseSBlbmNvbXBhc3MgYSBwb3B1bGF0aW9uIGJldHdlZW4gMiw1MDAgdG8gOCwwMDAgcGVvcGxlKS4KCmh0dHBzOi8vd3d3LmthZ2dsZS5jb20vemltZWl5YW5nLzIwMTUtdXMtY2Vuc3VzLWRlbW9ncmFwaGljLWRhdGEvZGF0YSA9IGFjc18yMDE1CgoKIyMjIEluaXRpYWwgQ2hlY2sgb2YgR3VuIFZpb2xlbmNlIERhdGEKClRoZSBkYXRhc2V0IEd1bi1WaW9sZW5jZSBEYXRhIHdhcyBpbXBvcnRlZCBhcyBgZ3ZkYC4gVXNpbmcgYGRhdGEuZnJhbWVgIHdpdGggcGlwaW5nLCBgZ3ZkYCB3YXMgY2hlY2tlZCBmb3IgZGltZW5zaW9ucyAoMjM5Njc3IG9ic2VydmF0aW9ucyBvZiAyOSBhdHRyaWJ1dGVzKSwgY29sdW1uIG5hbWVzIGFuZCBkYXRhIHR5cGVzLiBUaGUgc3RydWN0dXJlIG9mIHRoZSBkYXRhIGZyYW1lIGluZGljYXRlcyB3aWRlIGZvcm1hdCwgd2hlcmUgdGhlICdzdWJqZWN0IGluZm9ybWF0aW9uJyBpcyBpbmRpY2F0ZWQgYnkgdGhlIHVuaXF1ZSB2YWx1ZSBgaW5jaWRlbnRfaWRgLiBUaGlzIHdhcyBjb25maXJtZWQgYnkgYGxlbmd0aCh1bmlxdWUoZ3ZkJGluY2lkZW50X2lkKSlgIHdoaWNoIGdhdmUgMjM5Njc3IHVuaXF1ZSBvYnNlcnZhdGlvbnMsIHdoaWNoIGlzIGVxdWFsIHRvIHRoZSB0b3RhbCBudW1iZXIgb2Ygb2JzZXJ2YXRpb25zIChhbGwgb2JzZXJ2YXRpb25zIGFyZSB1bmlxdWUpLgoKYGBge3IsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHBhZ2VkLnByaW50PVRSVUV9CmRhdGEuZnJhbWUoQXR0cmlidXRlID0gbmFtZXMoZ3ZkKSwgQ2xhc3MgPSBzYXBwbHkoZ3ZkLCBjbGFzcyksCiAgICAgICAgICAgZ3ZkX2luY2lkZW50NDg2NjIzID0gc2FwcGx5KGd2ZFs4NCxdLCBmdW5jdGlvbih4KSBwYXN0ZTAoaGVhZCh4KSwgIGNvbGxhcHNlID0gIiwgIikpLAogICAgICAgICAgIHJvdy5uYW1lcyA9IE5VTEwpICU+JSBrYWJsZSgpICU+JSBrYWJsZV9zdHlsaW5nKGJvb3RzdHJhcF9vcHRpb25zID0gYygic3RyaXBlZCIsICJob3ZlciIsICJjb25kZW5zZWQiKSwgIGZvbnRfc2l6ZSA9IDExKSAKYGBgCgpgYGB7cn0KbGVuZ3RoKHVuaXF1ZShndmQkaW5jaWRlbnRfaWQpKSAjIENoZWNraW5nIHRoZSBudW1iZXIgb2YgdW5pcXVlIHZhbHVlcyBmb3IgaW5jaWRlbnQgSUQKYGBgCgpCYXNlZCBvbiB0aGUgb3V0cHV0IGZyb20gYHN0cihndmQpYCwgYSBzZWxlY3Rpb24gb2YgY29sdW1ucyB3ZXJlIGV4cGxvcmVkIHRvIGJldHRlciB1bmRlcnN0YW5kIHRoZWlyIHZhbHVlcy4gVGhpcyBpbmNsdWRlZCBgcGFydGljaXBhbnRfYWdlYCBhbmQgYHBhcnRpY2lwYW50X2dlbmRlcmAuIFRoZSByZXN1bHRhbnQgb3V0cHV0IChiZWxvdykgc2hvd3MgdGhhdCBlYWNoIG9mIHRoZXNlIGNvbHVtbnMgY29udGFpbnMgbXVsdGlwbGUgdmFsdWVzLiAKLSBJdCBhbHNvIHNob3dzIHRoYXQgU09NRSBWQUxVRVMgQVJFIE1JU1NJTkcuIAotIERhdGEgaXMgTk9UIFRJRFkKLSBUaGlzIGlzIGJlIGFkZHJlc3NlZCBpbiBzZWN0aW9uIFgKLSBJbiB0aGUgbWVhbnRpbWUgd2lsbCBkbyBvdGhlciBwcmVwcm9jZXNzaW5nCgpgYGB7cn0KZ3ZkICU+JSBzZWxlY3QocGFydGljaXBhbnRfYWdlLCBwYXJ0aWNpcGFudF9nZW5kZXIpICU+JSBoZWFkKG49OCkgJT4lIAogIGthYmxlKCkgJT4lIGthYmxlX3N0eWxpbmcoYm9vdHN0cmFwX29wdGlvbnMgPSBjKCJzdHJpcGVkIiwgImhvdmVyIiwgImNvbmRlbnNlZCIpLCAgZm9udF9zaXplID0gMTEpIApgYGAKCiMjIyBGaWx0ZXJpbmcgR3VuIFZpb2xlbmNlIERhdGEgZm9yIHZhbHVlcyBpbmNsdXNpdmUgb2YgdGhlIHllYXIgMjAxNQoKVGhlIEd1biBWaW9sZW5jZSBEYXRhc2V0IGNvbnRhaW5zIGRhdGEgZnJvbSAyMDEzIHRpbGwgMjAxNSwgd2hpbGUgdGhlIEFtZXJpY2FuIENlbnN1cyBEYXRhIGlzIGZyb20gMjAxNS4gV2Ugd2lsbCB0aGVyZWZvcmUgY3JlYXRlIGEgZGF0YSBzdWJzZXQgb2YgdGhlIEd1biBWaW9sZW5jZSBEYXRhIGZyb20gdGhlIHllYXIgMjAxNSBvbmx5LiBBcyBwcmV2aW91c2x5IGRldGVybWluZWQgKGBzdHIoZ3ZkKWApLCB0aGUgYGd2ZCRkYXRlYCBhdHRyaWJ1dGUgaXMgcHJlc2VudCBhcyBhIGZhY3RvciB3aXRoIDE3MjUgbGV2ZWxzICgxNzI1IGRpZmZlcmVudCBkYXRlIHZhbHVlcykuIFRoaXMgYXR0cmlidXRlIHdpbGwgYmUgY29udmVydGVkIHRvIGRhdGUgZm9ybWF0IChZWVlZLU1NLUREKSB1c2luZyBgYXMuRGF0ZWAuIFRoaXMgY29udmVyc2lvbiB3aWxsIGJlIGNoZWNrZWQgd2l0aCBgc3RyKClgLCBiZWxvdy4KCmBgYHtyfQpndmQkZGF0ZSA8LSBhcy5EYXRlKGd2ZCRkYXRlKSAjIENvbnZlcnRpbmcgdGhlIGd2ZCRkYXRlIGNvbHVtbiBhbmQgYXBwbHlpbmcgdG8gdGhlIGd2ZCBkYXRhc2V0CnN0cihndmQkZGF0ZSkgIyBDaGVja2luZyB0aGUgY29udmVyc2lvbiBvZiBndmQkZGF0ZQpgYGAKClRoZSBBbWVyaWNhbiAoVVMpIENlbnN1cyBEYXRhIGNvbnRhaW5zIHZhbHVlcyBmcm9tIHRoZSB5ZWFyIDIwMTUgb25seSwgYW5kIGFzIHN1Y2ggd2Ugd2lsbCBzdWJzZXQgdGhlIEd1biBWaW9sZW5jZSBEYXRhIGFjY3JvZGluZ2x5LiBUaGUgZmlyc3QgbWV0aG9kb2xvZ3kgdXNlZCBmb3IgZXh0cmFjdGluZyBZWVlZID0gMjAxNSB2YWx1ZSBmcm9tIGBndmQkZGF0ZWAgcmVsaWVkIG9uIGNvbnZlcnNpb24gb2YgYGd2ZCRkYXRlYCB0byBjb250YWluIHllYXIgb25seSAoYGd2ZCRkYXRlIDwtIGZvcm1hdC5EYXRlKGd2ZCRkYXRlLCBmb3JtYXQ9IiVZIilgKSwgdGhpcyB3YXMgdGhlbiBmaWx0ZXJlZCBmb3IgdmFsdWVzIG9mIDIwMTUgKGBndmQkZGF0ZV95ZWFyIDwtIGZpbHRlcihndmQsIGRhdGVfeWVhciA9PSAiMjAxNSIpYCkuIFRoaXMgbWV0aG9kb2xneSB3YXMgYWJhbmRvbmVkLCBhcyBpdCB1bm5lc3NjZXNhcmlseSBzdHJpcHBlZCBvdXQgdGhlIG1vbnRoIGFuZCBkYXkgZGF0YSBmcm9tIGBndmQkZGF0ZWAuIEluc3RlYWQsIGZpbHRlcmluZyB3YXMgdXNlZCwgYXMgYmVsb3cuCgpgYGB7cn0KeWVhcjIwMTVfYm9vbGVhbiA8LSBhcy5sb2dpY2FsKHllYXIoZ3ZkJGRhdGUpID09ICIyMDE1IikgI0NyZWF0aW5nIGEgeWVhciAyMDE1IHRydWUvZmFsc2UgdmVjdG9yCnN1bW1hcnkoeWVhcjIwMTVfYm9vbGVhbikgIyBDaGVja2luZyB0aGUgdmVjdG9yIHJlc3VsdHMKYGBgCgpgYGB7cn0KZ3ZkMjAxNSA8LSBndmRbeWVhcjIwMTVfYm9vbGVhbixdICMgQXBwbHlpbmcgdGhlIFRydWUvRmFsc2UgVmVjdG9yIHRvIGZpbHRlciBndmQKYGBgCgpgYGB7cn0Kc3VtbWFyeShndmQyMDE1JGRhdGUpICMgQ29uZmlybWluZyBvbmx5IDIwMTUgZGF0YSBpcyBwcmVzZW50CmBgYAoKVGhlIERTIGBndmQyMDE1YCBpcyBub3cgcHJlcGFyZWQuCgojIyMgRmlsdGVyaW5nIEd1biBWaW9sZW5jZSBEYXRhIDIwMTUgZm9yIHZhbHVlcyBmcm9tIHRoZSBzdGF0ZSBvZiBDYWxpZm9ybmlhCgpUaGUgZGF0YSBmcmFtZSBgZ3ZkMjAxNWAgaGFzIGRpbWVuc2lvbnMgb2YgNTM1NzkgaW5zdGFuY2VzIG92ZXIgMjkgYXR0cmlidXRlcywgd2Ugd2lsbCBub3cgY2hlY2sgdGhlIHZhbHVlcyBvZiBgZ3ZkMjAxNSRzdGF0ZWAgdXNpbmcgdGhlIGFnZ3JlZ2F0ZSBmdW5jdGlvbi4gVGhlIG91dHB1dCBlbmFibGVzIHVzIHRvIGRldGVybWluZSB0aGUgbnVtYmVyIG9mIGBjaXR5X29yX2NvdW50eWAgaW4gZWFjaCBTdGF0ZSwgdGhhdCBpcyBzbWFsbGVyIGdlb2dyYXBoaWNhbCByZWdpb25zIGluc2lkZSBlYWNoIHN0YXRlLiBGb3IgdGhpcyBhbmFseXNpcywgdGhlIFN0YXRlIG9mIENhbGlmb3JuaWEgd2FzIGNob3Nlbi4gQXMgQ2FsaWZvcm5pYSBpcyBvbmUgb2YgdGhlIG1vc3QgcG9wdWx1cyBzdGF0ZXMgaW4gQW1lcmljYSAocmVmKSwgd2l0aCBhIGxhcmdlIHJhbmdlIG9mIHNvY2lvLWVjb25vbWljIC4uLiBhbmQgYSB2YXJpZWQgZ2VvZ3JhcGh5LCBpdCB3YXMgZGV0ZXJtaW5lZCB0byBiZSBhIGdvb2QgY2hvaWNlLiBBbHNvIG5vdGUgdGhhdCB0aGUgZm9sbG93aW5nIG1ldGhvZG9sb2d5IG91dGxpbmVkIGNvdWxkIGJlIGFwcGxpZWQgdG8gYW55IG9mIHRoZSBzdGF0ZXMgaW4gdGhlIGBndmRgIGRhdGFzZXQsIHNvIENhbGlmb3JuaWEgd2lsbCBhY3QgYXMgYSBwcm9vZiBvZiBjb25jZXB0LgoKYGBge3J9CmFnZ3JlZ2F0ZShjaXR5X29yX2NvdW50eSB+IHN0YXRlLCBndmQyMDE1LCBmdW5jdGlvbih4KSBsZW5ndGgodW5pcXVlKHgpKSkgJT4lIAogIGthYmxlKCkgJT4lIGthYmxlX3N0eWxpbmcoYm9vdHN0cmFwX29wdGlvbnMgPSBjKCJzdHJpcGVkIiwgImhvdmVyIiwgImNvbmRlbnNlZCIpLCAgZm9udF9zaXplID0gMTEpICU+JSBzY3JvbGxfYm94KGhlaWdodCA9ICIyMDBweCIpCiMgQ2hlY2tpbmcgdGhlIGNvbnZlcnNpb24gb2YgZ3ZkJGRhdGUKYGBgCgpgYGB7cn0KZ3ZkMjAxNV9rZWVwX2NhbGkgPC0gZmlsdGVyKGd2ZDIwMTUsIHN0YXRlID09ICJDYWxpZm9ybmlhIikKYGBgCgpgYGB7cn0KYWdncmVnYXRlKGNpdHlfb3JfY291bnR5IH4gc3RhdGUsIGd2ZDIwMTVfa2VlcF9jYWxpLCBmdW5jdGlvbih4KSBsZW5ndGgodW5pcXVlKHgpKSkgJT4lIAogIGthYmxlKCkgJT4lIGthYmxlX3N0eWxpbmcoYm9vdHN0cmFwX29wdGlvbnMgPSBjKCJzdHJpcGVkIiwgImhvdmVyIiwgImNvbmRlbnNlZCIpLCAgZm9udF9zaXplID0gMTEpCmBgYAoKIyMjIEV4cGxvcmluZyB0aGUgb3RoZXIgYXR0cmlidXRlcyBpbiBndmQyMDE1X2tlZXBfY2FsaQoKUmVmZXJlbmNpbmcgdGhlIGZpcnN0IHRhYmxlIGdlbmVyYXRlZCBzdXJtaXppbmcgdGhlc2UgZGF0YSwgdGhlIGZvbGxvd2luZyBhdHRyaWJ1dGVzIHdpbGwgYmUgZHJvcHBlZCBmcm9tIGd2ZDIwMTVfa2VlcF9jYWxpOiBgYWRkcmVzc2AgYXMgdGhpcyBsZXZlbCBvZiBmaW5lIGRldGFpbCBpcyBub3QgcmVxdWlyZWQsIGBzb3VyY2VfdXJsYCBhcyB0aGlzIGNhbiBiZSBmb3VuZCB2aWEgYGluY2lkZW50X3VybGAsIGBpbmNpZGVudF91cmxfZmllbGRzX21pc3NpbmdgIGFzIHRoaXMgaXMgYSBib29sZWFuIGF0dHJpYnV0ZSB0aGF0IHdhcyBnZW5lcmF0ZWQgYnkgdGhlIGFuYWx5c3Qgd2hvIGNvbXBpbGVkIHRoZSBkYXRhc2V0LCBgaW5jaWRlbnRfY2hhcmFjdGVyaXN0aWNzYCBhcyB0aGVzZSBzdHJpbmdzIGFyZSB0b28gdW5zdHJ1Y3R1cmVkLCBgbG9jYXRpb25fZGVzY3JpcHRpb25gIGFzIHRoZXNlIHN0cmluZ3MgYXJlIHRvIHVuc3RydWN0dXJlZCwgYG5vdGVzYCBubyB2YWx1ZSwgYHBhcnRpY2lwYW50X2FnZV9ncm91cGAgd2UgYWxyZWFkeSBoYXZlIHBhcnRpY2lwYW50IGFnZSwgIGBwYXJ0aWNpcGFudF9uYW1lYCAmIGBzb3VyY2VzYC4KCmBgYHtyfQpndmQyMDE1X2tlZXBfY2FsaSA8LSBzZWxlY3QoZ3ZkMjAxNSwgaW5jaWRlbnRfaWQsIGRhdGUsIHN0YXRlLCBjaXR5X29yX2NvdW50eSwgbl9raWxsZWQsIG5faW5qdXJlZCwgaW5jaWRlbnRfdXJsLCBjb25ncmVzc2lvbmFsX2Rpc3RyaWN0LCBsYXRpdHVkZSwgbG9uZ2l0dWRlLCBuX2d1bnNfaW52b2x2ZWQsIHBhcnRpY2lwYW50X2FnZSwgcGFydGljaXBhbnRfZ2VuZGVyLCBwYXJ0aWNpcGFudF9zdGF0dXMsIHBhcnRpY2lwYW50X3R5cGUsIHN0YXRlX2hvdXNlX2Rpc3RyaWN0LCBzdGF0ZV9zZW5hdGVfZGlzdHJpY3QpCmBgYAoKYGBge3IsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHBhZ2VkLnByaW50PVRSVUV9CmRhdGEuZnJhbWUoQXR0cmlidXRlID0gbmFtZXMoZ3ZkMjAxNV9rZWVwX2NhbGkpLCBDbGFzcyA9IHNhcHBseShndmQyMDE1X2tlZXBfY2FsaSwgY2xhc3MpLAogICAgICAgICAgIGd2ZF9pbmNpZGVudDI3NDE2OCA9IHNhcHBseShndmQyMDE1X2tlZXBfY2FsaVsxLF0sIGZ1bmN0aW9uKHgpIHBhc3RlMChoZWFkKHgpLCAgY29sbGFwc2UgPSAiLCAiKSksCiAgICAgICAgICAgcm93Lm5hbWVzID0gTlVMTCkgJT4lIGthYmxlKCkgJT4lIGthYmxlX3N0eWxpbmcoYm9vdHN0cmFwX29wdGlvbnMgPSBjKCJzdHJpcGVkIiwgImhvdmVyIiwgImNvbmRlbnNlZCIpLCAgZm9udF9zaXplID0gMTEpIApgYGAKCmBgYHtyfQpkaW0oZ3ZkMjAxNV9rZWVwX2NhbGkpCmBgYAoKIyMjIyBJbmNpZGVudF9VUkwKClRoZSBhdHRyaWJ1dGUgYGluY2lkZW50X1VSTGAgd2lsbCBub3cgYmUgY29tcGFyZWQgd2l0aCBgaW5jaWRlbnRfSURgIChhcyB3ZSBtYXkgYmUgYWJsZSB0byBkcm9wIGBpbmNpZGVudF9VUkxgKQoKYGBge3J9Cmd2ZDIwMTVfa2VlcF9jYWxpJGluY2lkZW50X3VybCA8LSAgZ3ZkMjAxNV9rZWVwX2NhbGkkaW5jaWRlbnRfdXJsICU+JSAKICBzdHJfcmVwbGFjZV9hbGwoImh0dHA6Ly93d3cuZ3VudmlvbGVuY2VhcmNoaXZlLm9yZy9pbmNpZGVudC8iLCAiIikgIyAKZ3ZkMjAxNV9rZWVwX2NhbGkkaW5jaWRlbnRfdXJsIDwtIGFzLmludGVnZXIoZ3ZkMjAxNV9rZWVwX2NhbGkkaW5jaWRlbnRfdXJsKQpgYGAKCmBgYHtyfQojIENyZWF0ZSB0d28gdmVjdG9ycwphIDwtIGFzLnZlY3RvcihndmQyMDE1X2tlZXBfY2FsaSRpbmNpZGVudF9pZCkKYiA8LSBhcy52ZWN0b3IoZ3ZkMjAxNV9rZWVwX2NhbGkkaW5jaWRlbnRfdXJsKQphWyEoYSAlaW4lIGIpXQpgYGAKCi0gRHJvcCBpbmNpZGVudF91cmwgYW5kIHdpbGwgdXNlIGluY2lkZW50X2lkIHdpdGggVVJMIHN0ZW0uCgojIyMjIEV4cGxvcmluZyB0aGUgR1ZEIDIwMTUgQ2FsaWZvcm5pYSBEYXRhIFN1YnNldAoKKiBUZXh0IHRleHQgdGV4dAoqIFRoZSBwYXJ0aWNpcGFudCBhZ2UgYW5kIGdlbmRlciBhdHRyaWJ1dGVzIG1heSBjb250YWluIC4uLiAoZ29vZCBkYXRhIGZvciBhbmFseXRpY3MpCiogSW4gYm90aCBhdHRpYnV0ZXMsIG11bHRpcGxlIHZhbHVlcyBhcmUgY29udGFpbmVkLiAKKiBOb3QgdGlkeSwgbXVsdGlwbGUgdmFsdWVzIGluIG9uZSBjb2x1bW4KCmBgYHtyLCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFLCBwYWdlZC5wcmludD1UUlVFfQpndmQyMDE1X2tlZXBfY2FsaVsxOjUsIGMoMTE6MTUpXSAlPiUga2FibGUoKSAlPiUga2FibGVfc3R5bGluZyhib290c3RyYXBfb3B0aW9ucyA9IGMoInN0cmlwZWQiLCAiaG92ZXIiLCAiY29uZGVuc2VkIiksICBmb250X3NpemUgPSAxMSkgCmBgYAoKIyMjIyMgbl9ndW5faW52b2x2ZWQKCmBgYHtyfQp0YWJsZShzYXBwbHkoZ3ZkMjAxNV9rZWVwX2NhbGkkbl9ndW5zX2ludm9sdmVkLCBmdW5jdGlvbih5KSBzdW0obGVuZ3RoKHdoaWNoKGlzLm5hKHkpKSkpKSkgJT4lIGthYmxlKCkgJT4lIGthYmxlX3N0eWxpbmcoYm9vdHN0cmFwX29wdGlvbnMgPSBjKCJzdHJpcGVkIiwgImhvdmVyIiwgImNvbmRlbnNlZCIpLCAgZm9udF9zaXplID0gMTEpIApgYGAKCi0gQWxtb3N0IDUwJSBOQSAtIGRyb3AKLSBGdXRoZXIgYW5hbHlzaXMgPSBtYWNoaW5lIGxlYXJuaW5nCgojIyMjIyBwYXJ0aWNpcGFudF9hZ2UKCi0gQ3VycmVudCBmb3JtCi0gRGlzY3VzcwoKYGBge3J9Cmd2ZDIwMTVfa2VlcF9jYWxpJG1hdGNoZXMgPC0gc3RyX21hdGNoX2FsbChndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9hZ2UsICJcXGQrOjooXFxkKykiKQphZ2VzID0gYyhjKDAsMTUpKSAjIEZpcnN0IGFnZSByYW5nZSBpcyB1bmRlciAxNXMKZm9yIChpIGluIHNlcSgxNiwgNzYsIDUpKSAjIFRoZSBvdGhlciBhZ2UgcmFuZ2VzIGFyZSBldmVyeSA1IHllYXJzIAp7CiAgYWdlcyA8LSBjKGFnZXMsIGMoaSwgaSs0KSkKfQphZ2VzIDwtIGMoYWdlcywgYyg4MSwxMDApKSAjIFRoZSBsYXN0IGFnZSByYW5nZSBpcyA4MSBwbHVzCmZvciAoaSBpbiBzZXEoMSxsZW5ndGgoYWdlcyktMSwgMikpICMgRWFjaCBwYWlyIG9mIGFnZXMgaW4gdGhlIGFnZSByYW5nZXMKewogICMgQ29uc3RydWN0IHRoZSBjb2x1bW4gdXNpbmcgYXBwbHkKICAjIFBhc3RlIGhlcmUgY29uY2F0ZW5hdGVzIHRoZSBzdHJpbmcgZm9yIHRoZSBjb2x1bW4gbmFtZQogIGd2ZDIwMTVfa2VlcF9jYWxpW3Bhc3RlKCJhZ2UiLCBhZ2VzW2ldLGFnZXNbaSsxXSwgc2VwPSJfIildIDwtIGFwcGx5KGd2ZDIwMTVfa2VlcF9jYWxpLCAxLCBmdW5jdGlvbihyb3cpIHsKICAgIGNudCA8LSAwICMgQ291bnQgb2YgYWdlcyBpbiBjdXJyZW50IHJhbmdlIHN0YXJ0cyBhdCAwCiAgICBmb3IgKHggaW4gcm93JG1hdGNoZXMpICMgSXRlcmF0ZSB0aHJvdWdoIHRoZSBtYXRjaGVzIHdlIHBhcnNlZCBvdXQKICAgIHsgaWYgKCFncmVwbCgiOiIsIHgsIGZpeGVkID0gVFJVRSkpICMgSWYgdGhlIG1hdGNoIGRvZXMgbm90IGNvbnRhaW4gYSA6IHRoZW4gaXQgaXMgdGhlIG1hdGNoIGdyb3VwIHJhdGhlciB0aGFuIHRoZSBtYXRjaAogICAgICB7IGFnZSA8LSBhcy5pbnRlZ2VyKHgpICMgc28gY29udmVydCBhZ2UgYXMgc3RyaW5nIHRvIGludGVnZXIKICAgICAgICAgIGlmIChhZ2UgPj0gYWdlc1tpXSAmJiBhZ2UgPD0gYWdlc1tpKzFdKSAjIGFuZCBjaGVjayBpZiBhZ2UgZmFsbHMgd2l0aGluIGFnZSByYW5nZSBmb3IgdGhlIGN1cnJlbnQgY29sdW1uIAogICAgICAgIHsgY250IDwtIGNudCArIDEgfQogICAgICB9CiAgICB9CiAgICBjbnQKICB9KQp9CmBgYAoKLSBEUk9QIG1hdGNoZXMKLSBEUk9QIHBhcnRpY2lwYW50X2FnZQoKIyMjIyMgcGFydGljaXBhbnRfZ2VuZGVyCgpUaGUgY2hhcmFjdGVycyBgLFs6c3BhY2U6XWAsIGA6OmAsIGBbOmRpZ2l0Ol1gICYgYHx8YCB3ZXJlIHN0cmlwcGVkIGZyb20gdGhlIGBwYXJ0aWNpcGFudF9nZW5kZXJgIGFzIHNlZW4gYmVsb3cuIEEgbmV3IGNoYXIgdmFsdWUgd2FzIHN1YnNlcXVlbnRseSBjcmVhdGVkLCBgcGFydGljaXBhbnRfZ2VuZGVyX3VuaXF1ZV9jaGVja2AuIFRoaXMgdmFsdWUgd2FzIHRoZW4gY2hlY2tlZCBmb3IgdW5pcXVlIGNoYXJhY3RlcnMsIHdoaWNoIHlpZWxkZWQgb25seSBibGFuayAoIiIpLCBGZW1hbGUgYW5kIE1hbGUuIFR3byBgc3RyX2NvdW50YCBmdW5jdGlvbnMgd2VyZSB0aGVuIHVzZWQgdG8gZ2VuZXJhdGUgY291bnQgY29sdW1ucyBmb3IgZ2VuZGVyLCB0aGVzZSB3ZXJlIG5hbWVkIGBtYWxlX2NvdW50YCBhbmQgYGZlbWFsZV9jb3VudGAuIFRoZSBjb2x1bW4gYHBhcnRpY2lwYW50X2dlbmRlcmAgd2lsbCBiZSBsYXRlciBkcm9wcGVkLgoKYGBge3J9Cmd2ZDIwMTVfa2VlcF9jYWxpJHBhcnRpY2lwYW50X2dlbmRlciA8LSAgZ3ZkMjAxNV9rZWVwX2NhbGkkcGFydGljaXBhbnRfZ2VuZGVyICU+JSAKICBzdHJfcmVwbGFjZV9hbGwoIixbOnNwYWNlOl0iLCAiIikgJT4lICNSZW1vdmUgY29tbWEgJiB3aGl0ZXNwYWNlCiAgc3RyX3JlcGxhY2VfYWxsKCI6OiIsICIiKSAlPiUKICBzdHJfcmVwbGFjZV9hbGwoIls6ZGlnaXQ6XSIsICIgIikgJT4lCiAgc3RyX3JlcGxhY2VfYWxsKCJcXHx8IiwgIiIpCmBgYAoKYGBge3J9CnBhcnRpY2lwYW50X2dlbmRlcl91bmlxdWVfY2hlY2sgPC0gYXMuY2hhcmFjdGVyKGd2ZDIwMTVfa2VlcF9jYWxpWyxjKCJwYXJ0aWNpcGFudF9nZW5kZXIiKV0pCnVsIDwtIHVubGlzdChzdHJzcGxpdChwYXJ0aWNpcGFudF9nZW5kZXJfdW5pcXVlX2NoZWNrLCAiICIpKQp1bmlxdWUodWwpCmBgYAoKYGBge3J9Cmd2ZDIwMTVfa2VlcF9jYWxpJG1hbGVfY291bnQgPC0gc3RyX2NvdW50KGd2ZDIwMTVfa2VlcF9jYWxpJHBhcnRpY2lwYW50X2dlbmRlciwgcGF0dGVybiA9ICJNYWxlIikgIyBTdHJpbmdyCmd2ZDIwMTVfa2VlcF9jYWxpJGZlbWFsZV9jb3VudCA8LSBzdHJfY291bnQoZ3ZkMjAxNV9rZWVwX2NhbGkkcGFydGljaXBhbnRfZ2VuZGVyLCBwYXR0ZXJuID0gIkZlbWFsZSIpICMgU3RyaW5ncgpgYGAKCiMjIyMjIFBhcnRpY2lwYW50X3N0YXR1cwoKVGhlIGNoYXJhY3RlcnMgYCxbOnNwYWNlOl1gLCBgOjpgLCBgWzpkaWdpdDpdYCAmIGB8fGAgd2VyZSBzdHJpcHBlZCBmcm9tIHRoZSBgcGFydGljaXBhbnRfc3RhdHVzYCBpbiB0aGUgc2FtZSBtYW5uZXIgYXMgZm9yIGBwYXJ0aWNpcGFudF9nZW5kZXJgLiBUaGUgc2FtZSBtZXRob2RvbG9neSB3YXMgdGhlbiB1c2VkIHRvIGdlbmVyYXRlIGNvdW50cyAoYCkKCgpgYGB7ciwgaW5jbHVkZSA9IEZBTFNFfQpndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMgPC0gIGd2ZDIwMTVfa2VlcF9jYWxpJHBhcnRpY2lwYW50X3N0YXR1cyAlPiUgCiAgc3RyX3JlcGxhY2VfYWxsKCIsWzpzcGFjZTpdIiwgIiIpICU+JSAjUmVtb3ZlIGNvbW1hICYgd2hpdGVzcGFjZQogIHN0cl9yZXBsYWNlX2FsbCgiOjoiLCAiIikgJT4lCiAgc3RyX3JlcGxhY2VfYWxsKCJbOmRpZ2l0Ol0iLCAiICIpICU+JQogIHN0cl9yZXBsYWNlX2FsbCgiXFx8fCIsICIiKQpgYGAKCmBgYHtyfQpwYXJ0aWNpcGFudF9zdGF0dXNfdW5pcXVlX2NoZWNrIDwtIGFzLmNoYXJhY3RlcihndmQyMDE1X2tlZXBfY2FsaVssYygicGFydGljaXBhbnRfc3RhdHVzIildKQp1bCA8LSB1bmxpc3Qoc3Ryc3BsaXQocGFydGljaXBhbnRfc3RhdHVzX3VuaXF1ZV9jaGVjaywgIiAiKSkKdW5pcXVlKHVsKQpgYGAKClVzaW5nIHRoZSBVUkwgc3RlbSAiaHR0cDovL3d3dy5ndW52aW9sZW5jZWFyY2hpdmUub3JnL2luY2lkZW50LyIKCi0gQ0hBTkdFIFRPIElOSlVSRUQgQVJSRVNURUQKCmBgYHtyfQpJbmp1cmVkVW5oYXJtZWRBcnJlc3RlZCA8LSBncmVwbCgiSW5qdXJlZFVuaGFybWVkQXJyZXN0ZWQiLCBndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMpCmd2ZDIwMTVfa2VlcF9jYWxpW0luanVyZWRVbmhhcm1lZEFycmVzdGVkLGMoMSwxNCldCmBgYAoKYGBge3J9Cmd2ZDIwMTVfa2VlcF9jYWxpJHBhcnRpY2lwYW50X3N0YXR1cyA8LSBzdHJfcmVwbGFjZV9hbGwoZ3ZkMjAxNV9rZWVwX2NhbGkkcGFydGljaXBhbnRfc3RhdHVzLCAiSW5qdXJlZFVuaGFybWVkQXJyZXN0ZWQiLCAiSW5qdXJlZEFycmVzdGVkIikKYGBgCgojIyMjIyMgS2lsbGVkQXJyZXN0ZWQKCkl0IHdhcyBkZXRlcm1pbmVkIHRoYXQgIktpbGxlZEFycmVzdGVkIiBtZWFucyB0aGV5IHdlcmUgYXJyZXN0ZWQgYnV0IGxhdGVkIGRpZWQgZnJvbSBpbmp1cmllcyBzdXN0YWluZWQuIENoYW5nZSB0byBJbmp1cmVkQXJyZXN0ZWREaWVkLgoKYGBge3J9CktpbGxlZEFycmVzdGVkIDwtIGdyZXBsKCJLaWxsZWRBcnJlc3RlZCIsIGd2ZDIwMTVfa2VlcF9jYWxpJHBhcnRpY2lwYW50X3N0YXR1cykKc3VtbWFyeShLaWxsZWRBcnJlc3RlZCkKZ3ZkMjAxNV9rZWVwX2NhbGlbS2lsbGVkQXJyZXN0ZWQsXQpgYGAKCmBgYHtyfQpndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMgPC0gc3RyX3JlcGxhY2VfYWxsKGd2ZDIwMTVfa2VlcF9jYWxpJHBhcnRpY2lwYW50X3N0YXR1cywgIktpbGxlZEFycmVzdGVkIiwgIkluanVyZWRBcnJlc3RlZERpZWQiKQpgYGAKCgpgYGB7cn0KS2lsbGVkVW5oYXJtZWQgPC0gZ3JlcGwoIktpbGxlZFVuaGFybWVkIiwgZ3ZkMjAxNV9rZWVwX2NhbGkkcGFydGljaXBhbnRfc3RhdHVzKQpzdW1tYXJ5KEtpbGxlZFVuaGFybWVkKQpndmQyMDE1X2tlZXBfY2FsaVtLaWxsZWRVbmhhcm1lZCxdCmBgYAoKSW5jaWRlbnQgMzE4MzIwIHdhcyBjaGVja2VkIG9ubGluZSwgc2hvdWxkIGJlIGtpbGxlZCwgaW5qdXJlZCwga2lsbGVkLgpJbmNpZGVudCA0NDAyNjEgc2hvdWxkIGJlIGtpbGxlZCBraWxsZWQKCmBgYHtyfQpndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMgPC0gc3RyX3JlcGxhY2VfYWxsKGd2ZDIwMTVfa2VlcF9jYWxpJHBhcnRpY2lwYW50X3N0YXR1cywgIktpbGxlZFVuaGFybWVkIiwgIktpbGxlZCIpCmBgYAoKYGBge3J9CnBhcnRpY2lwYW50X3N0YXR1c191bmlxdWVfY2hlY2sgPC0gYXMuY2hhcmFjdGVyKGd2ZDIwMTVfa2VlcF9jYWxpWyxjKCJwYXJ0aWNpcGFudF9zdGF0dXMiKV0pCnVsIDwtIHVubGlzdChzdHJzcGxpdChwYXJ0aWNpcGFudF9zdGF0dXNfdW5pcXVlX2NoZWNrLCAiICIpKQp1bmlxdWUodWwpCmBgYAoKYGBge3J9CiMgQ2hlY2sgV09SRCBDT1VOVApndmQyMDE1X2tlZXBfY2FsaSRLaWxsZWRfY291bnQgPC0gc3RyX2NvdW50KGd2ZDIwMTVfa2VlcF9jYWxpJHBhcnRpY2lwYW50X3N0YXR1cywgcGF0dGVybiA9ICJLaWxsZWQiKSAjIFN0cmluZ3IKZ3ZkMjAxNV9rZWVwX2NhbGkkSW5qdXJlZF9jb3VudCA8LSBzdHJfY291bnQoZ3ZkMjAxNV9rZWVwX2NhbGkkcGFydGljaXBhbnRfc3RhdHVzLCBwYXR0ZXJuID0gIkluanVyZWQiKSAjIFN0cmluZ3IKZ3ZkMjAxNV9rZWVwX2NhbGkkVW5oYXJtZWRBcnJlc3RlZF9jb3VudCA8LSBzdHJfY291bnQoZ3ZkMjAxNV9rZWVwX2NhbGkkcGFydGljaXBhbnRfc3RhdHVzLCBwYXR0ZXJuID0gIlVuaGFybWVkQXJyZXN0ZWQiKSAjIFN0cmluZ3IKZ3ZkMjAxNV9rZWVwX2NhbGkkSW5qdXJlZEFycmVzdGVkX2NvdW50IDwtIHN0cl9jb3VudChndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMsIHBhdHRlcm4gPSAiSW5qdXJlZEFycmVzdGVkIikgIyBTdHJpbmdyICh3aXRoIGFuY2hvcikKZ3ZkMjAxNV9rZWVwX2NhbGkkQXJyZXN0ZWRfY291bnQgPC0gc3RyX2NvdW50KGd2ZDIwMTVfa2VlcF9jYWxpJHBhcnRpY2lwYW50X3N0YXR1cywgcGF0dGVybiA9ICJBcnJlc3RlZCIpICMgU3RyaW5nciAod2l0aCBhbmNob3IpCmd2ZDIwMTVfa2VlcF9jYWxpJFVuaGFybWVkX2NvdW50IDwtIHN0cl9jb3VudChndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMsIHBhdHRlcm4gPSAiVW5oYXJtZWQiKSAjIFN0cmluZ3IgKHdpdGggYW5jaG9yKQpndmQyMDE1X2tlZXBfY2FsaSRJbmp1cmVkQXJyZXN0ZWREaWVkX2NvdW50IDwtIHN0cl9jb3VudChndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMsIHBhdHRlcm4gPSAiSW5qdXJlZEFycmVzdGVkRGllZCIpICMgU3RyaW5ncgpgYGAKCmBgYHtyfQojIENoZWNrIGlmIHRoaXMgaXMgbmVlZGVkPz8/CktpbGxlZFVuaGFybWVkQXJyZXN0ZWQgPC0gZ3JlcGwoIktpbGxlZFVuaGFybWVkQXJyZXN0ZWQiLCBndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMpCnN1bW1hcnkoS2lsbGVkVW5oYXJtZWRBcnJlc3RlZCkKZ3ZkMjAxNV9rZWVwX2NhbGlbS2lsbGVkVW5oYXJtZWRBcnJlc3RlZCxdCmBgYAoKU2hvdWxkIGJlIEtpbGxlZCBhbmQgVW5oYXJtZWRBcnJlc3RlZAoKYGBge3J9CktpbGxlZFVuaGFybWVkIDwtIGdyZXBsKCJLaWxsZWRVbmhhcm1lZCIsIGd2ZDIwMTVfa2VlcF9jYWxpJHBhcnRpY2lwYW50X3N0YXR1cykKc3VtbWFyeShLaWxsZWRVbmhhcm1lZCkKZ3ZkMjAxNV9rZWVwX2NhbGlbS2lsbGVkVW5oYXJtZWQsXQpgYGAKCgpgYGB7cn0KY29sbmFtZXMoZ3ZkMjAxNV9rZWVwX2NhbGkpCmBgYAoKYGBge3J9Cmd2ZDIwMTVfcHQyIDwtIHNlbGVjdChndmQyMDE1X2tlZXBfY2FsaSwgaW5jaWRlbnRfaWQsIGNpdHlfb3JfY291bnR5LCBuX2tpbGxlZCwgbl9pbmp1cmVkLCBjb25ncmVzc2lvbmFsX2Rpc3RyaWN0LCBsYXRpdHVkZSwgbG9uZ2l0dWRlLCBuX2d1bnNfaW52b2x2ZWQsIHBhcnRpY2lwYW50X3R5cGUsIHN0YXRlX2hvdXNlX2Rpc3RyaWN0LCBzdGF0ZV9zZW5hdGVfZGlzdHJpY3QsIGFnZV8wXzE1LCBhZ2VfMTZfMjAsIGFnZV8yMV8yNSwgYWdlXzI2XzMwLCBhZ2VfMzFfMzUsIGFnZV8zNl80MCwgYWdlXzQxXzQ1LCBhZ2VfNDZfNTAsIGFnZV81MV81NSwgYWdlXzU2XzYwLCBhZ2VfNjFfNjUsIGFnZV82Nl83MCwgYWdlXzcxXzc1LCBhZ2VfNzZfODAsIGFnZV84MV8xMDAsIG1hbGVfY291bnQsIGZlbWFsZV9jb3VudCwgS2lsbGVkX2NvdW50LCBJbmp1cmVkX2NvdW50LCBVbmhhcm1lZEFycmVzdGVkX2NvdW50LCBJbmp1cmVkQXJyZXN0ZWRfY291bnQsIEFycmVzdGVkX2NvdW50LCBVbmhhcm1lZF9jb3VudCwgSW5qdXJlZEFycmVzdGVkRGllZF9jb3VudCkgIyMjIyMgVW5mb3J0dWFuZXRseSBPUkRFUiBoYXMgbm90IGJlZW4gcHJlc2VydmVkLi4uCmBgYAoKCgoKIyMjIEFDUwoKYGBge3IgQ29sdW1uIE5hbWVzLCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFLCBwYWdlZC5wcmludD1UUlVFfQpkaW0oYWNzMjAxNSkKYGBgCgpgYGB7ciBIZWFkIG9mIGFjczIwMTVQdDEsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHBhZ2VkLnByaW50PVRSVUV9CiNoZWFkKGFjczIwMTUsIG49OCkKYGBgCgpgYGB7ciBjb2xuYW1lcyBhY3MyMDE1LCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFLCBwYWdlZC5wcmludD1UUlVFfQpjb2xuYW1lcyhhY3MyMDE1KSAjIENoZWNraW5nIHRoZSBjb2x1bW4gbmFtZXMKYGBgCgpgYGB7cn0Kc2FwcGx5KGFjczIwMTUsIGNsYXNzKSAjIENoZWNraW5nIHRoZSBkYXRhIHR5cGVzIGZvciAnYWNzMjAxNScKYGBgCgoKCgojIyMjIyBDb21tZW50IC0gZHJvcCBjb2x1bW5zIGZpcnN0IHRoZW4gam9pbiB0aGVuIGNsZWFuLi4uIE9SIGNsZWFuIHRoZW4gam9pbi4uLgoKRm9yIHRoZSBmb2xsb3dpbmcgYW5hbHlzaXMsIG5seSBpbnRlcmVzdGVkIGluIGVjb25vbWljIGluZGljYXRvcnMKCmBgYHtyfQphY3MyMDE1X2tlZXAgPC0gc2VsZWN0KGFjczIwMTUsIFN0YXRlLCBDb3VudHksIFRvdGFsUG9wLCBJbmNvbWUsIEluY29tZVBlckNhcCwgUG92ZXJ0eSwgVW5lbXBsb3ltZW50KSAjRHBseXIKYGBgCgpDaGVja2luZyB0aGUgZGF0YSB0eXBlcwoKYGBge3IsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHBhZ2VkLnByaW50PVRSVUV9CnNhcHBseShhY3MyMDE1X2tlZXAsIGNsYXNzKQpgYGAKCmBgYHtyfQpzdW1tYXJ5KGFjczIwMTVfa2VlcCkKYGBgCgpgYGB7cn0KYWdncmVnYXRlKENvdW50eSB+IFN0YXRlLCBhY3MyMDE1X2tlZXAsIGZ1bmN0aW9uKHgpIGxlbmd0aCh1bmlxdWUoeCkpKQpgYGAKCmBgYHtyfQphY3MyMDE1X2tlZXBfY2FsaSA8LSBmaWx0ZXIoYWNzMjAxNV9rZWVwLCBTdGF0ZSA9PSAiQ2FsaWZvcm5pYSIpCmBgYAoKYGBge3J9CmFnZ3JlZ2F0ZShDb3VudHkgfiBTdGF0ZSwgYWNzMjAxNV9rZWVwX2NhbGksIGZ1bmN0aW9uKHgpIGxlbmd0aCh1bmlxdWUoeCkpKQpgYGAKCmBgYHtyfQphZ2dyZWdhdGUoY2l0eV9vcl9jb3VudHkgfiBjaXR5X29yX2NvdW50eSwgZ3ZkMjAxNV9wdDIsIGZ1bmN0aW9uKHgpIGxlbmd0aCh1bmlxdWUoeCkpKQpgYGAKCgojIyMgTWVyZ2UgLi4uIAoKYGBge3J9CmNvbG5hbWVzKGd2ZDIwMTVfcHQyKQpndmQyMDE1X3B0MiA9IHJlbmFtZShndmQyMDE1X3B0MiwgQ291bnR5ID0gY2l0eV9vcl9jb3VudHkpCmNvbG5hbWVzKGd2ZDIwMTVfcHQyKQpgYGAKCmBgYHtyfQpqb2luIDwtIGlubmVyX2pvaW4oZ3ZkMjAxNV9wdDIsIGFjczIwMTVfa2VlcF9jYWxpLCBieSA9ICJDb3VudHkiKSAjIERpc2FibGUgd2FybmluZ3MuLi4KYGBgCgojIyMjIEhvdyBjb3VsZCBDRU5TVVMgZGF0YSBiZSBtaXNzaW5nPz8/PyBKdXN0aWZpYWJseSB0aGVyZSBtYXkgbm90IGJlIGd1biBpbmNpZGVudHMgaW4gZXZlcnkgY291bnRyeSwgYnV0IHRoZXJlIElTIG1vcmUgaW5mbyB0aGF0IGd1biB2aW9sZW5jZSEhISEKCgoKCgoKCgoKCgoK</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiTUFUSDIzNDkgU2VtZXN0ZXIgMSwgMjAxOCAtIEFERCBERVNDUklQVElWRSBUSVRMRSIKYXV0aG9yOiAiQWxpc3RhaXIgR3JldmlzLUphbWVzIChzMzY0NDExOSkgYW5kIENocmlzIEthaWFzIChzWFhYWFhYKSIKc3VidGl0bGU6IEFzc2lnbm1lbnQgMwpvdXRwdXQ6CiAgaHRtbF9ub3RlYm9vazoKICAgICAgdG9jOiB0cnVlCiAgICAgIHRvY19mbG9hdDogdHJ1ZQotLS0KCjxzdHlsZT4KYm9keSB7CnRleHQtYWxpZ246IGp1c3RpZnl9Cjwvc3R5bGU+CgpgYGB7ciwgaW5jbHVkZSA9IEZBTFNFfQpvcHRpb25zKGtuaXRyLnRhYmxlLmZvcm1hdCA9ICJodG1sIikKYGBgCgojIyMgRXhlY3V0aXZlIFN1bW1hcnkKCkRhdGEgYmxhaCBibGFoIGFuZCAuLi4gVGhlc2UgZGF0YSB3ZXJlIGltcG9ydGVkIGFzIGB4eHhgIGFuZCBgeXl5YCwgcmVzcGVjdGl2ZWx5LgoKIyMjIFJlcXVpcmVkIHBhY2thZ2VzIAoKYGBge3IsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHBhZ2VkLnByaW50PVRSVUV9CiNUaGUgZm9sbG93aW5nIHBhY2thZ2VzIHdlcmUgdXNlZCB3aGlsc3QgY29tcGxldGluZyB0aGUgcmVwb3J0ICh3aXRoIGFubm90YXRpb24pCmxpYnJhcnkocmVhZHIpICMgVXNlZCB0byBpbXBvcnQgLmNzdiBmaWxlcwpsaWJyYXJ5KGRwbHlyKSAjIFNlY3Rpb24gWQpsaWJyYXJ5KHN0cmluZ3IpICMgU2VjdGlvbiBaCmxpYnJhcnkoa25pdHIpICMgU2VjdGlvbiBYCmxpYnJhcnkodGlkeXIpCmxpYnJhcnkobHVicmlkYXRlKQpsaWJyYXJ5KGthYmxlRXh0cmEpCiN4bHN4ICNyZWFkeGwgI2ZvcmVpZ24gI2dkYXRhICNydmVzdCAjZHBseXIgICNkZWR1Y3RpdmUgI3ZhbGlkYXRlICNIbWlzYyAjb3V0bGllcnMKI01WTiAjaW5mb3RoZW8gI01BU1MgI2NhcmV0ICNNTFIgI2dncGxvdCAjYmFzZSBSIGZ1bmN0aW9ucwpgYGAKCiMjIyBJbXBvcnRpbmcgdGhlIERhdGEKClRoZSBgcmVhZHJgIGZ1bmN0aW9uIHdhcyB1c2VkIHRvIGltcG9ydCB0aGUgZGF0YSBhcyBzaG93biBiZWxvdy4gVGhlIGRhdGEgd2VyZSBpbXBvcnRlZCBhcyBgZ3ZkYCBmb3IgR3VuIFZpb2xlbmNlIERhdGEgYW5kIGBhY3MyMDE1YCBmb3IgQW1lcmljYW4gKFVTKSAyMDE1IENlbnN1cyBEYXRhLgoKYGBge3IsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHBhZ2VkLnByaW50PVRSVUV9Cmd2ZFppcCA8LSAiZ3VuLXZpb2xlbmNlLWRhdGEuY3N2LnppcCIKb3V0RGlyPC0iL1VzZXJzL2FsaXN0YWlyZ2ovRG9jdW1lbnRzL0dpdEh1YiIgIyBDaGFuZ2Ugb3V0cHV0IGRpcmVjdG9yeSBmb3IgdW56aXBwZWQgLmNzdiBmaWxlIGFzIG5lZWRlZAp1bnppcChndmRaaXAsIGV4ZGlyPW91dERpcikKc2V0d2QoIi9Vc2Vycy9hbGlzdGFpcmdqL0RvY3VtZW50cy9HaXRIdWIiKQpndmQgPC0gcmVhZC5jc3YoImd1bi12aW9sZW5jZS1kYXRhLmNzdiIpICMgSW1wb3J0aW5nIEd1biBWaW9sZW5jZSBEYXRhCnNldHdkKCIvVXNlcnMvYWxpc3RhaXJnai9Eb2N1bWVudHMvR2l0SHViL01BVEgyMzQ5X0Fzc2lnbm1lbnQzVjIiKQphY3MyMDE1IDwtIHJlYWQuY3N2KCJhY3MyMDE1X2NvdW50eV9kYXRhLmNzdiIpICMgSW1wb3J0aW5nIEFtZXJpY2FuIChVUykgQ2Vuc3VzIERhdGEgMjAxNQpgYGAKCiMjIyBEYXRhIFN1bW1hcnkKClRocmVlIGRhdGEgc2V0cyBmcm9tIHR3byBzb3VyY2VzIHdhcyB1c2VkIGR1cmluZyB0aGlzIGFuYWx5c2lzLgoKR3VuIFZpb2xlbmNlIERhdGEgYSBDb21wcmVoZW5zaXZlIHJlY29yZCBvZiBvdmVyIDI2MGsgVVMgZ3VuIHZpb2xlbmNlIGluY2lkZW50cyBmcm9tIDIwMTMtMjAxOCAoaXRhbGljcyksIHdhcyBjb21waWxlZCBieSBKYW1lcyBLbyBhbmQgbWFkZSBhdmFpbGFibGUgb24ga2FnZ2xlLmNvbSAoZm9vdG5vdGUpLiBUaGVzZSBkYXRhIGNvbnRhaW4gYWxsIHJlY29yZGVkIGd1biB2aW9sZW5jZSBpbmNpZGVudHMgaW4gdGhlIFVTIGJldHdlZW4gSmFudWFyeSAyMDEzIGFuZCBNYXJjaCAyMDE4LCBpbmNsdXNpdmUuIFRoZXNlIGRhdGEgd2VyZSBpbXBvcnRlZCBhcyBgZ3ZkYC4KCmh0dHBzOi8vd3d3LmthZ2dsZS5jb20vamFtZXNsa28vZ3VuLXZpb2xlbmNlLWRhdGEvZGF0YSA9IGd1bl92aW9sZW5jZV9kYXRhCgpVUyBDZW5zdXMgRGVtb2dyYXBoaWMgRGF0YSBEZW1vZ3JhcGhpYyBhbmQgRWNvbm9taWMgRGF0YSBmb3IgVHJhY3RzIGFuZCBDb3VudGllcyAoaXRhbGljcyksIHdhcyBjb2xsZWN0ZWQgYnkgdGhlIFVTIENlbnN1cyBCdXJlYXUgYW5kIG1hZGUgYXZhaWxhYmxlIG9uIGthZ2dsZS5jb20gKGZvb3Rub3RlKS4gVGhlc2UgZGF0YSBjb250YWluIGFsbCBjZW5jdXMgZGF0YSBmcm9tIHRoZSAyMDE1IGZlZGVyYWwgY2Vuc3VzLiBUaGVzZSBkYXRhIHdlcmUgc3BsaXQgaW50byB0d28gZGF0YSBzZXRzLCB0aGUgZmlyc3QgYmVpbmcgY291bnR5IGRhdGEsIGFuZCB0aGUgc2Vjb25kIGJlaW5nIHRyYWN0IGRhdGEgKFRoZSAiQ2Vuc3VzIFRyYWN0IiBpcyBhbiBhcmVhIHJvdWdobHkgZXF1aXZhbGVudCB0byBhIG5laWdoYm9yaG9vZCBlc3RhYmxpc2hlZCBieSB0aGUgQnVyZWF1IG9mIENlbnN1cyBmb3IgYW5hbHl6aW5nIHBvcHVsYXRpb25zLiBUaGV5IGdlbmVyYWxseSBlbmNvbXBhc3MgYSBwb3B1bGF0aW9uIGJldHdlZW4gMiw1MDAgdG8gOCwwMDAgcGVvcGxlKS4KCmh0dHBzOi8vd3d3LmthZ2dsZS5jb20vemltZWl5YW5nLzIwMTUtdXMtY2Vuc3VzLWRlbW9ncmFwaGljLWRhdGEvZGF0YSA9IGFjc18yMDE1CgoKIyMjIEluaXRpYWwgQ2hlY2sgb2YgR3VuIFZpb2xlbmNlIERhdGEKClRoZSBkYXRhc2V0IEd1bi1WaW9sZW5jZSBEYXRhIHdhcyBpbXBvcnRlZCBhcyBgZ3ZkYC4gVXNpbmcgYGRhdGEuZnJhbWVgIHdpdGggcGlwaW5nLCBgZ3ZkYCB3YXMgY2hlY2tlZCBmb3IgZGltZW5zaW9ucyAoMjM5Njc3IG9ic2VydmF0aW9ucyBvZiAyOSBhdHRyaWJ1dGVzKSwgY29sdW1uIG5hbWVzIGFuZCBkYXRhIHR5cGVzLiBUaGUgc3RydWN0dXJlIG9mIHRoZSBkYXRhIGZyYW1lIGluZGljYXRlcyB3aWRlIGZvcm1hdCwgd2hlcmUgdGhlICdzdWJqZWN0IGluZm9ybWF0aW9uJyBpcyBpbmRpY2F0ZWQgYnkgdGhlIHVuaXF1ZSB2YWx1ZSBgaW5jaWRlbnRfaWRgLiBUaGlzIHdhcyBjb25maXJtZWQgYnkgYGxlbmd0aCh1bmlxdWUoZ3ZkJGluY2lkZW50X2lkKSlgIHdoaWNoIGdhdmUgMjM5Njc3IHVuaXF1ZSBvYnNlcnZhdGlvbnMsIHdoaWNoIGlzIGVxdWFsIHRvIHRoZSB0b3RhbCBudW1iZXIgb2Ygb2JzZXJ2YXRpb25zIChhbGwgb2JzZXJ2YXRpb25zIGFyZSB1bmlxdWUpLgoKYGBge3IsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHBhZ2VkLnByaW50PVRSVUV9CmRhdGEuZnJhbWUoQXR0cmlidXRlID0gbmFtZXMoZ3ZkKSwgQ2xhc3MgPSBzYXBwbHkoZ3ZkLCBjbGFzcyksCiAgICAgICAgICAgZ3ZkX2luY2lkZW50NDg2NjIzID0gc2FwcGx5KGd2ZFs4NCxdLCBmdW5jdGlvbih4KSBwYXN0ZTAoaGVhZCh4KSwgIGNvbGxhcHNlID0gIiwgIikpLAogICAgICAgICAgIHJvdy5uYW1lcyA9IE5VTEwpICU+JSBrYWJsZSgpICU+JSBrYWJsZV9zdHlsaW5nKGJvb3RzdHJhcF9vcHRpb25zID0gYygic3RyaXBlZCIsICJob3ZlciIsICJjb25kZW5zZWQiKSwgIGZvbnRfc2l6ZSA9IDExKSAKYGBgCgpgYGB7cn0KbGVuZ3RoKHVuaXF1ZShndmQkaW5jaWRlbnRfaWQpKSAjIENoZWNraW5nIHRoZSBudW1iZXIgb2YgdW5pcXVlIHZhbHVlcyBmb3IgaW5jaWRlbnQgSUQKYGBgCgpCYXNlZCBvbiB0aGUgb3V0cHV0IGZyb20gYHN0cihndmQpYCwgYSBzZWxlY3Rpb24gb2YgY29sdW1ucyB3ZXJlIGV4cGxvcmVkIHRvIGJldHRlciB1bmRlcnN0YW5kIHRoZWlyIHZhbHVlcy4gVGhpcyBpbmNsdWRlZCBgcGFydGljaXBhbnRfYWdlYCBhbmQgYHBhcnRpY2lwYW50X2dlbmRlcmAuIFRoZSByZXN1bHRhbnQgb3V0cHV0IChiZWxvdykgc2hvd3MgdGhhdCBlYWNoIG9mIHRoZXNlIGNvbHVtbnMgY29udGFpbnMgbXVsdGlwbGUgdmFsdWVzLiAKLSBJdCBhbHNvIHNob3dzIHRoYXQgU09NRSBWQUxVRVMgQVJFIE1JU1NJTkcuIAotIERhdGEgaXMgTk9UIFRJRFkKLSBUaGlzIGlzIGJlIGFkZHJlc3NlZCBpbiBzZWN0aW9uIFgKLSBJbiB0aGUgbWVhbnRpbWUgd2lsbCBkbyBvdGhlciBwcmVwcm9jZXNzaW5nCgpgYGB7cn0KZ3ZkICU+JSBzZWxlY3QocGFydGljaXBhbnRfYWdlLCBwYXJ0aWNpcGFudF9nZW5kZXIpICU+JSBoZWFkKG49OCkgJT4lIAogIGthYmxlKCkgJT4lIGthYmxlX3N0eWxpbmcoYm9vdHN0cmFwX29wdGlvbnMgPSBjKCJzdHJpcGVkIiwgImhvdmVyIiwgImNvbmRlbnNlZCIpLCAgZm9udF9zaXplID0gMTEpIApgYGAKCiMjIyBGaWx0ZXJpbmcgR3VuIFZpb2xlbmNlIERhdGEgZm9yIHZhbHVlcyBpbmNsdXNpdmUgb2YgdGhlIHllYXIgMjAxNQoKVGhlIEd1biBWaW9sZW5jZSBEYXRhc2V0IGNvbnRhaW5zIGRhdGEgZnJvbSAyMDEzIHRpbGwgMjAxNSwgd2hpbGUgdGhlIEFtZXJpY2FuIENlbnN1cyBEYXRhIGlzIGZyb20gMjAxNS4gV2Ugd2lsbCB0aGVyZWZvcmUgY3JlYXRlIGEgZGF0YSBzdWJzZXQgb2YgdGhlIEd1biBWaW9sZW5jZSBEYXRhIGZyb20gdGhlIHllYXIgMjAxNSBvbmx5LiBBcyBwcmV2aW91c2x5IGRldGVybWluZWQgKGBzdHIoZ3ZkKWApLCB0aGUgYGd2ZCRkYXRlYCBhdHRyaWJ1dGUgaXMgcHJlc2VudCBhcyBhIGZhY3RvciB3aXRoIDE3MjUgbGV2ZWxzICgxNzI1IGRpZmZlcmVudCBkYXRlIHZhbHVlcykuIFRoaXMgYXR0cmlidXRlIHdpbGwgYmUgY29udmVydGVkIHRvIGRhdGUgZm9ybWF0IChZWVlZLU1NLUREKSB1c2luZyBgYXMuRGF0ZWAuIFRoaXMgY29udmVyc2lvbiB3aWxsIGJlIGNoZWNrZWQgd2l0aCBgc3RyKClgLCBiZWxvdy4KCmBgYHtyfQpndmQkZGF0ZSA8LSBhcy5EYXRlKGd2ZCRkYXRlKSAjIENvbnZlcnRpbmcgdGhlIGd2ZCRkYXRlIGNvbHVtbiBhbmQgYXBwbHlpbmcgdG8gdGhlIGd2ZCBkYXRhc2V0CnN0cihndmQkZGF0ZSkgIyBDaGVja2luZyB0aGUgY29udmVyc2lvbiBvZiBndmQkZGF0ZQpgYGAKClRoZSBBbWVyaWNhbiAoVVMpIENlbnN1cyBEYXRhIGNvbnRhaW5zIHZhbHVlcyBmcm9tIHRoZSB5ZWFyIDIwMTUgb25seSwgYW5kIGFzIHN1Y2ggd2Ugd2lsbCBzdWJzZXQgdGhlIEd1biBWaW9sZW5jZSBEYXRhIGFjY3JvZGluZ2x5LiBUaGUgZmlyc3QgbWV0aG9kb2xvZ3kgdXNlZCBmb3IgZXh0cmFjdGluZyBZWVlZID0gMjAxNSB2YWx1ZSBmcm9tIGBndmQkZGF0ZWAgcmVsaWVkIG9uIGNvbnZlcnNpb24gb2YgYGd2ZCRkYXRlYCB0byBjb250YWluIHllYXIgb25seSAoYGd2ZCRkYXRlIDwtIGZvcm1hdC5EYXRlKGd2ZCRkYXRlLCBmb3JtYXQ9IiVZIilgKSwgdGhpcyB3YXMgdGhlbiBmaWx0ZXJlZCBmb3IgdmFsdWVzIG9mIDIwMTUgKGBndmQkZGF0ZV95ZWFyIDwtIGZpbHRlcihndmQsIGRhdGVfeWVhciA9PSAiMjAxNSIpYCkuIFRoaXMgbWV0aG9kb2xneSB3YXMgYWJhbmRvbmVkLCBhcyBpdCB1bm5lc3NjZXNhcmlseSBzdHJpcHBlZCBvdXQgdGhlIG1vbnRoIGFuZCBkYXkgZGF0YSBmcm9tIGBndmQkZGF0ZWAuIEluc3RlYWQsIGZpbHRlcmluZyB3YXMgdXNlZCwgYXMgYmVsb3cuCgpgYGB7cn0KeWVhcjIwMTVfYm9vbGVhbiA8LSBhcy5sb2dpY2FsKHllYXIoZ3ZkJGRhdGUpID09ICIyMDE1IikgI0NyZWF0aW5nIGEgeWVhciAyMDE1IHRydWUvZmFsc2UgdmVjdG9yCnN1bW1hcnkoeWVhcjIwMTVfYm9vbGVhbikgIyBDaGVja2luZyB0aGUgdmVjdG9yIHJlc3VsdHMKYGBgCgpgYGB7cn0KZ3ZkMjAxNSA8LSBndmRbeWVhcjIwMTVfYm9vbGVhbixdICMgQXBwbHlpbmcgdGhlIFRydWUvRmFsc2UgVmVjdG9yIHRvIGZpbHRlciBndmQKYGBgCgpgYGB7cn0Kc3VtbWFyeShndmQyMDE1JGRhdGUpICMgQ29uZmlybWluZyBvbmx5IDIwMTUgZGF0YSBpcyBwcmVzZW50CmBgYAoKVGhlIERTIGBndmQyMDE1YCBpcyBub3cgcHJlcGFyZWQuCgojIyMgRmlsdGVyaW5nIEd1biBWaW9sZW5jZSBEYXRhIDIwMTUgZm9yIHZhbHVlcyBmcm9tIHRoZSBzdGF0ZSBvZiBDYWxpZm9ybmlhCgoKCmBgYHtyfQphZ2dyZWdhdGUoY2l0eV9vcl9jb3VudHkgfiBzdGF0ZSwgZ3ZkMjAxNSwgZnVuY3Rpb24oeCkgbGVuZ3RoKHVuaXF1ZSh4KSkpICU+JSAKICBrYWJsZSgpICU+JSBrYWJsZV9zdHlsaW5nKGJvb3RzdHJhcF9vcHRpb25zID0gYygic3RyaXBlZCIsICJob3ZlciIsICJjb25kZW5zZWQiKSwgIGZvbnRfc2l6ZSA9IDExLCBmdWxsX3dpZHRoID0gRikgJT4lIHNjcm9sbF9ib3goaGVpZ2h0ID0gIjIwMHB4IikKYGBgCgpUaGUgZGF0YSBmcmFtZSBgZ3ZkMjAxNWAgaGFzIGRpbWVuc2lvbnMgb2YgNTM1NzkgaW5zdGFuY2VzIG92ZXIgMjkgYXR0cmlidXRlcywgd2Ugd2lsbCBub3cgY2hlY2sgdGhlIHZhbHVlcyBvZiBgZ3ZkMjAxNSRzdGF0ZWAgdXNpbmcgdGhlIGFnZ3JlZ2F0ZSBmdW5jdGlvbi4gVGhlIG91dHB1dCBlbmFibGVzIHVzIHRvIGRldGVybWluZSB0aGUgbnVtYmVyIG9mIGBjaXR5X29yX2NvdW50eWAgaW4gZWFjaCBTdGF0ZSwgdGhhdCBpcyBzbWFsbGVyIGdlb2dyYXBoaWNhbCByZWdpb25zIGluc2lkZSBlYWNoIHN0YXRlLiBGb3IgdGhpcyBhbmFseXNpcywgdGhlIFN0YXRlIG9mIENhbGlmb3JuaWEgd2FzIGNob3Nlbi4gQXMgQ2FsaWZvcm5pYSBpcyBvbmUgb2YgdGhlIG1vc3QgcG9wdWx1cyBzdGF0ZXMgaW4gQW1lcmljYSAocmVmKSwgd2l0aCBhIGxhcmdlIHJhbmdlIG9mIHNvY2lvLWVjb25vbWljIC4uLiBhbmQgYSB2YXJpZWQgZ2VvZ3JhcGh5LCBpdCB3YXMgZGV0ZXJtaW5lZCB0byBiZSBhIGdvb2QgY2hvaWNlLiBBbHNvIG5vdGUgdGhhdCB0aGUgZm9sbG93aW5nIG1ldGhvZG9sb2d5IG91dGxpbmVkIGNvdWxkIGJlIGFwcGxpZWQgdG8gYW55IG9mIHRoZSBzdGF0ZXMgaW4gdGhlIGBndmRgIGRhdGFzZXQsIHNvIENhbGlmb3JuaWEgd2lsbCBhY3QgYXMgYSBwcm9vZiBvZiBjb25jZXB0LgoKCmBgYHtyfQpndmQyMDE1X2tlZXBfY2FsaSA8LSBmaWx0ZXIoZ3ZkMjAxNSwgc3RhdGUgPT0gIkNhbGlmb3JuaWEiKQpgYGAKCmBgYHtyfQphZ2dyZWdhdGUoY2l0eV9vcl9jb3VudHkgfiBzdGF0ZSwgZ3ZkMjAxNV9rZWVwX2NhbGksIGZ1bmN0aW9uKHgpIGxlbmd0aCh1bmlxdWUoeCkpKSAlPiUgCiAga2FibGUoKSAlPiUga2FibGVfc3R5bGluZyhib290c3RyYXBfb3B0aW9ucyA9IGMoInN0cmlwZWQiLCAiaG92ZXIiLCAiY29uZGVuc2VkIiksICBmb250X3NpemUgPSAxMSwgZnVsbF93aWR0aCA9IEYpCmBgYAoKIyMjIEV4cGxvcmluZyB0aGUgb3RoZXIgYXR0cmlidXRlcyBpbiBndmQyMDE1X2tlZXBfY2FsaQoKUmVmZXJlbmNpbmcgdGhlIGZpcnN0IHRhYmxlIGdlbmVyYXRlZCBzdXJtaXppbmcgdGhlc2UgZGF0YSwgdGhlIGZvbGxvd2luZyBhdHRyaWJ1dGVzIHdpbGwgYmUgZHJvcHBlZCBmcm9tIGd2ZDIwMTVfa2VlcF9jYWxpOiBgYWRkcmVzc2AgYXMgdGhpcyBsZXZlbCBvZiBmaW5lIGRldGFpbCBpcyBub3QgcmVxdWlyZWQsIGBzb3VyY2VfdXJsYCBhcyB0aGlzIGNhbiBiZSBmb3VuZCB2aWEgYGluY2lkZW50X3VybGAsIGBpbmNpZGVudF91cmxfZmllbGRzX21pc3NpbmdgIGFzIHRoaXMgaXMgYSBib29sZWFuIGF0dHJpYnV0ZSB0aGF0IHdhcyBnZW5lcmF0ZWQgYnkgdGhlIGFuYWx5c3Qgd2hvIGNvbXBpbGVkIHRoZSBkYXRhc2V0LCBgaW5jaWRlbnRfY2hhcmFjdGVyaXN0aWNzYCBhcyB0aGVzZSBzdHJpbmdzIGFyZSB0b28gdW5zdHJ1Y3R1cmVkLCBgbG9jYXRpb25fZGVzY3JpcHRpb25gIGFzIHRoZXNlIHN0cmluZ3MgYXJlIHRvIHVuc3RydWN0dXJlZCwgYG5vdGVzYCBubyB2YWx1ZSwgYHBhcnRpY2lwYW50X2FnZV9ncm91cGAgd2UgYWxyZWFkeSBoYXZlIHBhcnRpY2lwYW50IGFnZSwgIGBwYXJ0aWNpcGFudF9uYW1lYCAmIGBzb3VyY2VzYC4KCmBgYHtyfQpndmQyMDE1X2tlZXBfY2FsaSA8LSBzZWxlY3QoZ3ZkMjAxNV9rZWVwX2NhbGksIGluY2lkZW50X2lkLCBkYXRlLCBzdGF0ZSwgY2l0eV9vcl9jb3VudHksIG5fa2lsbGVkLCBuX2luanVyZWQsIGluY2lkZW50X3VybCwgY29uZ3Jlc3Npb25hbF9kaXN0cmljdCwgbGF0aXR1ZGUsIGxvbmdpdHVkZSwgbl9ndW5zX2ludm9sdmVkLCBwYXJ0aWNpcGFudF9hZ2UsIHBhcnRpY2lwYW50X2dlbmRlciwgcGFydGljaXBhbnRfc3RhdHVzLCBwYXJ0aWNpcGFudF90eXBlLCBzdGF0ZV9ob3VzZV9kaXN0cmljdCwgc3RhdGVfc2VuYXRlX2Rpc3RyaWN0KQpgYGAKCmBgYHtyLCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFLCBwYWdlZC5wcmludD1UUlVFfQpkYXRhLmZyYW1lKEF0dHJpYnV0ZSA9IG5hbWVzKGd2ZDIwMTVfa2VlcF9jYWxpKSwgQ2xhc3MgPSBzYXBwbHkoZ3ZkMjAxNV9rZWVwX2NhbGksIGNsYXNzKSwKICAgICAgICAgICBndmRfaW5jaWRlbnQyNzQxNjggPSBzYXBwbHkoZ3ZkMjAxNV9rZWVwX2NhbGlbNTMsXSwgZnVuY3Rpb24oeCkgcGFzdGUwKGhlYWQoeCksICBjb2xsYXBzZSA9ICIsICIpKSwKICAgICAgICAgICByb3cubmFtZXMgPSBOVUxMKSAlPiUga2FibGUoKSAlPiUga2FibGVfc3R5bGluZyhib290c3RyYXBfb3B0aW9ucyA9IGMoInN0cmlwZWQiLCAiaG92ZXIiLCAiY29uZGVuc2VkIiksICBmb250X3NpemUgPSAxMSwgZnVsbF93aWR0aCA9IEYpCmBgYAoKYGBge3J9Cmd2ZDIwMTVfa2VlcF9jYWxpJGNvbmdyZXNzaW9uYWxfZGlzdHJpY3QgPC0gYXMuZmFjdG9yKGd2ZDIwMTVfa2VlcF9jYWxpJGNvbmdyZXNzaW9uYWxfZGlzdHJpY3QpCmd2ZDIwMTVfa2VlcF9jYWxpJHN0YXRlX2hvdXNlX2Rpc3RyaWN0IDwtIGFzLmZhY3RvcihndmQyMDE1X2tlZXBfY2FsaSRzdGF0ZV9ob3VzZV9kaXN0cmljdCkKZ3ZkMjAxNV9rZWVwX2NhbGkkc3RhdGVfc2VuYXRlX2Rpc3RyaWN0IDwtIGFzLmZhY3RvcihndmQyMDE1X2tlZXBfY2FsaSRzdGF0ZV9zZW5hdGVfZGlzdHJpY3QpCmBgYAoKYGBge3J9CmRpbShndmQyMDE1X2tlZXBfY2FsaSkKYGBgCgojIyMjIEluY2lkZW50X1VSTAoKVGhlIGF0dHJpYnV0ZSBgaW5jaWRlbnRfVVJMYCB3aWxsIG5vdyBiZSBjb21wYXJlZCB3aXRoIGBpbmNpZGVudF9JRGAgKGFzIHdlIG1heSBiZSBhYmxlIHRvIGRyb3AgYGluY2lkZW50X1VSTGApCgpgYGB7cn0KZ3ZkMjAxNV9rZWVwX2NhbGkkaW5jaWRlbnRfdXJsIDwtICBndmQyMDE1X2tlZXBfY2FsaSRpbmNpZGVudF91cmwgJT4lIAogIHN0cl9yZXBsYWNlX2FsbCgiaHR0cDovL3d3dy5ndW52aW9sZW5jZWFyY2hpdmUub3JnL2luY2lkZW50LyIsICIiKSAjIApndmQyMDE1X2tlZXBfY2FsaSRpbmNpZGVudF91cmwgPC0gYXMuaW50ZWdlcihndmQyMDE1X2tlZXBfY2FsaSRpbmNpZGVudF91cmwpCmBgYAoKYGBge3J9CiMgQ3JlYXRlIHR3byB2ZWN0b3JzCmEgPC0gYXMudmVjdG9yKGd2ZDIwMTVfa2VlcF9jYWxpJGluY2lkZW50X2lkKQpiIDwtIGFzLnZlY3RvcihndmQyMDE1X2tlZXBfY2FsaSRpbmNpZGVudF91cmwpCmFbIShhICVpbiUgYildCmBgYAoKLSBEcm9wIGluY2lkZW50X3VybCBhbmQgd2lsbCB1c2UgaW5jaWRlbnRfaWQgd2l0aCBVUkwgc3RlbS4KCiMjIyMgRXhwbG9yaW5nIHRoZSBHVkQgMjAxNSBDYWxpZm9ybmlhIERhdGEgU3Vic2V0CgoqIFRleHQgdGV4dCB0ZXh0CiogVGhlIHBhcnRpY2lwYW50IGFnZSBhbmQgZ2VuZGVyIGF0dHJpYnV0ZXMgbWF5IGNvbnRhaW4gLi4uIChnb29kIGRhdGEgZm9yIGFuYWx5dGljcykKKiBJbiBib3RoIGF0dGlidXRlcywgbXVsdGlwbGUgdmFsdWVzIGFyZSBjb250YWluZWQuIAoqIE5vdCB0aWR5LCBtdWx0aXBsZSB2YWx1ZXMgaW4gb25lIGNvbHVtbgoKYGBge3IsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHBhZ2VkLnByaW50PVRSVUV9Cmd2ZDIwMTVfa2VlcF9jYWxpWzE6NSwgYygxMToxNSldICU+JSBrYWJsZSgpICU+JSBrYWJsZV9zdHlsaW5nKGJvb3RzdHJhcF9vcHRpb25zID0gYygic3RyaXBlZCIsICJob3ZlciIsICJjb25kZW5zZWQiKSwgIGZvbnRfc2l6ZSA9IDExLCBmdWxsX3dpZHRoID0gRikKYGBgCgojIyMjIyBuX2d1bl9pbnZvbHZlZAoKYGBge3J9CnRhYmxlKHNhcHBseShndmQyMDE1X2tlZXBfY2FsaSRuX2d1bnNfaW52b2x2ZWQsIGZ1bmN0aW9uKHkpIHN1bShsZW5ndGgod2hpY2goaXMubmEoeSkpKSkpKSAlPiUga2FibGUoKSAlPiUga2FibGVfc3R5bGluZyhib290c3RyYXBfb3B0aW9ucyA9IGMoInN0cmlwZWQiLCAiaG92ZXIiLCAiY29uZGVuc2VkIiksICBmb250X3NpemUgPSAxMSwgZnVsbF93aWR0aCA9IEYpIApgYGAKCi0gQWxtb3N0IDUwJSBOQSAtIGRyb3AKLSBGdXRoZXIgYW5hbHlzaXMgPSBtYWNoaW5lIGxlYXJuaW5nCgojIyMjIyBwYXJ0aWNpcGFudF9hZ2UKCi0gQ3VycmVudCBmb3JtCi0gRGlzY3VzcwoKYGBge3J9Cmd2ZDIwMTVfa2VlcF9jYWxpJG1hdGNoZXMgPC0gc3RyX21hdGNoX2FsbChndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9hZ2UsICJcXGQrOjooXFxkKykiKQphZ2VzID0gYyhjKDAsMTUpKSAjIEZpcnN0IGFnZSByYW5nZSBpcyB1bmRlciAxNXMKZm9yIChpIGluIHNlcSgxNiwgNzYsIDUpKSAjIFRoZSBvdGhlciBhZ2UgcmFuZ2VzIGFyZSBldmVyeSA1IHllYXJzIAp7CiAgYWdlcyA8LSBjKGFnZXMsIGMoaSwgaSs0KSkKfQphZ2VzIDwtIGMoYWdlcywgYyg4MSwxMDApKSAjIFRoZSBsYXN0IGFnZSByYW5nZSBpcyA4MSBwbHVzCmZvciAoaSBpbiBzZXEoMSxsZW5ndGgoYWdlcyktMSwgMikpICMgRWFjaCBwYWlyIG9mIGFnZXMgaW4gdGhlIGFnZSByYW5nZXMKewogICMgQ29uc3RydWN0IHRoZSBjb2x1bW4gdXNpbmcgYXBwbHkKICAjIFBhc3RlIGhlcmUgY29uY2F0ZW5hdGVzIHRoZSBzdHJpbmcgZm9yIHRoZSBjb2x1bW4gbmFtZQogIGd2ZDIwMTVfa2VlcF9jYWxpW3Bhc3RlKCJhZ2UiLCBhZ2VzW2ldLGFnZXNbaSsxXSwgc2VwPSJfIildIDwtIGFwcGx5KGd2ZDIwMTVfa2VlcF9jYWxpLCAxLCBmdW5jdGlvbihyb3cpIHsKICAgIGNudCA8LSAwICMgQ291bnQgb2YgYWdlcyBpbiBjdXJyZW50IHJhbmdlIHN0YXJ0cyBhdCAwCiAgICBmb3IgKHggaW4gcm93JG1hdGNoZXMpICMgSXRlcmF0ZSB0aHJvdWdoIHRoZSBtYXRjaGVzIHdlIHBhcnNlZCBvdXQKICAgIHsgaWYgKCFncmVwbCgiOiIsIHgsIGZpeGVkID0gVFJVRSkpICMgSWYgdGhlIG1hdGNoIGRvZXMgbm90IGNvbnRhaW4gYSA6IHRoZW4gaXQgaXMgdGhlIG1hdGNoIGdyb3VwIHJhdGhlciB0aGFuIHRoZSBtYXRjaAogICAgICB7IGFnZSA8LSBhcy5pbnRlZ2VyKHgpICMgc28gY29udmVydCBhZ2UgYXMgc3RyaW5nIHRvIGludGVnZXIKICAgICAgICAgIGlmIChhZ2UgPj0gYWdlc1tpXSAmJiBhZ2UgPD0gYWdlc1tpKzFdKSAjIGFuZCBjaGVjayBpZiBhZ2UgZmFsbHMgd2l0aGluIGFnZSByYW5nZSBmb3IgdGhlIGN1cnJlbnQgY29sdW1uIAogICAgICAgIHsgY250IDwtIGNudCArIDEgfQogICAgICB9CiAgICB9CiAgICBhcy5pbnRlZ2VyKGNudCkKICB9KQp9CmBgYAoKLSBEUk9QIG1hdGNoZXMKLSBEUk9QIHBhcnRpY2lwYW50X2FnZQoKIyMjIyMgcGFydGljaXBhbnRfZ2VuZGVyCgpUaGUgY2hhcmFjdGVycyBgLFs6c3BhY2U6XWAsIGA6OmAsIGBbOmRpZ2l0Ol1gICYgYHx8YCB3ZXJlIHN0cmlwcGVkIGZyb20gdGhlIGBwYXJ0aWNpcGFudF9nZW5kZXJgIGFzIHNlZW4gYmVsb3cuIEEgbmV3IGNoYXIgdmFsdWUgd2FzIHN1YnNlcXVlbnRseSBjcmVhdGVkLCBgcGFydGljaXBhbnRfZ2VuZGVyX3VuaXF1ZV9jaGVja2AuIFRoaXMgdmFsdWUgd2FzIHRoZW4gY2hlY2tlZCBmb3IgdW5pcXVlIGNoYXJhY3RlcnMsIHdoaWNoIHlpZWxkZWQgb25seSBibGFuayAoIiIpLCBGZW1hbGUgYW5kIE1hbGUuIFR3byBgc3RyX2NvdW50YCBmdW5jdGlvbnMgd2VyZSB0aGVuIHVzZWQgdG8gZ2VuZXJhdGUgY291bnQgY29sdW1ucyBmb3IgZ2VuZGVyLCB0aGVzZSB3ZXJlIG5hbWVkIGBtYWxlX2NvdW50YCBhbmQgYGZlbWFsZV9jb3VudGAuIFRoZSBjb2x1bW4gYHBhcnRpY2lwYW50X2dlbmRlcmAgd2lsbCBiZSBsYXRlciBkcm9wcGVkLgoKYGBge3J9Cmd2ZDIwMTVfa2VlcF9jYWxpJHBhcnRpY2lwYW50X2dlbmRlciA8LSAgZ3ZkMjAxNV9rZWVwX2NhbGkkcGFydGljaXBhbnRfZ2VuZGVyICU+JSAKICBzdHJfcmVwbGFjZV9hbGwoIixbOnNwYWNlOl0iLCAiIikgJT4lICNSZW1vdmUgY29tbWEgJiB3aGl0ZXNwYWNlCiAgc3RyX3JlcGxhY2VfYWxsKCI6OiIsICIiKSAlPiUKICBzdHJfcmVwbGFjZV9hbGwoIls6ZGlnaXQ6XSIsICIgIikgJT4lCiAgc3RyX3JlcGxhY2VfYWxsKCJcXHx8IiwgIiIpCmBgYAoKYGBge3J9CnBhcnRpY2lwYW50X2dlbmRlcl91bmlxdWVfY2hlY2sgPC0gYXMuY2hhcmFjdGVyKGd2ZDIwMTVfa2VlcF9jYWxpWyxjKCJwYXJ0aWNpcGFudF9nZW5kZXIiKV0pCnVsIDwtIHVubGlzdChzdHJzcGxpdChwYXJ0aWNpcGFudF9nZW5kZXJfdW5pcXVlX2NoZWNrLCAiICIpKQp1bmlxdWUodWwpCmBgYAoKYGBge3J9Cmd2ZDIwMTVfa2VlcF9jYWxpJG1hbGVfY291bnQgPC0gc3RyX2NvdW50KGd2ZDIwMTVfa2VlcF9jYWxpJHBhcnRpY2lwYW50X2dlbmRlciwgcGF0dGVybiA9ICJNYWxlIikgIyBTdHJpbmdyCmd2ZDIwMTVfa2VlcF9jYWxpJGZlbWFsZV9jb3VudCA8LSBzdHJfY291bnQoZ3ZkMjAxNV9rZWVwX2NhbGkkcGFydGljaXBhbnRfZ2VuZGVyLCBwYXR0ZXJuID0gIkZlbWFsZSIpICMgU3RyaW5ncgpgYGAKCiMjIyMjIFBhcnRpY2lwYW50X3N0YXR1cwoKVGhlIGNoYXJhY3RlcnMgYCxbOnNwYWNlOl1gLCBgOjpgLCBgWzpkaWdpdDpdYCAmIGB8fGAgd2VyZSBzdHJpcHBlZCBmcm9tIHRoZSBgcGFydGljaXBhbnRfc3RhdHVzYCBpbiB0aGUgc2FtZSBtYW5uZXIgYXMgZm9yIGBwYXJ0aWNpcGFudF9nZW5kZXJgLiBUaGUgc2FtZSBtZXRob2RvbG9neSB3YXMgdGhlbiB1c2VkIHRvIGdlbmVyYXRlIGNvdW50cyAoYHVubGlzdGAsIGBzdHJzcGxpdGAsIGB1bmlxdWVgKSBmb3IgdGhlIGBwYXJ0aWNpcGFudF9zdGF0dXNgIHZhbHVlcywgZ2l2aW5nIHRoZSBmb2xsb3dpbmc7CgpgYGB7ciwgaW5jbHVkZSA9IEZBTFNFfQpndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMgPC0gIGd2ZDIwMTVfa2VlcF9jYWxpJHBhcnRpY2lwYW50X3N0YXR1cyAlPiUgCiAgc3RyX3JlcGxhY2VfYWxsKCIsWzpzcGFjZTpdIiwgIiIpICU+JSAjUmVtb3ZlIGNvbW1hICYgd2hpdGVzcGFjZQogIHN0cl9yZXBsYWNlX2FsbCgiOjoiLCAiIikgJT4lCiAgc3RyX3JlcGxhY2VfYWxsKCJbOmRpZ2l0Ol0iLCAiICIpICU+JQogIHN0cl9yZXBsYWNlX2FsbCgiXFx8fCIsICIiKQpgYGAKCmBgYHtyfQpwYXJ0aWNpcGFudF9zdGF0dXNfdW5pcXVlX2NoZWNrIDwtIGFzLmNoYXJhY3RlcihndmQyMDE1X2tlZXBfY2FsaVssYygicGFydGljaXBhbnRfc3RhdHVzIildKQp1bCA8LSB1bmxpc3Qoc3Ryc3BsaXQocGFydGljaXBhbnRfc3RhdHVzX3VuaXF1ZV9jaGVjaywgIiAiKSkKdW5pcXVlKHVsKQpgYGAKClNldmVyYWwgYW5vbWFsb3VzIHZhbHVlcyB3aGljaCBjb250YWluIG11dHVhbGx5IGV4Y2x1c2l2ZSBzdGF0ZXMgb2YgYmVpbmcsIHdlcmUgaWRlbnRpZmllZCBhczsgIkluanVyZWRVbmhhcm1lZEFycmVzdGVkIiwgIktpbGxlZEluanVyZWQiLCAiS2lsbGVkQXJyZXN0ZWQiLCAiS2lsbGVkVW5oYXJtZWQiLCAiSW5qdXJlZFVuaGFybWVkIiBhbmQgIktpbGxlZFVuaGFybWVkQXJyZXN0ZWQiLiBUaGUgYGdyZXBsYCBmdW5jdGlvbiB3YXMgdGhlbiB1c2VkIHRvIGNyZWF0ZSBhIGJvb2xlYW4gdmVjdG9yIGZvciBpbiBlYWNoIGNhc2UgdG8gc2VhcmNoIGZvciB0aGUgc291cmNlIG9mIHRoZSB2YWx1ZSBpbiBgZ3ZkMjAxNV9rZWVwX2NhbGlgLiBPbmNlIHRoZSBgaW5jaWRlbnRfaWRgIHdhcyBpZGVudGlmaWVkLCB0aGUgVVJMICJodHRwOi8vd3d3Lmd1bnZpb2xlbmNlYXJjaGl2ZS5vcmcvaW5jaWRlbnQvYGluY2lkZW50X2lkYCIgd2FzIGNoZWNrZWQuIEVhY2ggaW5zdGFuY2Ugd2FzIHRoZW4gcmF0aW9uYWxpemVkIGFuZCBnaXZlbiBhIG1vcmUgYXBwcm9wcmlhdGUgdmFsdWUgdXNpbmcgdGhlIGBzdHJfcmVwbGFjZV9hbGxgIGZ1bmN0aW9uLiAKCmBgYHtyfQpJbmp1cmVkVW5oYXJtZWRBcnJlc3RlZCA8LSBncmVwbCgiSW5qdXJlZFVuaGFybWVkQXJyZXN0ZWQiLCBndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMpCmd2ZDIwMTVfa2VlcF9jYWxpW0luanVyZWRVbmhhcm1lZEFycmVzdGVkLGMoMSwxNCldCmBgYAoKVGhlIHZhbHVlcyB3ZXJlIGFsbCBjaGVja2VkIGFzIGRlc2NyaWJlZCBhYm92ZSBhbmQgdXBkYXRlZCBhcyBmb2xsb3dzOwoKIE9yaWdpbmFsVmFsdWUgfCBFeHBsYW5hdGlvbiAvIEp1c3RpZmljYXRpb24gfCBVcGRhdGVkVmFsdWUKLS0tLS0tLS0tLS0tLSB8IC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0gfCAtLS0tLS0tLS0tLQpgSW5qdXJlZFVuaGFybWVkQXJyZXN0ZWRgIHwgVGhpcyB2YWx1ZSB3YXMgY3JlYXRlZCBhcyB0aGUgcmVwb3J0aW5nIG9mIGFuIGluY2lkZW50IGlzIHVwZGF0ZWQgfCBgSW5qdXJlZEFycmVzdGVkYApgS2lsbGVkSW5qdXJlZGAgfCBUaGlzIHZhbHVlIHdhcyBjcmVhdGVkIHdoZW4gYSBwZXJzb24gd2hvIHdhcyBpbml0aWFsbHkgaW5qdXJlZCBsYXRlciBkaWVzIHwgYEtpbGxlZGAKYEtpbGxlZEFycmVzdGVkYCB8IFRoaXMgdmFsdWUgd2FzIGNyZWF0ZWQgd2hlbiBhIHBlcnNvbiB3aG8gd2FzIG1vcnRhbGx5IHdvdW5kZWQsIGFycmVzdGVkIGFuZCBsYXRlciBkaWVzIHwgYEtpbGxlZGAKYEtpbGxlZFVuaGFybWVkYCB8IFRoaXMgdmFsdWUgd2FzIGNyZWF0ZWQgYXMgdGhlIHJlcG9ydGluZyBvZiBhbiBpbmNpZGVudCBpcyB1cGRhdGVkIHwgYEtpbGxlZGAKYEluanVyZWRVbmhhcm1lZGAgfCBUaGlzIHZhbHVlIHdhcyBjcmVhdGVkIGFzIHRoZSByZXBvcnRpbmcgb2YgYW4gaW5jaWRlbnQgaXMgdXBkYXRlZCB8IGBJbmp1cmVkYApgS2lsbGVkVW5oYXJtZWRBcnJlc3RlZGAgfCBUaGlzIHZhbHVlIHdhcyBjcmVhdGVkIGFzIHRoZSByZXBvcnRpbmcgb2YgYW4gaW5jaWRlbnQgaXMgdXBkYXRlZCB8IGBLaWxsZWRgCgpgYGB7cn0KZ3ZkMjAxNV9rZWVwX2NhbGkkcGFydGljaXBhbnRfc3RhdHVzIDwtIHN0cl9yZXBsYWNlX2FsbChndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMsICJJbmp1cmVkVW5oYXJtZWRBcnJlc3RlZCIsICJJbmp1cmVkQXJyZXN0ZWQiKQpndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMgPC0gc3RyX3JlcGxhY2VfYWxsKGd2ZDIwMTVfa2VlcF9jYWxpJHBhcnRpY2lwYW50X3N0YXR1cywgIktpbGxlZEluanVyZWQiLCAiS2lsbGVkIikKZ3ZkMjAxNV9rZWVwX2NhbGkkcGFydGljaXBhbnRfc3RhdHVzIDwtIHN0cl9yZXBsYWNlX2FsbChndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMsICJLaWxsZWRBcnJlc3RlZCIsICJLaWxsZWQiKQpndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMgPC0gc3RyX3JlcGxhY2VfYWxsKGd2ZDIwMTVfa2VlcF9jYWxpJHBhcnRpY2lwYW50X3N0YXR1cywgIktpbGxlZFVuaGFybWVkIiwgIktpbGxlZCIpCmd2ZDIwMTVfa2VlcF9jYWxpJHBhcnRpY2lwYW50X3N0YXR1cyA8LSBzdHJfcmVwbGFjZV9hbGwoZ3ZkMjAxNV9rZWVwX2NhbGkkcGFydGljaXBhbnRfc3RhdHVzLCAiSW5qdXJlZFVuaGFybWVkIiwgIkluanVyZWQiKQpndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMgPC0gc3RyX3JlcGxhY2VfYWxsKGd2ZDIwMTVfa2VlcF9jYWxpJHBhcnRpY2lwYW50X3N0YXR1cywgIktpbGxlZFVuaGFybWVkQXJyZXN0ZWQiLCAiS2lsbGVkIikKYGBgCgpgYGB7ciwgaW5jbHVkZT1GQUxTRX0KZ3ZkMjAxNV9rZWVwX2NhbGkkcGFydGljaXBhbnRfc3RhdHVzIDwtIHN0cl9yZXBsYWNlX2FsbChndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMsICJLaWxsZWRBcnJlc3RlZCIsICJLaWxsZWQiKQpgYGAKCmBgYHtyfQpwYXJ0aWNpcGFudF9zdGF0dXNfdW5pcXVlX2NoZWNrIDwtIGFzLmNoYXJhY3RlcihndmQyMDE1X2tlZXBfY2FsaVssYygicGFydGljaXBhbnRfc3RhdHVzIildKQp1bCA8LSB1bmxpc3Qoc3Ryc3BsaXQocGFydGljaXBhbnRfc3RhdHVzX3VuaXF1ZV9jaGVjaywgIiAiKSkKdW5pcXVlKHVsKQpgYGAKCmBgYHtyfQpndmQyMDE1X2tlZXBfY2FsaSRpbmp1cmVkX2NvdW50IDwtIHN0cl9jb3VudChndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMsIHBhdHRlcm4gPSAiSW5qdXJlZCIpCmd2ZDIwMTVfa2VlcF9jYWxpJHVuaGFybWVkX2NvdW50IDwtIHN0cl9jb3VudChndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMsIHBhdHRlcm4gPSAiVW5oYXJtZWQiKQpndmQyMDE1X2tlZXBfY2FsaSRraWxsZWRfY291bnQgPC0gc3RyX2NvdW50KGd2ZDIwMTVfa2VlcF9jYWxpJHBhcnRpY2lwYW50X3N0YXR1cywgcGF0dGVybiA9ICJLaWxsZWQiKQpndmQyMDE1X2tlZXBfY2FsaSR1bmhhcm1lZEFycmVzdGVkX2NvdW50IDwtIHN0cl9jb3VudChndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMsIHBhdHRlcm4gPSAiVW5oYXJtZWRBcnJlc3RlZCIpCmd2ZDIwMTVfa2VlcF9jYWxpJGFycmVzdGVkX2NvdW50IDwtIHN0cl9jb3VudChndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF9zdGF0dXMsIHBhdHRlcm4gPSAiQXJyZXN0ZWQiKQpndmQyMDE1X2tlZXBfY2FsaSRpbmp1cmVkQXJyZXN0ZWRfY291bnQgPC0gc3RyX2NvdW50KGd2ZDIwMTVfa2VlcF9jYWxpJHBhcnRpY2lwYW50X3N0YXR1cywgcGF0dGVybiA9ICJJbmp1cmVkQXJyZXN0ZWQiKSAKYGBgCgoKIyMjIyMgUGFydGljaXBhbnRfVHlwZQoKVGhlIGNoYXJhY3RlcnMgYCxbOnNwYWNlOl1gLCBgOjpgLCBgWzpkaWdpdDpdYCAmIGB8fGAgd2VyZSBzdHJpcHBlZCBmcm9tIHRoZSBgcGFydGljaXBhbnRfdHlwZWAgaW4gdGhlIHNhbWUgbWFubmVyIGFzIGZvciBgcGFydGljaXBhbnRfZ2VuZGVyYC4gVGhlIHNhbWUgbWV0aG9kb2xvZ3kgd2FzIHRoZW4gdXNlZCB0byBnZW5lcmF0ZSBjb3VudHMgKGB1bmxpc3RgLCBgc3Ryc3BsaXRgLCBgdW5pcXVlYCkgZm9yIHRoZSBgcGFydGljaXBhbnRfdHlwZWAgdmFsdWVzLCBnaXZpbmcgdGhlIGZvbGxvd2luZzsKCmBgYHtyLCBpbmNsdWRlID0gRkFMU0V9Cmd2ZDIwMTVfa2VlcF9jYWxpJHBhcnRpY2lwYW50X3R5cGUgPC0gIGd2ZDIwMTVfa2VlcF9jYWxpJHBhcnRpY2lwYW50X3R5cGUgJT4lIAogIHN0cl9yZXBsYWNlX2FsbCgiLFs6c3BhY2U6XSIsICIiKSAlPiUgI1JlbW92ZSBjb21tYSAmIHdoaXRlc3BhY2UKICBzdHJfcmVwbGFjZV9hbGwoIjo6IiwgIiIpICU+JQogIHN0cl9yZXBsYWNlX2FsbCgiWzpkaWdpdDpdIiwgIiAiKSAlPiUKICBzdHJfcmVwbGFjZV9hbGwoIlxcfHwiLCAiIikKYGBgCgpgYGB7cn0KcGFydGljaXBhbnRfdHlwZV91bmlxdWVfY2hlY2sgPC0gYXMuY2hhcmFjdGVyKGd2ZDIwMTVfa2VlcF9jYWxpWyxjKCJwYXJ0aWNpcGFudF90eXBlIildKQp1bCA8LSB1bmxpc3Qoc3Ryc3BsaXQocGFydGljaXBhbnRfdHlwZV91bmlxdWVfY2hlY2ssICIgIikpCnVuaXF1ZSh1bCkKYGBgCgpgYGB7cn0KZ3ZkMjAxNV9rZWVwX2NhbGkkdmljdGltX2NvdW50IDwtIHN0cl9jb3VudChndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF90eXBlLCBwYXR0ZXJuID0gIlZpY3RpbSIpCmd2ZDIwMTVfa2VlcF9jYWxpJHN1YmplY3RTdXNwZWN0X2NvdW50IDwtIHN0cl9jb3VudChndmQyMDE1X2tlZXBfY2FsaSRwYXJ0aWNpcGFudF90eXBlLCBwYXR0ZXJuID0gIlN1YmplY3QtU3VzcGVjdCIpCmBgYAoKIyMjIyBUaGUgRGF0ZSBDb2x1bW4gPz8/CgpgYGB7cn0KY29sbmFtZXMoZ3ZkMjAxNV9rZWVwX2NhbGkpCmBgYAoKYGBge3J9CiMgQ2hlY2tpbmcKYSA8LSBhcy52ZWN0b3IoZ3ZkMjAxNV9rZWVwX2NhbGkkbl9raWxsZWQpCmIgPC0gYXMudmVjdG9yKGd2ZDIwMTVfa2VlcF9jYWxpJGtpbGxlZF9jb3VudCkKYVshKGEgJWluJSBiKV0KYGBgCgpgYGB7cn0KIyBDaGVja2luZwphIDwtIGFzLnZlY3RvcihndmQyMDE1X2tlZXBfY2FsaSRuX2luanVyZWQpCmIgPC0gYXMudmVjdG9yKGd2ZDIwMTVfa2VlcF9jYWxpJGluanVyZWRfY291bnQpCmFbIShhICVpbiUgYildCmBgYAoKIyMjIAoKCgpgYGB7cn0KZ3ZkMjAxNV9wdDIgPC0gc2VsZWN0KGd2ZDIwMTVfa2VlcF9jYWxpLCBpbmNpZGVudF9pZCwgZGF0ZSwgc3RhdGUsIGNpdHlfb3JfY291bnR5LCBjb25ncmVzc2lvbmFsX2Rpc3RyaWN0LCBzdGF0ZV9ob3VzZV9kaXN0cmljdCwgc3RhdGVfc2VuYXRlX2Rpc3RyaWN0LCBsYXRpdHVkZSwgbG9uZ2l0dWRlLCBhZ2VfMF8xNSwgYWdlXzE2XzIwLCBhZ2VfMjFfMjUsIGFnZV8yNl8zMCwgYWdlXzMxXzM1LCBhZ2VfMzZfNDAsIGFnZV80MV80NSwgYWdlXzQ2XzUwLCBhZ2VfNTFfNTUsIGFnZV81Nl82MCwgYWdlXzYxXzY1LCBhZ2VfNjZfNzAsIGFnZV83MV83NSwgYWdlXzc2XzgwLCBhZ2VfODFfMTAwLCBtYWxlX2NvdW50LCBmZW1hbGVfY291bnQsIGluanVyZWRfY291bnQsIHVuaGFybWVkX2NvdW50LCBraWxsZWRfY291bnQsIHVuaGFybWVkQXJyZXN0ZWRfY291bnQsIGFycmVzdGVkX2NvdW50LCBpbmp1cmVkQXJyZXN0ZWRfY291bnQsIHZpY3RpbV9jb3VudCwgc3ViamVjdFN1c3BlY3RfY291bnQpCmBgYAoKYGBge3IsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHBhZ2VkLnByaW50PVRSVUV9CmRhdGEuZnJhbWUoQXR0cmlidXRlID0gbmFtZXMoZ3ZkMjAxNV9wdDIpLCBDbGFzcyA9IHNhcHBseShndmQyMDE1X3B0MiwgY2xhc3MpLAogICAgICAgICAgIGd2ZDIwMTVfa2VlcF9jYWxpID0gc2FwcGx5KGd2ZDIwMTVfcHQyLCBmdW5jdGlvbih4KSBwYXN0ZShoZWFkKHgpLCAgY29sbGFwc2UgPSAiLCAiKSksCiAgICAgICAgICAgcm93Lm5hbWVzID0gTlVMTCkgJT4lIGthYmxlKCkgJT4lIGthYmxlX3N0eWxpbmcoYm9vdHN0cmFwX29wdGlvbnMgPSBjKCJzdHJpcGVkIiwgImhvdmVyIiwgImNvbmRlbnNlZCIpLCAgZm9udF9zaXplID0gMTEpCmBgYAoKCiMjIyBBQ1MKCmBgYHtyLCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFLCBwYWdlZC5wcmludD1UUlVFfQpkYXRhLmZyYW1lKEF0dHJpYnV0ZSA9IG5hbWVzKGFjczIwMTUpLCBDbGFzcyA9IHNhcHBseShhY3MyMDE1LCBjbGFzcyksCiAgICAgICAgICAgYWNzMjAxNSA9IHNhcHBseShhY3MyMDE1LCBmdW5jdGlvbih4KSBwYXN0ZShoZWFkKHgpLCAgY29sbGFwc2UgPSAiLCAiKSksCiAgICAgICAgICAgcm93Lm5hbWVzID0gTlVMTCkgJT4lIGthYmxlKCkgJT4lIGthYmxlX3N0eWxpbmcoYm9vdHN0cmFwX29wdGlvbnMgPSBjKCJzdHJpcGVkIiwgImhvdmVyIiwgImNvbmRlbnNlZCIpLCAgZm9udF9zaXplID0gMTEpICU+JSBzY3JvbGxfYm94KGhlaWdodCA9ICIyMDBweCIpCmBgYAoKIyMjIyMgQ29tbWVudCAtIGRyb3AgY29sdW1ucyBmaXJzdCB0aGVuIGpvaW4gdGhlbiBjbGVhbi4uLiBPUiBjbGVhbiB0aGVuIGpvaW4uLi4KCkZvciB0aGUgZm9sbG93aW5nIGFuYWx5c2lzLCBvbmx5IGludGVyZXN0ZWQgaW4gZWNvbm9taWMgaW5kaWNhdG9ycyBhbmQgcG9wdWxhdGlvbgoKYGBge3J9CmFjczIwMTVfa2VlcCA8LSBzZWxlY3QoYWNzMjAxNSwgU3RhdGUsIENvdW50eSwgVG90YWxQb3AsIE1lbiwgV29tZW4sIEluY29tZSwgSW5jb21lUGVyQ2FwLCBQb3ZlcnR5LCBVbmVtcGxveW1lbnQpCmBgYAoKYGBge3IsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHBhZ2VkLnByaW50PVRSVUV9CmRhdGEuZnJhbWUoQXR0cmlidXRlID0gbmFtZXMoYWNzMjAxNV9rZWVwKSwgQ2xhc3MgPSBzYXBwbHkoYWNzMjAxNV9rZWVwLCBjbGFzcyksCiAgICAgICAgICAgYWNzMjAxNSA9IHNhcHBseShhY3MyMDE1X2tlZXAsIGZ1bmN0aW9uKHgpIHBhc3RlKGhlYWQoeCksICBjb2xsYXBzZSA9ICIsICIpKSwKICAgICAgICAgICByb3cubmFtZXMgPSBOVUxMKSAlPiUga2FibGUoKSAlPiUga2FibGVfc3R5bGluZyhib290c3RyYXBfb3B0aW9ucyA9IGMoInN0cmlwZWQiLCAiaG92ZXIiLCAiY29uZGVuc2VkIiksICBmb250X3NpemUgPSAxMSkgJT4lIHNjcm9sbF9ib3goaGVpZ2h0ID0gIjIwMHB4IikKYGBgCgpgYGB7cn0KYWdncmVnYXRlKENvdW50eSB+IFN0YXRlLCBhY3MyMDE1X2tlZXAsIGZ1bmN0aW9uKHgpIGxlbmd0aCh1bmlxdWUoeCkpKSAlPiUga2FibGUoKSAlPiUga2FibGVfc3R5bGluZyhib290c3RyYXBfb3B0aW9ucyA9IGMoInN0cmlwZWQiLCAiaG92ZXIiLCAiY29uZGVuc2VkIiksICBmb250X3NpemUgPSAxMSwgZnVsbF93aWR0aCA9IEYpICU+JSBzY3JvbGxfYm94KGhlaWdodCA9ICIyMDBweCIpCmBgYAoKYGBge3J9CmFjczIwMTVfa2VlcF9jYWxpIDwtIGZpbHRlcihhY3MyMDE1X2tlZXAsIFN0YXRlID09ICJDYWxpZm9ybmlhIikKYGBgCgpgYGB7cn0KYWdncmVnYXRlKENvdW50eSB+IFN0YXRlLCBhY3MyMDE1X2tlZXBfY2FsaSwgZnVuY3Rpb24oeCkgbGVuZ3RoKHVuaXF1ZSh4KSkpICU+JSBrYWJsZSgpICU+JSBrYWJsZV9zdHlsaW5nKGJvb3RzdHJhcF9vcHRpb25zID0gYygic3RyaXBlZCIsICJob3ZlciIsICJjb25kZW5zZWQiKSwgIGZvbnRfc2l6ZSA9IDExLCBmdWxsX3dpZHRoID0gRikKYGBgCgpgYGB7cn0KYWdncmVnYXRlKGNpdHlfb3JfY291bnR5IH4gY2l0eV9vcl9jb3VudHksIGd2ZDIwMTVfcHQyLCBmdW5jdGlvbih4KSBsZW5ndGgodW5pcXVlKHgpKSkgJT4lIGthYmxlKCkgJT4lIGthYmxlX3N0eWxpbmcoYm9vdHN0cmFwX29wdGlvbnMgPSBjKCJzdHJpcGVkIiwgImhvdmVyIiwgImNvbmRlbnNlZCIpLCAgZm9udF9zaXplID0gMTEsIGZ1bGxfd2lkdGggPSBGKQpgYGAKCgojIyMgTWVyZ2UgLi4uIAoKYGBge3IsIHdhcm5pbmc9RkFMU0V9Cmd2ZDIwMTVfcHQyIDwtIHJlbmFtZShndmQyMDE1X3B0MiwgQ291bnR5ID0gY2l0eV9vcl9jb3VudHkpCmd2ZF9hY3Nfam9pbiA8LSBpbm5lcl9qb2luKGd2ZDIwMTVfcHQyLCBhY3MyMDE1X2tlZXBfY2FsaSwgYnkgPSAiQ291bnR5IikKZ3ZkX2Fjc19qb2luIDwtIHN1YnNldChndmRfYWNzX2pvaW4sIHNlbGVjdCA9IC1jKFN0YXRlLCBzdGF0ZSkpCmBgYAoKCiMjIyBNZXJnZSAuLi4gCgpgYGB7ciwgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRSwgcGFnZWQucHJpbnQ9VFJVRX0KZGF0YS5mcmFtZShBdHRyaWJ1dGUgPSBuYW1lcyhndmRfYWNzX2pvaW4pLCBDbGFzcyA9IHNhcHBseShndmRfYWNzX2pvaW4sIGNsYXNzKSwKICAgICAgICAgICBndmRfYWNzX2pvaW4gPSBzYXBwbHkoZ3ZkX2Fjc19qb2luLCBmdW5jdGlvbih4KSBwYXN0ZTAoaGVhZCh4KSwgIGNvbGxhcHNlID0gIiwgIikpLAogICAgICAgICAgIE5BTiA9IHNhcHBseShndmRfYWNzX2pvaW4sIGZ1bmN0aW9uKHkpIHN1bShsZW5ndGgod2hpY2goaXMubmEoeSkpKSkpLAogICAgICAgICAgIHJvdy5uYW1lcyA9IE5VTEwpICU+JSBrYWJsZSgpICU+JSBrYWJsZV9zdHlsaW5nKGJvb3RzdHJhcF9vcHRpb25zID0gYygic3RyaXBlZCIsICJob3ZlciIsICJjb25kZW5zZWQiKSwgIGZvbnRfc2l6ZSA9IDExKSAjJT4lIHNjcm9sbF9ib3goaGVpZ2h0ID0gIjIwMHB4IikKYGBgCgojIyMjIE5hTiBWYWx1ZXMKCmBgYHtyfQpndmRfYWNzX2pvaW4gJT4lIGZpbHRlcihpcy5uYShjb25ncmVzc2lvbmFsX2Rpc3RyaWN0KSkgJT4lIAogIHNlbGVjdChDb3VudHksIGNvbmdyZXNzaW9uYWxfZGlzdHJpY3QsIHN0YXRlX2hvdXNlX2Rpc3RyaWN0LCBzdGF0ZV9zZW5hdGVfZGlzdHJpY3QsIGxhdGl0dWRlLCBsb25naXR1ZGUpICU+JQogIGthYmxlKCkgJT4lIGthYmxlX3N0eWxpbmcoYm9vdHN0cmFwX29wdGlvbnMgPSBjKCJzdHJpcGVkIiwgImhvdmVyIiwgImNvbmRlbnNlZCIpLCAgZm9udF9zaXplID0gMTEpCmBgYAoKCmBgYHtyfQpndmRfYWNzX2pvaW5fZnJlc25vIDwtIGd2ZF9hY3Nfam9pbiAlPiUgZmlsdGVyKENvdW50eSA9PSAiRnJlc25vIikKc3VtbWFyeShndmRfYWNzX2pvaW5fZnJlc25vJGNvbmdyZXNzaW9uYWxfZGlzdHJpY3QpCgoKCm5hLm9taXQoZGYpCgpgYGAKCgoKCgoKCgoK</div>
 
 
 </div>

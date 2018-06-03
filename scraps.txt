@@ -169,4 +169,21 @@ DROP THIS
 colnames(gvd2015_keep_cali)
 ```
 
+```{r echo = FALSE}
+attempt <- gvd_acs_join %>% 
+  filter(!is.na(congressional_district)) %>%
+  select(County, congressional_district, state_house_district, state_senate_district, latitude, longitude)
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
 
