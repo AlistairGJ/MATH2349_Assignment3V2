@@ -64,10 +64,23 @@ https://www.kaggle.com/zimeiyang/2015-us-census-demographic-data/data = acs_2015
 
 ### Initial Check of Gun Violence Data
 
-The dataset Gun-Violence Data was imported as `gvd`. Using `str()` it was checked for dimensions (239677 observations of 29 attributes), column names and data types.
+The dataset Gun-Violence Data was imported as `gvd`. Using `str()` it was checked for dimensions (239677 observations of 29 attributes), column names and data types. The structure of the data frame indicates wide format, where the 'subject information' is indicated by the unique value `incident_id`. This was confirmed by `length(unique(gvd$incident_id))` which gave 239677 unique observations, which is equal to the total number of observations (all observations are unique).
 
 ```{r, message=FALSE, warning=FALSE, paged.print=TRUE}
 str(gvd)
+```
+```{r}
+length(unique(gvd$incident_id)) # Checking the number of unique values for incident ID
+```
+
+Based on the output from `str(gvd)`, a selection of columns were explored to better understand their values. This included `participant_age` and `participant_gender`. The resultant output (below) shows that each of these columns contains multiple values. 
+- It also shows that SOME VALUES ARE MISSING. 
+- Data is NOT TIDY
+- This is be addressed in section X
+- In the meantime will do other preprocessing
+
+```{r}
+gvd %>% select(participant_age, participant_gender) %>% head(n=8)
 ```
 
 ### Filtering Gun Violence Data for values inclusive of the year 2015
@@ -79,59 +92,55 @@ gvd$date <- as.Date(gvd$date) # Converting the gvd$date column and applying to t
 str(gvd$date) # Checking the conversion of gvd$date
 ```
 
-The American (US) Census Data contains values from the year 2015 only, and as such we will subset the Gun Violence Data accrodingly. The first methodology explored for extracting YYYY = 2015 value from `gvd$date` 
-
-Intially `gvd$date <- format.Date(gvd$date, format="%Y")` was used to convert YYYY-DD-MM to YYYY values. This was then filtered
-#gvd$date_year <- filter(gvd, date_year == "2015") # Filtering Gun Violence Data for 2015 only
-
-Want to retain all date information but in one column at the moment.
-- Previous attempt 
+The American (US) Census Data contains values from the year 2015 only, and as such we will subset the Gun Violence Data accrodingly. The first methodology used for extracting YYYY = 2015 value from `gvd$date` relied on conversion of `gvd$date` to contain year only (`gvd$date <- format.Date(gvd$date, format="%Y")`), this was then filtered for values of 2015 (`gvd$date_year <- filter(gvd, date_year == "2015")`). This methodolgy was abandoned, as it unnesscesarily stripped out the month and day data from `gvd$date`. Instead, filtering was used, as below.
 
 ```{r}
-year2015_boolean <- as.logical(year(gvd$date) == "2015") #Creating 2015 TF
-summary(year2015_boolean)
+year2015_boolean <- as.logical(year(gvd$date) == "2015") #Creating a year 2015 true/false vector
+summary(year2015_boolean) # Checking the vector results
+```
+```{r}
+gvd2015 <- gvd[year2015_boolean,] # Applying the True/False Vector to filter gvd
 ```
 
 ```{r}
-gvd2015 <- gvd[year2015_boolean,]
+summary(gvd2015$date) # Confirming only 2015 data is present
+```
+
+The DS `gvd2015` is now prepared.
+
+### Filtering Gun Violence Data 2015 for values from the state of California
+
+The data frame `gvd2015` has dimensions of 53579 instances over 29 attributes, we will now check the values of `gvd2015$state` using the aggregate function. The output enables us to determine the number of `city_or_county` in each State, that is smaller geographical regions inside each state. For this analysis, the State of California was chosen. As California is one of the most populus states in America (ref), with a large range of socio-economic ... and a varied geography, it was determined to be a good choice. Also note that the following methodology outlined could be applied to any of the states in the `gvd` dataset, so California will act as a proof of concept.
+
+```{r}
+aggregate(city_or_county ~ state, gvd2015, function(x) length(unique(x)))
+```
+```{r}
+gvd2015_keep_cali <- filter(gvd2015, state == "California")
 ```
 
 ```{r}
-dim(gvd2015)
+aggregate(city_or_county ~ state, gvd2015_keep_cali, function(x) length(unique(x)))
+```
+
+### Exploring the other attributes in gvd2015_keep_cali
+
+
+
+```{r}
+# Insert display of attributes / explain, narrate attributes ...
+
+gvd %>% select(participant_age, participant_gender) %>% head(n=8)
+
+gvd2015_keep_cali %>% select(gvd2015_keep_cali, address, incident_url, source_url, incident_url_fields_missing)
+head(gvd2015_check1, n=6)
 ```
 
 ```{r}
 sapply(gvd, class)
 ```
 
-```{r}
-gvd2015$date <- factor(gvd2015$date)
-str(gvd2015$date) # Confirming only 2015 data is present
-```
 
-```{r}
-sapply(gvd, class) # Checking the data types for 'gvd'
-```
-
-### Filering for only one State
-
-The data frame `gvd2015` has dimensions of 53579 instances over 29 attributes, we will now check the values of `gvd2015$state` using the aggregate function.
-
-```{r}
-aggregate(city_or_county ~ state, gvd2015, function(x) length(unique(x)))
-```
-
-
-
-### Dropping Attributes from GVD
-
-After the GVD dataframe was subset for 2015, the attributes were examined to determine their value in further analysis. The data frame `gvd2015` has dimensions of 53579 instances over 29 attributes. 
-
-```{r}
-# Insert display of attributes / explain, narrate attributes ...
-gvd2015_check1 <- select(gvd2015, date, address, incident_url, source_url, incident_url_fields_missing)
-#head(gvd2015_check1, n=6)
-```
 
 The following attributes will be dropped from GVD (2015); `date` as this is all for the year 2015 now, `address` as this level of fine detail is not required, `incident_url`, `source_url` & `incident_url_fields_missing` as these have no value for our analysis.
 + `gun_stolen` to sparse, `gun_type` to sparse, `location_description` to sparse, `notes` no value, `participant_age_group` we already have participant age,  `participant_name`  `participant_relationship`  `sources`     
@@ -147,7 +156,7 @@ dim(gvd2015_keep)
 
 
 ```{r}
-aggregate(state ~ state, gvd2015_keep, function(x) length(unique(x)))
+aggregate(state ~ state, gvd2015_keep_cali, function(x) length(unique(x)))
 ```
 
 For our analysis the State California will be chosen. *Talk about varied socio-economic status..?*
@@ -544,5 +553,5 @@ year2015_boolean
 #gvd$date_year <- filter(gvd, date_year == "2015") # Filtering Gun Violence Data for 2015 only
 ```
 
-
+summary(gvd2015_keep_cali$state)
 
