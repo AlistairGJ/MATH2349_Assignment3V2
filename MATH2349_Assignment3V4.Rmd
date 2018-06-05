@@ -85,7 +85,8 @@ data.frame(AttNo = c(1:29), Attribute = names(gvd), Class = sapply(gvd, class),
 data.frame(AttNo = c(1:37), Attribute = names(acs2015), Class = sapply(acs2015, class),
            acs2015 = sapply(acs2015, function(x) paste(head(x),  collapse = ", ")),
            NA_Count = sapply(acs2015, function(y) sum(length(which(is.na(y))))),
-           row.names = NULL) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11) %>% scroll_box(height = "200px")
+           row.names = NULL) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                                                           font_size = 11) %>% scroll_box(height = "200px")
 ```
 
 The `length()` & `unique()` functions were used to determine if `gvd$incident_id` and `acs2015$CensusId` contained only unique values. In each case the number of values was equal to the number of observations. Thus `incident_id` and `CensusId` may be used as observation identifiers if required.
@@ -98,34 +99,21 @@ length(unique(gvd$incident_id)) # Checking the number of unique values for incid
 length(unique(acs2015$CensusId)) # Checking the number of unique values for CensusId
 ```
 
-Based on the output of the above `gvd` summary table (`data.frame(...`), the `participant_age` and `participant_gender` were explored to better understand their values. 
-
-
-
-It was noted that each cell contains multiple instances of data
-
-
-each of these columns contains multiple values. 
-- It also shows that SOME VALUES ARE MISSING. 
-- Data is NOT TIDY
-- This is be addressed in section X
-- In the meantime will do other preprocessing
+Based on the output of the above `gvd` summary table (`data.frame(...`), the `participant_age` and `participant_gender` were explored to better understand their values. It was noted that these cells store multiple, discrete instances of data. The [:digit:] at the start of each value is presumably used to track the values accross from one `participant_` attribute to the next. It is also worth noting missing values. The first observation below contains only one age value, with four participant values. These attributes will be address later in the analysis.
 
 ```{r}
 gvd %>% select(participant_age, participant_gender) %>% head(n=8) %>% 
   kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11) 
 ```
 
-### Filtering Gun Violence Data for values inclusive of the year 2015
+### Filtering GVD for Year 2015
 
-The Gun Violence Dataset contains data from 2013 till 2015, while the American Census Data is from 2015. We will therefore create a data subset of the Gun Violence Data from the year 2015 only. As previously determined (`str(gvd)`), the `gvd$date` attribute is present as a factor with 1725 levels (1725 different date values). This attribute will be converted to date format (YYYY-MM-DD) using `as.Date`. This conversion will be checked with `str()`, below.
+The Gun Violence Dataset contains data from 2013 till 2015, while the American Census Data is from 2015. We will therefore create a data subset of the Gun Violence Data from the year 2015 only (as we will later be joining these data). The attribute `gvd$date` was converted to date format (YYYY-MM-DD) using `as.Date` and checked with `str()`, below. A Boolean vector was then created for 2015-MM-DD values. This was applied as a mask to `gvd`, and extracted as the subset `gvd2015`, which was then checked.
 
 ```{r}
 gvd$date <- as.Date(gvd$date) # Converting the gvd$date column and applying to the gvd dataset
 str(gvd$date) # Checking the conversion of gvd$date
 ```
-
-The American (US) Census Data contains values from the year 2015 only, and as such we will subset the Gun Violence Data accrodingly. The first methodology used for extracting YYYY = 2015 value from `gvd$date` relied on conversion of `gvd$date` to contain year only (`gvd$date <- format.Date(gvd$date, format="%Y")`), this was then filtered for values of 2015 (`gvd$date_year <- filter(gvd, date_year == "2015")`). This methodolgy was abandoned, as it unnesscesarily stripped out the month and day data from `gvd$date`. Instead, filtering was used, as below.
 
 ```{r}
 year2015_boolean <- as.logical(year(gvd$date) == "2015") #Creating a year 2015 true/false vector
@@ -140,30 +128,47 @@ gvd2015 <- gvd[year2015_boolean,] # Applying the True/False Vector to filter gvd
 summary(gvd2015$date) # Confirming only 2015 data is present
 ```
 
-The DS `gvd2015` is now prepared.
+The DS `gvd2015` is now prepared. As an aside, the first methodology used for extracting YYYY = 2015 value from `gvd$date` relied on conversion of `gvd$date` to contain year only (`gvd$date <- format.Date(gvd$date, format="%Y")`), this was then filtered for values of 2015 (`gvd$date_year <- filter(gvd, date_year == "2015")`). This methodolgy was abandoned, as it unnesscesarily stripped out the month and day data from `gvd$date`. The applied method is no more complex but retains more information.
+
 
 ### Filtering Gun Violence Data 2015 for values from the state of California
 
+The values of `gvd2015$state` were aggregated for comparison (below). The output enables us to determine the number of `city_or_county` in each State, as defined during the composition of the Gun Violence Dataset. For the subsequent analysis, the State of California was selected. This was based on an assumption it would have a large range of discrete and continuous values in the corresponding Census dataset (for example extremely poor and rich socioeconomic areas). Also note that the methodology outlined below could be applied to any of the states in the `gvd` dataset, so California will act as a proof of concept.
+
 ```{r}
 aggregate(city_or_county ~ state, gvd2015, function(x) length(unique(x))) %>% 
-  kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11) %>% scroll_box(height = "200px")
+  kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11) %>% 
+  row_spec(5, bold = T, background = "lightskyblue") %>%
+  scroll_box(height = "200px")
 ```
 
-The data frame `gvd2015` has dimensions of 53579 instances over 29 attributes, we will now check the values of `gvd2015$state` using the aggregate function. The output enables us to determine the number of `city_or_county` in each State, that is smaller geographical regions inside each state. For this analysis, the State of California was chosen. As California is one of the most populus states in America (ref), with a large range of socio-economic ... and a varied geography, it was determined to be a good choice. Also note that the following methodology outlined could be applied to any of the states in the `gvd` dataset, so California will act as a proof of concept.
-
-
 ```{r}
-gvd2015_keep_cali <- filter(gvd2015, state == "California")
+gvd2015_keep_cali <- filter(gvd2015, state == "California") # Creating the new dataset
 ```
 
 ```{r}
 aggregate(city_or_county ~ state, gvd2015_keep_cali, function(x) length(unique(x))) %>% 
-  kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11)
+  kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11) %>% 
+  row_spec(1, bold = T, background = "lightskyblue") # Check the new dataset
 ```
 
-### Exploring the other attributes in gvd2015_keep_cali
+### Exploring gvd2015_keep_cali
 
-Referencing the first table generated surmizing these data, the following attributes will be dropped from gvd2015_keep_cali: `address` as this level of fine detail is not required, `source_url` as this can be found via `incident_url`, `incident_url_fields_missing` as this is a boolean attribute that was generated by the analyst who compiled the dataset, `incident_characteristics` as these strings are too unstructured, `location_description` as these strings are to unstructured, `notes` no value, `participant_age_group` we already have participant age,  `participant_name` & `sources`.
+During data exploration it was determined the following attributes will add no futher value to the analysis and will be dropped.
+
+ Attribute | Explanation / Justification
+------------- | ------------------------------------------------- 
+`address` | This level of extremely fine detail is not required
+`source_url` | As this can be found online via `incident_url` 
+`incident_url_fields_missing` | As this is a boolean attribute which can be checked with filtering
+`incident_characteristics` | As these strings are highly unstructured 
+`location_description` | These strings are highly unstructured
+`notes` | Contains no information of value for this analysis
+`participant_age_group` | We can determine this from `participant_age` 
+`participant_name` | This level of extremely fine detail is not required
+`sources` | We have source information from `incident_url`
+
+The desired columns were selected back into `gvd2015_keep_cali`, which was then checked in the table below. The attributes `congressional_district`, `state_house_district` & `state_sentate_district` were converted into factors and the dimensions of the new `gvd2015_keep_cali` were checked.
 
 ```{r}
 gvd2015_keep_cali <- select(gvd2015_keep_cali, incident_id, date, state, city_or_county, n_killed, n_injured, incident_url, congressional_district, latitude, longitude, n_guns_involved, participant_age, participant_gender, participant_status, participant_type, state_house_district, state_senate_district)
@@ -172,7 +177,8 @@ gvd2015_keep_cali <- select(gvd2015_keep_cali, incident_id, date, state, city_or
 ```{r, message=FALSE, warning=FALSE, paged.print=TRUE}
 data.frame(Attribute = names(gvd2015_keep_cali), Class = sapply(gvd2015_keep_cali, class),
            gvd_incident274168 = sapply(gvd2015_keep_cali[53,], function(x) paste0(head(x),  collapse = ", ")),
-           row.names = NULL) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11)
+           row.names = NULL) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                                                           font_size = 11) %>% scroll_box(height = "200px")
 ```
 
 ```{r}
