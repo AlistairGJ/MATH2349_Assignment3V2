@@ -1,7 +1,7 @@
 ---
-#title: "MATH2349 Semester 1, 2018 - ADD DESCRIPTIVE TITLE"
+#title: "US Gun Violence and Census Data from California 2015"
 #author: "Alistair Grevis-James (s3644119) and Chris Kaias (sXXXXXX)"
-#subtitle: Assignment 3
+#subtitle: Assignment 3, MATH2349, Semester 1, 2018 
 #output:
 #  html_notebook:
 #      toc: true
@@ -19,7 +19,10 @@ options(knitr.table.format = "html")
 
 ### Executive Summary
 
-The libraries `readr`, `diplyr`, `stringr`, `knitr`, `tidyr`, `lubridate`, `kableExtra` and `outliers` were imported into the RStudio interactive development environment. The .csv files “gun-violence-data” (Gun Violence Data, kaggle.com) and “American Census Data 2015” (US Census Demographic and Economic Data, kaggle.com) were imported as `gvd` and `acs2015`, respectively. These data were then checked for structure, including dimensions and attribute classes. It was noted the `gvd` dataset failed to conform to the “tidy data” principals. Most notably, every instance of the attributes prefixed “participant_” contained multiple values, delimited by a combination of [:digit:], :: and/or ||. In order to be computationally efficient, it was decided to first subset `gvd` before cleaning the aforementioned “participant_” attributes. 
+The required libraries were imported into the RStudio interactive development environment, followed by the .csv files “gun-violence-data” and “American Census Data 2015” as `gvd` and `acs2015`, respectively [^1][^2]. These data were then checked for tidiness (`gvd` untidy, `acs2015` tidy), dimensions (`gvd` 239677 obs. of 29 var., `acs2015` 3220 obs. of 37 var.), NA count and attribute classes (see summary tables, below). 
+The `gvd` dataset failed to conform to the “tidy data” principals. Most notably, the attributes prefixed “participant_” contained multiple values per cell, delimited by a combination of [:digit:], :: and/or ||. In order to be computationally efficient, it was decided to first subset `gvd` before cleaning the aforementioned “participant_” attributes.  As the `acs2015` dataset contained values from only the 2015 American (US) Census, the first subset involved filtering values of the year 2015 from the `gvd` dataset. 
+This was achieved using the `as.logical()` and `year()` functions, creating and applying a boolean vector to `gvd` to create the dataset `gvd2015`. This methodology enabled us to retain the native date format YYYY-MM-DD. The `gvd2015` was then filtered for values which satisfied the condition `state == “California”`, giving `gvd2015_keep_cali`. A custom function was written and employed to scour through the `participant_age` column of `gvd2015`. This resulted in capturing age counts of incident participants by binning them into approximately 5-years bin intervals. The `participant, _gender, _status, _type` columns were then also all stripped of string prefix values and binned. The resultant `killed_count` and `injured_count` matched perfectly the original `n_killed` and `n_injured` attributes, indicating an extremely precise processing methodology. It was determined that the `incident_url` column of `gvd2015_keep_cali` could be dropped, as the URL prefix in every case matched the unique incident ID.
+The `acs2015` dataset was then filtered for values from the state of California.
 
 
 ### Required packages 
@@ -34,13 +37,18 @@ library(tidyr)
 library(lubridate)
 library(kableExtra)
 library(outliers)
+library(ggplot2)
 #xlsx #readxl #foreign #gdata #rvest #dplyr  #deductive #validate #Hmisc 
 #MVN #infotheo #MASS #caret #MLR #ggplot #base R functions
 ```
 
 ### Importing the Data
 
-The `readr` function was used to import the data as shown below. The data were imported as `gvd` for Gun Violence Data and `acs2015` for American (US) 2015 Census Data.
+The first dataset, 'Gun Violence Data - A Comprehensive Record of Over 260k US Gun Violence Incidents from 2013-2018', was compiled by James Ko and made available on kaggle.com[^1]. These data contain all recorded gun violence incidents in the US between January 2013 and March 2018, inclusive.
+<br>
+The second dataset, 'US Census Demographic Data Demographic and Economic Data for Tracts and Counties', was collected by the US Census Bureau and made available on kaggle.com[^2]. These data contain all census data from the 2015 federal US census. 
+<br>
+The `readr` function was used to import the data as shown below.
 
 ```{r, message=FALSE, warning=FALSE, paged.print=TRUE}
 gvdZip <- "gun-violence-data.csv.zip"
@@ -52,34 +60,52 @@ setwd("/Users/alistairgj/Documents/GitHub/MATH2349_Assignment3V2")
 acs2015 <- read.csv("acs2015_county_data.csv") # Importing American (US) Census Data 2015
 ```
 
-### Data Summary
+### Checking the Data
 
-Three data sets from two sources was used during this analysis.
+Two custom output table was created to check `gvd` & `acs2015`. These results are summarized below.
 
-Gun Violence Data a Comprehensive record of over 260k US gun violence incidents from 2013-2018 (italics), was compiled by James Ko and made available on kaggle.com (footnote). These data contain all recorded gun violence incidents in the US between January 2013 and March 2018, inclusive. These data were imported as `gvd`.
-
-https://www.kaggle.com/jameslko/gun-violence-data/data = gun_violence_data
-
-US Census Demographic Data Demographic and Economic Data for Tracts and Counties (italics), was collected by the US Census Bureau and made available on kaggle.com (footnote). These data contain all cencus data from the 2015 federal census. These data were split into two data sets, the first being county data, and the second being tract data (The "Census Tract" is an area roughly equivalent to a neighborhood established by the Bureau of Census for analyzing populations. They generally encompass a population between 2,500 to 8,000 people).
-
-https://www.kaggle.com/zimeiyang/2015-us-census-demographic-data/data = acs_2015
-
-
-### Initial Check of Gun Violence Data
-
-The dataset Gun-Violence Data was imported as `gvd`. Using `data.frame` with piping, `gvd` was checked for dimensions (239677 observations of 29 attributes), column names and data types. The structure of the data frame indicates wide format, where the 'subject information' is indicated by the unique value `incident_id`. This was confirmed by `length(unique(gvd$incident_id))` which gave 239677 unique observations, which is equal to the total number of observations (all observations are unique).
+ Feature 		| gvd 					| acs2015
+------------- 	      | ------------------------------ | -----------
+Observations   | 239677 | 3220
+Attributes   | 29 |  37
+Tidy | No | Yes
+Format | Wide | Wide 
+Unique Ref   | Yes - IncidentID | Yes - CensusID 
+Incorrect Class  | Attribute 1, 5, 8:14, 16, 19 |  Attribute 1
+Contains NA  | Attribute 11, 15, 17, 18, 28, 29 | Attribute 14, 15, 19
 
 ```{r, message=FALSE, warning=FALSE, paged.print=TRUE}
-data.frame(Attribute = names(gvd), Class = sapply(gvd, class),
+data.frame(AttNo = c(1:29), Attribute = names(gvd), Class = sapply(gvd, class),
            gvd_incident486623 = sapply(gvd[84,], function(x) paste0(head(x),  collapse = ", ")),
-           row.names = NULL) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11) 
+           NA_Count = sapply(gvd, function(y) sum(length(which(is.na(y))))),
+           row.names = NULL) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11) %>% scroll_box(height = "200px")
+```
+
+```{r, message=FALSE, warning=FALSE, paged.print=TRUE}
+data.frame(AttNo = c(1:37), Attribute = names(acs2015), Class = sapply(acs2015, class),
+           acs2015 = sapply(acs2015, function(x) paste(head(x),  collapse = ", ")),
+           NA_Count = sapply(acs2015, function(y) sum(length(which(is.na(y))))),
+           row.names = NULL) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11) %>% scroll_box(height = "200px")
+```
+
+The `length()` & `unique()` functions were used to determine if `gvd$incident_id` and `acs2015$CensusId` contained only unique values. In each case the number of values was equal to the number of observations. Thus `incident_id` and `CensusId` may be used as observation identifiers if required.
+
+```{r}
+length(unique(gvd$incident_id)) # Checking the number of unique values for incident_id
 ```
 
 ```{r}
-length(unique(gvd$incident_id)) # Checking the number of unique values for incident ID
+length(unique(acs2015$CensusId)) # Checking the number of unique values for CensusId
 ```
 
-Based on the output from `str(gvd)`, a selection of columns were explored to better understand their values. This included `participant_age` and `participant_gender`. The resultant output (below) shows that each of these columns contains multiple values. 
+Based on the output of the above `gvd` summary table (`data.frame(...`), the `participant_age` and `participant_gender` were explored to better understand their values. 
+
+
+
+It was noted that each cell contains multiple instances of data
+
+
+each of these columns contains multiple values. 
 - It also shows that SOME VALUES ARE MISSING. 
 - Data is NOT TIDY
 - This is be addressed in section X
@@ -117,8 +143,6 @@ summary(gvd2015$date) # Confirming only 2015 data is present
 The DS `gvd2015` is now prepared.
 
 ### Filtering Gun Violence Data 2015 for values from the state of California
-
-
 
 ```{r}
 aggregate(city_or_county ~ state, gvd2015, function(x) length(unique(x))) %>% 
@@ -230,9 +254,6 @@ for (i in seq(1,length(ages)-1, 2)) # Each pair of ages in the age ranges
   })
 }
 ```
-
-- DROP matches
-- DROP participant_age
 
 ##### participant_gender
 
@@ -367,8 +388,6 @@ a[!(a %in% b)]
 
 ### 
 
-
-
 ```{r}
 gvd2015_pt2 <- select(gvd2015_keep_cali, incident_id, date, state, city_or_county, congressional_district, state_house_district, state_senate_district, latitude, longitude, age_0_15, age_16_20, age_21_25, age_26_30, age_31_35, age_36_40, age_41_45, age_46_50, age_51_55, age_56_60, age_61_65, age_66_70, age_71_75, age_76_80, age_81_100, male_count, female_count, injured_count, unharmed_count, killed_count, unharmedArrested_count, arrested_count, injuredArrested_count, victim_count, subjectSuspect_count)
 ```
@@ -378,7 +397,6 @@ data.frame(Attribute = names(gvd2015_pt2), Class = sapply(gvd2015_pt2, class),
            gvd2015_keep_cali = sapply(gvd2015_pt2, function(x) paste(head(x),  collapse = ", ")),
            row.names = NULL) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11)
 ```
-
 
 ### ACS
 
@@ -433,7 +451,7 @@ gvd_acs_join <- subset(gvd_acs_join, select = -c(State, state))
 ```{r, message=FALSE, warning=FALSE, paged.print=TRUE}
 data.frame(Attribute = names(gvd_acs_join), Class = sapply(gvd_acs_join, class),
            gvd_acs_join = sapply(gvd_acs_join, function(x) paste0(head(x),  collapse = ", ")),
-           NAN = sapply(gvd_acs_join, function(y) sum(length(which(is.na(y))))),
+           NA_count = sapply(gvd_acs_join, function(y) sum(length(which(is.na(y))))),
            row.names = NULL) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11) #%>% scroll_box(height = "200px")
 ```
 
@@ -521,10 +539,12 @@ boxplot(gvd_acs_join$killed_count ~ gvd_acs_join$MONTH, main="Diamond carat by c
 
 
 ```{r}
+# Log 10 apply
 gvd_acs_join %>% plot(Unemployment ~ Income, data = ., ylab="Unemployment", xlab="Income", main="Carat by Depth")
 ```
 
 ```{r}
+# GGplot2 - bubbleplot
 gvd_acs_join %>% plot(latitude_norm ~ longitude_norm, data = ., ylab="Unemployment", xlab="Income", main="Carat by Depth")
 ```
 
@@ -599,7 +619,9 @@ killed_count_clean %>%  boxplot(main="Box Plot of Diamond Carat", ylab="Carat", 
 
 
 
-
+### References (see last page)
+[^1]: https://www.kaggle.com/jameslko/gun-violence-data/data
+[^2]: https://www.kaggle.com/zimeiyang/2015-us-census-demographic-data/data
 
 
 
