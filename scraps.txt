@@ -187,3 +187,47 @@ attempt <- gvd_acs_join %>%
 
 ```
 
+
+#### Exploring the GVD 2015 California Data Subset
+
+* Text text text
+* The participant age and gender attributes may contain ... (good data for analytics)
+* In both attibutes, multiple values are contained. 
+* Not tidy, multiple values in one column
+
+```{r, message=FALSE, warning=FALSE, paged.print=TRUE}
+gvd2015_keep_cali[1:5, c(11:15)] %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11)
+```
+
+
+
+```{r}
+aggregate(County ~ County, gvd_acs_join, function(x) length(unique(x))) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11) %>% row_spec(1, bold = T, background = "lightskyblue") 
+``` 
+
+
+```{r}
+gvd_check <- substr(gvd2015_pt2$County, 0, 5) # 
+acs_check <- substr(acs2015_keep_cali$County, 0, 5) #
+merge_check <- merge(gvd_check, acs_check)
+equal_check <- all_equal(merge_check$x, merge_check$y, ignore_row_order = TRUE, convert = TRUE)
+```
+
+
+```{r}
+scatter1 <- ggplot(gvd_acs_age_long, aes(x=AgeGroupCount, y=TotalPop)) + 
+  geom_point() +
+  ggtitle("Participant Count versus Age Group") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+scatter1
+```
+
+
+
+
+```{r}
+boxplot(gvd_acs_join$killed_count ~ gvd_acs_join$MONTH, main="Diamond carat by cut", ylab = "Carat", xlab = "Cut")
+```
+
+
+
