@@ -88,7 +88,7 @@ data.frame(AttNo = c(1:37), Attribute = names(acs2015), Class = sapply(acs2015, 
            row.names = NULL) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
                                                            font_size = 11) %>% scroll_box(height = "200px")
 ```
-
+<br>
 The `length()` & `unique()` functions were used to determine if `gvd$incident_id` and `acs2015$CensusId` contained only unique values. In each case the number of values was equal to the number of observations. Thus `incident_id` and `CensusId` may be used as observation identifiers if required.
 
 ```{r}
@@ -131,7 +131,7 @@ summary(gvd2015$date) # Confirming only 2015 data is present
 The DS `gvd2015` is now prepared. As an aside, the first methodology used for extracting YYYY = 2015 value from `gvd$date` relied on conversion of `gvd$date` to contain year only (`gvd$date <- format.Date(gvd$date, format="%Y")`), this was then filtered for values of 2015 (`gvd$date_year <- filter(gvd, date_year == "2015")`). This methodolgy was abandoned, as it unnesscesarily stripped out the month and day data from `gvd$date`. The applied method is no more complex but retains more information.
 
 
-### Filtering Gun Violence Data 2015 for values from the state of California
+### Filtering for California
 
 The values of `gvd2015$state` were aggregated for comparison (below). The output enables us to determine the number of `city_or_county` in each State, as defined during the composition of the Gun Violence Dataset. For the subsequent analysis, the State of California was selected. This was based on an assumption it would have a large range of discrete and continuous values in the corresponding Census dataset (for example extremely poor and rich socioeconomic areas). Also note that the methodology outlined below could be applied to any of the states in the `gvd` dataset, so California will act as a proof of concept.
 
@@ -152,18 +152,18 @@ aggregate(city_or_county ~ state, gvd2015_keep_cali, function(x) length(unique(x
   row_spec(1, bold = T, background = "lightskyblue") # Check the new dataset
 ```
 
-### Exploring gvd2015_keep_cali
+### GVD 2015 California DS
 
-During data exploration it was determined the following attributes will add no futher value to the analysis and will be dropped.
+During data exploration it was determined the following attributes will add no futher value to this analysis and will be dropped.
 
  Attribute | Explanation / Justification
 ------------- | ------------------------------------------------- 
 `address` | This level of extremely fine detail is not required
-`source_url` | As this can be found online via `incident_url` 
-`incident_url_fields_missing` | As this is a boolean attribute which can be checked with filtering
-`incident_characteristics` | As these strings are highly unstructured 
-`location_description` | These strings are highly unstructured
-`notes` | Contains no information of value for this analysis
+`source_url` | This can be found online the other URL `incident_url` 
+`incident_url_fields_missing` | This is a boolean attribute which can be checked with filtering
+`incident_characteristics` | These strings are extremely varied in content
+`location_description` | These strings are extremely varied in content
+`notes` | These strings are extremely varied in content & contain no information of value for us
 `participant_age_group` | We can determine this from `participant_age` 
 `participant_name` | This level of extremely fine detail is not required
 `sources` | We have source information from `incident_url`
@@ -191,13 +191,13 @@ gvd2015_keep_cali$state_senate_district <- as.factor(gvd2015_keep_cali$state_sen
 dim(gvd2015_keep_cali)
 ```
 
-#### Incident_URL
+### Incident_URL Attribute
 
-The attribute `incident_URL` will now be compared with `incident_ID` (as we may be able to drop `incident_URL`)
+The attribute `incident_url` was compared with `incident_id`. Using string manipulation, the suffix `http://www.gunviolencearchive.org/incident/` was removed from all values in the `incident_url`. The resultant `_url` column and the original `_id` column were converted into vectors (_id = a, _url = b). The vectors a and b were compared, with a delta value of 0. The `_url` attribute is therefore deemed unesscesary and will be dropped.
 
 ```{r}
 gvd2015_keep_cali$incident_url <-  gvd2015_keep_cali$incident_url %>% 
-  str_replace_all("http://www.gunviolencearchive.org/incident/", "") # 
+  str_replace_all("http://www.gunviolencearchive.org/incident/", "") # Cleaving off the suffix 
 gvd2015_keep_cali$incident_url <- as.integer(gvd2015_keep_cali$incident_url)
 ```
 
@@ -208,32 +208,17 @@ b <- as.vector(gvd2015_keep_cali$incident_url)
 a[!(a %in% b)]
 ```
 
-- Drop incident_url and will use incident_id with URL stem.
+### n_gun_involved Attribute
 
-#### Exploring the GVD 2015 California Data Subset
-
-* Text text text
-* The participant age and gender attributes may contain ... (good data for analytics)
-* In both attibutes, multiple values are contained. 
-* Not tidy, multiple values in one column
-
-```{r, message=FALSE, warning=FALSE, paged.print=TRUE}
-gvd2015_keep_cali[1:5, c(11:15)] %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11)
-```
-
-##### n_gun_involved
+This attribute contained approximately 40% NA values and was dropped.
 
 ```{r}
 table(sapply(gvd2015_keep_cali$n_guns_involved, function(y) sum(length(which(is.na(y)))))) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11) 
 ```
 
-- Almost 50% NA - drop
-- Futher analysis = machine learning
+### participant_age Attribute
 
-##### participant_age
-
-- Current form
-- Discuss
+The following function was constructed to iterate through the integer values of the participant_age column and bin the values using a +1 count. The resultant binned counts were spread over 15 new attributes.
 
 ```{r}
 gvd2015_keep_cali$matches <- str_match_all(gvd2015_keep_cali$participant_age, "\\d+::(\\d+)")
@@ -261,7 +246,7 @@ for (i in seq(1,length(ages)-1, 2)) # Each pair of ages in the age ranges
 }
 ```
 
-##### participant_gender
+### participant_gender attribute
 
 The characters `,[:space:]`, `::`, `[:digit:]` & `||` were stripped from the `participant_gender` as seen below. A new char value was subsequently created, `participant_gender_unique_check`. This value was then checked for unique characters, which yielded only blank (""), Female and Male. Two `str_count` functions were then used to generate count columns for gender, these were named `male_count` and `female_count`. The column `participant_gender` will be later dropped.
 
@@ -284,7 +269,7 @@ gvd2015_keep_cali$male_count <- str_count(gvd2015_keep_cali$participant_gender, 
 gvd2015_keep_cali$female_count <- str_count(gvd2015_keep_cali$participant_gender, pattern = "Female") # Stringr
 ```
 
-##### Participant_status
+##### Participant_status attribute
 
 The characters `,[:space:]`, `::`, `[:digit:]` & `||` were stripped from the `participant_status` in the same manner as for `participant_gender`. The same methodology was then used to generate counts (`unlist`, `strsplit`, `unique`) for the `participant_status` values, giving the following;
 
@@ -410,6 +395,8 @@ data.frame(Attribute = names(gvd2015_pt2), Class = sapply(gvd2015_pt2, class),
 data.frame(Attribute = names(acs2015), Class = sapply(acs2015, class),
            acs2015 = sapply(acs2015, function(x) paste(head(x),  collapse = ", ")),
            row.names = NULL) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11) %>% scroll_box(height = "200px")
+
+
 ```
 
 ##### Comment - drop columns first then join then clean... OR clean then join...
@@ -427,7 +414,7 @@ data.frame(Attribute = names(acs2015_keep), Class = sapply(acs2015_keep, class),
 ```
 
 ```{r}
-aggregate(County ~ State, acs2015_keep, function(x) length(unique(x))) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11) %>% scroll_box(height = "200px")
+aggregate(County ~ State, acs2015_keep, function(x) length(unique(x))) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11) %>% row_spec(5, bold = T, background = "lightskyblue") %>% scroll_box(height = "200px")
 ```
 
 ```{r}
@@ -435,7 +422,7 @@ acs2015_keep_cali <- filter(acs2015_keep, State == "California")
 ```
 
 ```{r}
-aggregate(County ~ State, acs2015_keep_cali, function(x) length(unique(x))) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11)
+aggregate(County ~ State, acs2015_keep_cali, function(x) length(unique(x))) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11) %>% row_spec(1, bold = T, background = "lightskyblue")
 ```
 
 ```{r}
@@ -471,18 +458,12 @@ gvd_acs_join %>% filter(is.na(congressional_district)) %>%
 
 The aggregate function was used to determine the number of congressional districts in each county.
 
-```{r echo=FALSE}
-gvd_acs_join_fresno <- gvd_acs_join %>% filter(County == "Fresno")
-one <- aggregate(congressional_district ~ County, gvd_acs_join_fresno, function(x) length(unique(x))) 
-gvd_acs_join_sanBernardino <- gvd_acs_join %>% filter(County == "San Bernardino")
-two <- aggregate(congressional_district ~ County, gvd_acs_join_sanBernardino, function(x) length(unique(x)))
-gvd_acs_join_losAngeles <- gvd_acs_join %>% filter(County == "Los Angeles")
-three <- aggregate(congressional_district ~ County, gvd_acs_join_losAngeles, function(x) length(unique(x))) 
-gvd_acs_join_sacramento <- gvd_acs_join %>% filter(County == "Sacramento")
-four <- aggregate(congressional_district ~ County, gvd_acs_join_sacramento, function(x) length(unique(x)))
-c <- union_all(one, two)
-d <- union_all(three, four)
-union_all(c, d) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11)
+```{r, message=FALSE, warning=FALSE, paged.print=TRUE}
+target <- c("Fresno", "San Bernardino", "Los Angeles", "Sacramento")
+gvd_select_county <- filter(gvd_acs_join, County %in% target)
+gvd_select_county <- gvd_select_county %>% select(County, congressional_district, state_house_district, state_senate_district, latitude, longitude)
+UniqueCount <- lengths(lapply(gvd_select_county, unique))
+as.data.frame(UniqueCount) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11)
 ```
 
 ```{r}
@@ -496,8 +477,44 @@ gvd_acs_join %>% filter(is.na(congressional_district)) %>%
 ```
 
 
+
+```{r}
+gvd_acs_join_gather <- gvd_acs_join %>% gather(age_0_15:age_81_100,
+                                               key = "AgeGroup", value = "AgeGroupCount")
+```
+
+```{r}
+gvd_acs_age_long <- filter(gvd_acs_join_gather, AgeGroupCount != 0)
+```
+
+```{r}
+ggplot(gvd_acs_age_long, aes(x=AgeGroup)) + geom_bar(aes(fill=County), position = "dodge")
+```
+
+```{r}
+
+```
+
+
+
+
+```{r}
+ggplot(gvd_acs_age_long, aes(x=AgeGroup)) + geom_scatt (aes(fill=County))
+```
+
+
+
+```{r}
+ggplot(data = censusVizNew[censusVizNew$Engagement=="Fully engaged",], aes(x = as.numeric(Age), y = Number, colour = Engagement)
+```
+
+
+
 ```{r}
 hist(gvd_acs_join$Income)
+
+density(gvd_acs_join_gather$Events)
+
 ```
 
 ```{r}
@@ -628,6 +645,21 @@ killed_count_clean %>%  boxplot(main="Box Plot of Diamond Carat", ylab="Carat", 
 ### References (see last page)
 [^1]: https://www.kaggle.com/jameslko/gun-violence-data/data
 [^2]: https://www.kaggle.com/zimeiyang/2015-us-census-demographic-data/data
+
+
+#### Exploring the GVD 2015 California Data Subset
+
+* Text text text
+* The participant age and gender attributes may contain ... (good data for analytics)
+* In both attibutes, multiple values are contained. 
+* Not tidy, multiple values in one column
+
+```{r, message=FALSE, warning=FALSE, paged.print=TRUE}
+gvd2015_keep_cali[1:5, c(11:15)] %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11)
+```
+
+
+
 
 
 
