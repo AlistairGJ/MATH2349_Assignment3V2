@@ -1,11 +1,14 @@
 ---
-#title: "US Gun Violence and Census Data from California 2015"
-#author: "Alistair Grevis-James (s3644119) and Christopher Kaias (s3090801)"
-#subtitle: Assignment 3, MATH2349, Semester 1, 2018 
-#output:
-#  html_notebook:
-#      toc: true
-#      toc_float: true
+title: "US Gun Violence and Census Data from California 2015"
+author: "Alistair Grevis-James (s3644119) and Christopher Kaias (s3090801)"
+subtitle: Assignment 3, MATH2349, Semester 1, 2018
+output:
+  html_document:
+    df_print: paged
+    toc: yes
+  html_notebook:
+    toc: yes
+    toc_float: yes
 ---
 
 <style>
@@ -19,10 +22,13 @@ options(knitr.table.format = "html")
 
 ### Executive Summary
 
-The required libraries were imported into the RStudio interactive development environment, followed by the .csv files “gun-violence-data” and “American Census Data 2015” as `gvd` and `acs2015`, respectively [^1][^2]. These data sets were then checked for tidiness (`gvd` untidy, `acs2015` tidy), dimensions (`gvd` 239677 obs. of 29 variables, `acs2015` 3220 obs. of 37 variables), NA count and attribute classes (see summary tables below). 
+The required libraries were imported into the RStudio interactive development environment, followed by the .csv files “gun-violence-data” and “American Census Data 2015” as `gvd` and `acs2015`, respectively [^1][^2]. These data sets were then checked for tidiness (`gvd` untidy, `acs2015` tidy), dimensions (`gvd` 239677 obs. of 29 variables, `acs2015` 3220 obs. of 37 variables), NA count and attribute classes (see summary tables below).
+<br>
 The `gvd` dataset failed to conform to the “tidy data” principles. Most notably, the attributes prefixed “participant_” contained multiple values per cell, delimited by a combination of [:digit:], :: and/or ||. In order to be computationally efficient, it was decided to first subset `gvd` before cleaning the aforementioned “participant_” attributes.  As the `acs2015` dataset contained values from only the 2015 American (US) Census, the first subset involved filtering values of the year 2015 from the `gvd` dataset. 
-This was achieved using the `as.logical()` and `year()` functions, creating and applying a boolean vector to `gvd` to create the dataset `gvd2015`. This methodology enabled us to retain the native date format YYYY-MM-DD. The `gvd2015` was then filtered for values which satisfied the condition `state == “California”`, giving `gvd2015_keep_cali`. A custom function was written and employed to scour through the `participant_age` column of `gvd2015`. This resulted in capturing age counts of incident participants by binning them into approximately 5-years bin intervals. The `participant, _gender, _status, _type` columns were then also all stripped of string prefix values and binned. The resultant `killed_count` and `injured_count` matched perfectly the original `n_killed` and `n_injured` attributes, indicating an extremely precise processing methodology. It was determined that the `incident_url` column of `gvd2015_keep_cali` could be dropped, as the URL prefix in every case matched the unique incident ID.
-The `acs2015` dataset was then filtered for values from the state of California.
+<br>
+This was achieved using the `as.logical()` and `year()` functions, creating and applying a boolean vector to `gvd` to create the dataset `gvd2015`. This methodology enabled us to retain the native date format YYYY-MM-DD. The `gvd2015` was then filtered for values which satisfied the condition `state == “California”`, giving `gvd2015_keep_cali`. A custom function was written and employed to scour through the `participant_age` column of `gvd2015`. This resulted in capturing age counts of incident participants by binning them into approximately 5-years bin intervals. The `participant, _gender, _status, _type` columns were then also all stripped of string prefix values and binned. The resultant `killed_count` and `injured_count` matched perfectly the original `n_killed` and `n_injured` attributes, indicating an extremely precise processing methodology. It was determined that the `incident_url` column of `gvd2015_keep_cali` could be dropped, as the URL prefix in every case matched the unique incident ID. The `acs2015` dataset was then filtered for values from the state of California. Following this step, an inner join was performed between the Gun Violence and American (US) Census datasets.
+<br>
+The joined dataset was checked for NA values, followed by conversion to long format for plotting and value distribution analysis. The data was transformed and checked and cleaned for outliers.
 
 
 ### Required packages 
@@ -44,9 +50,9 @@ library(ggplot2)
 
 ### Importing the Data
 
-The first dataset, 'Gun Violence Data - A Comprehensive Record of Over 260k US Gun Violence Incidents from 2013-2018', was compiled by James Ko and made available on kaggle.com[^1]. This dataset contains all recorded gun violence incidents in the US between January 2013 and March 2018 (inclusive).
+The first dataset, 'Gun Violence Data - A Comprehensive Record of Over 260k US Gun Violence Incidents from 2013-2018', was compiled by James Ko and made available on kaggle.com. This dataset contains all recorded gun violence incidents in the US between January 2013 and March 2018 (inclusive).
 <br>
-The second dataset, 'US Census Demographic Data Demographic and Economic Data for Tracts and Counties', was collected by the US Census Bureau and made available on kaggle.com[^2]. This dataset contains all census data from the 2015 Federal US census. 
+The second dataset, 'US Census Demographic Data Demographic and Economic Data for Tracts and Counties', was collected by the US Census Bureau and made available on kaggle.com. This dataset contains all census data from the 2015 Federal US census. 
 <br>
 The `readr` function was used to import the data as shown below.
 
@@ -99,7 +105,7 @@ length(unique(gvd$incident_id)) # Checking the number of unique values for incid
 length(unique(acs2015$CensusId)) # Checking the number of unique values for CensusId
 ```
 
-Based on the output of the above `gvd` summary table (`data.frame(...`), the `participant_age` and `participant_gender` were explored to better understand their values. It was noted that these cells store multiple, discrete instances of data. The [:digit:] at the start of each value is presumably used to track the values accross from one `participant_` attribute to the next. It is also worth noting missing values. The first observation below contains only one age value, with four participant values. These attributes will be address later in the analysis.
+Based on the output of the above `gvd` summary table (`data.frame(...`), the `participant_age` and `participant_gender` were explored to better understand their values. It was noted that these cells store multiple, discrete instances of data. The [:digit:] at the start of each value is presumably used to track the values accross from one `participant_` attribute to the next. The first observation below contains only one age value, with four participant values. One avenue for addressing these inconsistencies could involve performing counts for each delimited value. However this is beyond the scope of the current analysis and so this particulat inconsistency will be ignored.
 
 ```{r}
 gvd %>% select(participant_age, participant_gender) %>% head(n=8) %>% 
@@ -175,7 +181,7 @@ gvd2015_keep_cali <- select(gvd2015_keep_cali, incident_id, date, state, city_or
 ```
 
 ```{r, message=FALSE, warning=FALSE, paged.print=TRUE}
-data.frame(AttNo = c(1:43), Attribute = names(gvd2015_keep_cali), Class = sapply(gvd2015_keep_cali, class),
+data.frame(Attribute = names(gvd2015_keep_cali), Class = sapply(gvd2015_keep_cali, class),
            gvd_incident274168 = sapply(gvd2015_keep_cali[53,], function(x) paste0(head(x),  collapse = ", ")),
            NA_Count = sapply(gvd2015_keep_cali, function(y) sum(length(which(is.na(y))))),
            row.names = NULL) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
@@ -288,7 +294,7 @@ ul <- unlist(strsplit(participant_status_unique_check, " "))
 unique(ul)
 ```
 
-Several anomalous values which contain mutually exclusive states of being, were identified as; "InjuredUnharmedArrested", "KilledInjured", "KilledArrested", "KilledUnharmed", "InjuredUnharmed" and "KilledUnharmedArrested". The `grepl` function was then used to create a boolean vector for in each case to search for the source of the value in `gvd2015_keep_cali`. Once the `incident_id` was identified, the URL "http://www.gunviolencearchive.org/incident/`incident_id`" was checked. Each instance was then rationalized and given a more appropriate value using the `str_replace_all` function. 
+Several anomalous values which contain mutually exclusive states of being, were identified as; "InjuredUnharmedArrested", "KilledInjured", "KilledArrested", "KilledUnharmed", "InjuredUnharmed" and "KilledUnharmedArrested". The `grepl` function was then used to create a boolean vector for in each case to search for the source of the value in `gvd2015_keep_cali`. Once the `incident_id` was identified, the URL "http://www.gunviolencearchive.org/incident/incident_id" was checked. Each instance was then rationalized and given a more appropriate value using the `str_replace_all` function. 
 
 ```{r}
 InjuredUnharmedArrested <- grepl("InjuredUnharmedArrested", gvd2015_keep_cali$participant_status)
@@ -405,7 +411,7 @@ data.frame(AttNo = c(1:37), Attribute = names(acs2015), Class = sapply(acs2015, 
 
 ### Subsetting Census Data
 
-For the following analysis, only economic and population data were carried over. The `acs2015` dataset was subset into `acs2015_keep`, below. The subset data contained only 1 NA value. As the GVD dataset was filtered for the State of California, so to will be the `acs2015_keep` dataset. The California county count was noted to be 58 (as opposed to 502 for GVD). This was retionalized by the data collection process, which was initially generated in police reports. The classification system for county areas used by law enforcement is highly unlikely to match what is used to collect census data. We can consider county classification in the GVD to perhaps be more generalized, whereas in the American Census Data classification to be more scientific.
+For the following analysis, only economic and population data were carried over. The `acs2015` dataset was subset into `acs2015_keep`, below. The subset data contained only 1 NA value. As the GVD dataset was filtered for the State of California, so to will be the `acs2015_keep` dataset. The California county count was noted to be 58 (as opposed to 502 for GVD). This was retionalized by the data collection process, which was initially generated in police reports. The classification system for county areas used by law enforcement is highly unlikely to match what is used to collect census data. We can consider county classification in the GVD to perhaps be more generalized, whereas in the American Census Data classification to be more empirical.
 
 ```{r}
 acs2015_keep <- select(acs2015, State, County, TotalPop, Men, Women, Income, IncomePerCap, Poverty, Unemployment)
@@ -432,25 +438,12 @@ aggregate(County ~ State, acs2015_keep_cali, function(x) length(unique(x))) %>% 
 
 
 
-
-
-
-
-
-```{r}
-aggregate(state ~ County, gvd2015_pt2, function(x) length(unique(x))) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11) %>% row_spec(5, bold = T, background = "lightskyblue") #%>% scroll_box(height = "200px")
-```
-
-```{r}
-aggregate(State ~ County, acs2015_keep_cali, function(x) length(unique(x))) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11) %>% row_spec(5, bold = T, background = "lightskyblue") #%>% scroll_box(height = "200px")
-```
-
 ### Joining the Data Sets
 
 The `gvd2015_pt2` and `acs2015_keep_cali` datasets were joined by County. As an inner join was used, as this will retain the County data found only in both sets. 
 
 ```{r, warning=FALSE}
-#gvd2015_pt2 <- rename(gvd2015_pt2, County = city_or_county) # Renaming 
+gvd2015_pt2 <- rename(gvd2015_pt2, County = city_or_county) # Renaming 
 gvd_acs_join <- inner_join(gvd2015_pt2, acs2015_keep_cali, by = "County")
 gvd_acs_join <- subset(gvd_acs_join, select = -c(State, state)) # State attribute dropped (all values = California)
 ```
@@ -459,7 +452,7 @@ gvd_acs_join <- subset(gvd_acs_join, select = -c(State, state)) # State attribut
 data.frame(Attribute = names(gvd_acs_join), Class = sapply(gvd_acs_join, class),
            gvd_acs_join = sapply(gvd_acs_join, function(x) paste0(head(x),  collapse = ", ")),
            NA_count = sapply(gvd_acs_join, function(y) sum(length(which(is.na(y))))),
-           row.names = NULL) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11) #%>% scroll_box(height = "200px")
+           row.names = NULL) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"),  font_size = 11) %>% scroll_box(height = "200px")
 ```
 
 #### NA Values in Joined Dataset

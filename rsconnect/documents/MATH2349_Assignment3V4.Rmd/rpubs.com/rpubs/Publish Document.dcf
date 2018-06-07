@@ -1,0 +1,10 @@
+name: Publish Document
+title:
+username:
+account: rpubs
+server: rpubs.com
+hostUrl: rpubs.com
+appId: https://api.rpubs.com/api/v1/document/394937/12d896adcae844eb955a74b108bf42af
+bundleId: https://api.rpubs.com/api/v1/document/394937/12d896adcae844eb955a74b108bf42af
+url: http://rpubs.com/AlistairGJ/394937
+when: 1528301675.08418
